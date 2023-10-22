@@ -2,8 +2,8 @@ import { useState, ChangeEvent, FormEvent } from 'react'
 import { useDispatch } from 'react-redux'
 
 import { ProductForm } from './ProductForm'
-import { addProduct, Product } from '../redux/slices/products/productSlice'
-import { AppDispatch } from '../redux/store'
+import { addProduct, Product } from '../../../redux/slices/products/productSlice'
+import { AppDispatch } from '../../../redux/store'
 
 const initialProductState: Product = {
   id: 0,
@@ -51,7 +51,7 @@ export function NewProductWrapper() {
   }
 
   return (
-    <div>
+    <div className="p-20">
       <h3 className="text-2xl font-bold">Add a new product</h3>
       <ProductForm handleSubmit={handleSubmit} handleChange={handleChange} product={product} />
     </div>

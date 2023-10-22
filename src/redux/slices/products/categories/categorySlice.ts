@@ -1,22 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-export type Product = {
+export type Category = {
   id: number
   name: string
-  image: string
-  description: string
-  categories: number[]
-  variants: string[]
-  sizes: string[]
 }
 
-export type ProductState = {
-  items: Product[]
+export type CategoryState = {
+  items: Category[]
   error: null | string
   isLoading: boolean
 }
 
-const initialState: ProductState = {
+const initialState: CategoryState = {
   items: [],
   error: null,
   isLoading: false
@@ -26,24 +21,25 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    productsRequest: (state) => {
+    categoriesRequest: (state) => {
       state.isLoading = true
     },
-    productsSuccess: (state, action) => {
+    categoriesSuccess: (state, action) => {
       state.isLoading = false
       state.items = action.payload
     },
-    addProduct: (state, action: { payload: { product: Product } }) => {
+    addCategories: (state, action: { payload: { product: Category } }) => {
       // let's append the new product to the beginning of the array
       state.items = [action.payload.product, ...state.items]
     },
-    removeProduct: (state, action: { payload: { productId: number } }) => {
+    removeCategories: (state, action: { payload: { productId: number } }) => {
       const filteredItems = state.items.filter((product) => product.id !== action.payload.productId)
       state.items = filteredItems
     }
   }
 })
 
-export const { removeProduct, addProduct, productsRequest, productsSuccess } = userSlice.actions
+export const { categoriesRequest, categoriesSuccess, addCategories, removeCategories } =
+  userSlice.actions
 
 export default userSlice.reducer
