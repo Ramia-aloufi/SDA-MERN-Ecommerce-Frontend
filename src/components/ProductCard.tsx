@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from 'react'
-import { Category } from '../redux/slices/products/categories/categorySlice'
+import { Category } from '../redux/slices/categories/categorySlice'
 import { Product } from '../redux/slices/products/productSlice'
 type ProductCardProps = {
   product: Product

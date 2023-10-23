@@ -3,6 +3,8 @@ import { AppDispatch, RootState } from '../../../redux/store'
 import { useEffect } from 'react'
 import { productsRequest, productsSuccess } from '../../../redux/slices/products/productSlice'
 import api from '../../../api'
+import { FiTrash, FiEdit } from 'react-icons/fi'
+
 export const ProductsTable = () => {
   const dispatch = useDispatch<AppDispatch>()
   const state = useSelector((state: RootState) => state)
@@ -43,9 +45,13 @@ export const ProductsTable = () => {
                 </td>
                 <td className="border p-2">{product.variants.map((varient) => varient)}</td>
                 <td className="border p-2">{product.categories.map((id) => id)}</td>
-                <td className="border p-2 grid gap-3">
-                  <button className="bg-red">delete</button>
-                  <button className="bg-yellow">edit</button>
+                <td className="border p-2 grid gap-3 justify-center">
+                  <button className="bg-yellow">
+                    <FiTrash />
+                  </button>
+                  <button className="bg-yellow">
+                    <FiEdit />
+                  </button>
                 </td>
               </tr>
             )

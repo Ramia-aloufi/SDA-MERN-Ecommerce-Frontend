@@ -17,7 +17,7 @@ const initialState: CategoryState = {
   isLoading: false
 }
 
-export const userSlice = createSlice({
+export const categorySlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
@@ -40,6 +40,6 @@ export const userSlice = createSlice({
 })
 
 export const { categoriesRequest, categoriesSuccess, addCategories, removeCategories } =
-  userSlice.actions
+  categorySlice.actions
 
-export default userSlice.reducer
+export default categorySlice.reducer

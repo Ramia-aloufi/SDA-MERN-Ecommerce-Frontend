@@ -22,8 +22,8 @@ const initialState: ProductState = {
   isLoading: false
 }
 
-export const userSlice = createSlice({
-  name: 'user',
+export const productSlice = createSlice({
+  name: 'product',
   initialState,
   reducers: {
     productsRequest: (state) => {
@@ -44,6 +44,6 @@ export const userSlice = createSlice({
   }
 })
 
-export const { removeProduct, addProduct, productsRequest, productsSuccess } = userSlice.actions
+export const { removeProduct, addProduct, productsRequest, productsSuccess } = productSlice.actions
 
-export default userSlice.reducer
+export default productSlice.reducer

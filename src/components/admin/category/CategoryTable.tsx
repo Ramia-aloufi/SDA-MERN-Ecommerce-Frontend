@@ -3,9 +3,10 @@ import api from '../../../api'
 import {
   categoriesRequest,
   categoriesSuccess
-} from '../../../redux/slices/products/categories/categorySlice'
+} from '../../../redux/slices/categories/categorySlice'
 import { AppDispatch, RootState } from '../../../redux/store'
 import { useEffect } from 'react'
+import { FiTrash, FiEdit } from 'react-icons/fi'
 
 const CategoryTable = () => {
   const dispatch = useDispatch<AppDispatch>()
@@ -36,9 +37,13 @@ const CategoryTable = () => {
             <tr key={category.id} className={index % 2 === 0 ? 'bg-gray-100' : ''}>
               <td className="border p-2">{category.id}</td>
               <td className="border p-2">{category.name}</td>
-              <td className="border p-2 flex gap-3">
-                <button className="bg-red">delete</button>
-                <button className="bg-yellow">edit</button>
+              <td className="border  py-2 grid gap-3 justify-center ">
+                <button className="bg-yellow">
+                  <FiTrash />
+                </button>
+                <button className="bg-yellow">
+                  <FiEdit />
+                </button>
               </td>
             </tr>
           )

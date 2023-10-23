@@ -1,12 +1,9 @@
-import { ChangeEvent, useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../redux/store'
 import { productsRequest, productsSuccess } from '../redux/slices/products/productSlice'
 import api from '../api'
-import {
-  categoriesRequest,
-  categoriesSuccess
-} from '../redux/slices/products/categories/categorySlice'
+import { categoriesRequest, categoriesSuccess } from '../redux/slices/categories/categorySlice'
 import ProductCard from '../components/ProductCard'
 
 const Home = () => {
