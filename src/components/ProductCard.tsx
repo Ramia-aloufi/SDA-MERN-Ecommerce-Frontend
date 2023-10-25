@@ -1,49 +1,55 @@
-import { ChangeEvent, useState } from 'react'
-import { Category } from '../redux/slices/categories/categorySlice'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { Product } from '../redux/slices/products/productSlice'
+import { AppDispatch } from '../redux/store'
+import { useDispatch, useSelector } from 'react-redux'
+import { categoryState, fetchCategory } from '../redux/slices/categories/categorySlice'
+
 type ProductCardProps = {
   product: Product
-  categories: Category[]
 }
-const ProductCard = ({ product, categories }: ProductCardProps) => {
-  const [sizeOption, setSizedOption] = useState('') // Default selected option
-  const [selectedOption, setSelectedOption] = useState('') // Default selected option
-
+const ProductCard = ({ product }: ProductCardProps) => {
+  const dispatch = useDispatch<AppDispatch>()
+  const [selectedSize, setSelectedSize] = useState('')
+  const [selecVariant, setSelectedVariant] = useState('')
+  const categories = useSelector(categoryState)
   const handleVarientSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    setSelectedOption(event.target.value)
+    setSelectedVariant(event.target.value)
   }
   const handleSizeSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    setSizedOption(event.target.value)
+    setSelectedSize(event.target.value)
   }
+  useEffect(() => {
+    dispatch(fetchCategory())
+  }, [dispatch])
   return (
-    <div className="group relative text-left">
-      <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
+    <div className="group bg-white relative justify-evenly items-baseline text-left shadow-sm rounded-md p-4 h-[525px]">
+      <div className=" w-full overflow-hidden rounded-lg lg:aspect-none group-hover:opacity-75 h-[250px]">
         <img
           src={product.image}
           alt={product.name}
-          className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+          className="h-full w-full object-cover object-center"
         />
       </div>
-      <div className="mt-4 flex justify-between">
+      <div className="mt-1 flex justify-between">
         <div>
           <h3 className="text-sm text-gray-700">
             {product.categories.map((categoryId) => (
-              <span key={product.id}>
+              <span key={categoryId}>
                 {categories.map((category) => category.id == categoryId && category.name)}
               </span>
             ))}
             {product.sizes.length > 0 && (
               <div className="p-1">
-                <label htmlFor="selectOption" className=" text-sm font-bold mb-2">
+                <label htmlFor={`selectedSize-${product.id}`} className=" text-sm font-bold mb-2">
                   Select Size:
                 </label>
                 <select
-                  id="selectOption"
-                  value={sizeOption}
+                  value={selectedSize}
+                  id={`selectedSize-${product.id}`}
                   onChange={handleSizeSelectChange}
                   className="p-2 rounded-md border border-gray-300 bg-slate-50 focus:outline-none focus:ring focus:border-blue-300">
-                  {product.sizes.map((size) => (
-                    <option key={size} value={size} className="py-1 text-white">
+                  {product.sizes.map((size, index) => (
+                    <option key={index} value={size} className="py-1 text-white">
                       {size}
                     </option>
                   ))}
@@ -52,16 +58,16 @@ const ProductCard = ({ product, categories }: ProductCardProps) => {
             )}
             {product.variants.length > 0 && (
               <div className="p-1">
-                <label htmlFor="selectOption" className=" text-sm font-bold mb-2">
+                <label htmlFor={`selecVariant-${product.id}`} className=" text-sm font-bold mb-2">
                   Select variant:
                 </label>
                 <select
-                  id="selectOption"
-                  value={selectedOption}
+                  id={`selecVariant-${product.id}`}
+                  value={selecVariant}
                   onChange={handleVarientSelectChange}
                   className="p-2 rounded-md border border-gray-300 bg-slate-50 focus:outline-none focus:ring focus:border-blue-300">
-                  {product.variants.map((variant) => (
-                    <option key={variant} value={variant} className="py-1 text-white">
+                  {product.variants.map((variant, index) => (
+                    <option key={index} value={variant} className="py-1 text-white">
                       {variant}
                     </option>
                   ))}
@@ -72,7 +78,7 @@ const ProductCard = ({ product, categories }: ProductCardProps) => {
           <p className="mt-1 text-sm text-gray-500">{product.description}</p>
         </div>
       </div>
-      <button>add To Cart</button>
+      <button className="absolute bottom-4 right-4 left-4">add To Cart</button>
     </div>
   )
 }

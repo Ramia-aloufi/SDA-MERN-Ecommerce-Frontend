@@ -1,27 +1,18 @@
 import { useDispatch, useSelector } from 'react-redux'
-import api from '../../../api'
-import {
-  categoriesRequest,
-  categoriesSuccess
-} from '../../../redux/slices/categories/categorySlice'
-import { AppDispatch, RootState } from '../../../redux/store'
 import { useEffect } from 'react'
 import { FiTrash, FiEdit } from 'react-icons/fi'
 
+import { AppDispatch } from '../../../redux/store'
+import { categoryState, fetchCategory } from '../../../redux/slices/categories/categorySlice'
+
 const CategoryTable = () => {
   const dispatch = useDispatch<AppDispatch>()
-  const state = useSelector((state: RootState) => state)
-  const categories = state.categories
+  const categories = useSelector(categoryState)
 
   useEffect(() => {
-    handleGetCategories()
+    dispatch(fetchCategory())
   }, [])
 
-  const handleGetCategories = async () => {
-    dispatch(categoriesRequest())
-    const res = await api.get('/mock/e-commerce/categories.json')
-    dispatch(categoriesSuccess(res.data))
-  }
   return (
     <table className="min-w-full table-auto text-xs">
       <thead>
@@ -32,16 +23,16 @@ const CategoryTable = () => {
         </tr>
       </thead>
       <tbody>
-        {categories.items.map((category, index) => {
+        {categories.map((category, index) => {
           return (
             <tr key={category.id} className={index % 2 === 0 ? 'bg-gray-100' : ''}>
               <td className="border p-2">{category.id}</td>
               <td className="border p-2">{category.name}</td>
               <td className="border  py-2 grid gap-3 justify-center ">
-                <button className="bg-yellow">
+                <button className="trashBtn">
                   <FiTrash />
                 </button>
-                <button className="bg-yellow">
+                <button className="editBtn">
                   <FiEdit />
                 </button>
               </td>

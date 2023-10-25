@@ -3,15 +3,11 @@ import './App.css'
 import Index from './router'
 import NavBar from './components/NavBar'
 import { Footer } from './components/Footer'
+import { RouterProvider } from 'react-router-dom'
+import { router } from './router/index'
 
 function App() {
-  return (
-    <div className="App">
-      <NavBar />
-      <Index />
-      <Footer />
-    </div>
-  )
+  return <RouterProvider router={router} />
 }
 
 export default App

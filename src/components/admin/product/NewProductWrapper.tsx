@@ -1,9 +1,7 @@
 import { useState, ChangeEvent, FormEvent } from 'react'
-import { useDispatch } from 'react-redux'
 
 import { ProductForm } from './ProductForm'
-import { addProduct, Product } from '../../../redux/slices/products/productSlice'
-import { AppDispatch } from '../../../redux/store'
+import { Product } from '../../../redux/slices/products/productSlice'
 
 const initialProductState: Product = {
   id: 0,
@@ -16,7 +14,7 @@ const initialProductState: Product = {
 }
 
 export function NewProductWrapper() {
-  const dispatch = useDispatch<AppDispatch>()
+  // const dispatch = useDispatch<AppDispatch>()
   const [product, setProduct] = useState<Product>(initialProductState)
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -45,7 +43,7 @@ export function NewProductWrapper() {
     product.id = +new Date()
     console.log('product:', product)
 
-    dispatch(addProduct({ product }))
+    // dispatch(addProduct({ product }))
     // Reset the form
     setProduct(initialProductState)
   }

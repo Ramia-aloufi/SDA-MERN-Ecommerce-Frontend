@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchData, selectUser } from '../../../redux/slices/user/UserSlice'
+import { fetchUser, userState } from '../../../redux/slices/user/UserSlice'
 import { AppDispatch } from '../../../redux/store'
 import { FiTrash, FiEdit } from 'react-icons/fi'
 
 const UserLists = () => {
   const dispatch = useDispatch<AppDispatch>()
-  const { items, isLoading, error } = useSelector(selectUser)
+  const { items, isLoading, error } = useSelector(userState)
 
   useEffect(() => {
-    dispatch(fetchData())
+    dispatch(fetchUser())
   }, [dispatch])
 
   if (isLoading) {
@@ -43,10 +43,10 @@ const UserLists = () => {
               <td className="border p-2">{item.role}</td>
               <td className="border p-2">{item.password}</td>
               <td className="border p-2 grid gap-3 justify-center">
-                <button className="bg-yellow">
+                <button className="trashBtn">
                   <FiTrash />
                 </button>
-                <button className="bg-yellow">
+                <button className="editBtn">
                   <FiEdit />
                 </button>
               </td>

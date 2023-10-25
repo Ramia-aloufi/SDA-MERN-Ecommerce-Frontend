@@ -15,14 +15,19 @@ export type userState = {
   items: User[]
   error: null | string
   isLoading: boolean
+  isLogedIn: boolean
+  userData: User | null
 }
 
 const initialState: userState = {
   items: [],
   error: null,
-  isLoading: false
+  isLoading: false,
+  isLogedIn: false,
+  userData: null
 }
-export const fetchData = createAsyncThunk('user/fetchData', async () => {
+
+export const fetchUser = createAsyncThunk('user/fetchData', async () => {
   const response = await api.get('/mock/e-commerce/users.json')
   if (!response.statusText) {
     throw new Error('Network response error')
@@ -34,23 +39,33 @@ export const fetchData = createAsyncThunk('user/fetchData', async () => {
 export const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    logIn: (state, action) => {
+      state.isLogedIn = true
+      state.userData = action.payload
+    },
+    logOut: (state) => {
+      state.isLogedIn = true
+      state.userData = null
+    }
+  },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchData.pending, (state) => {
+      .addCase(fetchUser.pending, (state) => {
         state.isLoading = true
       })
-      .addCase(fetchData.fulfilled, (state, action) => {
+      .addCase(fetchUser.fulfilled, (state, action) => {
         state.isLoading = false
         state.items = action.payload
       })
-      .addCase(fetchData.rejected, (state, action) => {
+      .addCase(fetchUser.rejected, (state, action) => {
         state.isLoading = false
         state.error = action.error.message || 'An error occurred.'
       })
   }
 })
 
-export const selectUser = (state: RootState) => state.users
+export const userState = (state: RootState) => state.users
+export const { logIn } = userSlice.actions
 
 export default userSlice.reducer

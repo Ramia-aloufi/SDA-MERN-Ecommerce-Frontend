@@ -1,24 +1,17 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { AppDispatch, RootState } from '../../../redux/store'
+import { AppDispatch } from '../../../redux/store'
 import { useEffect } from 'react'
-import { productsRequest, productsSuccess } from '../../../redux/slices/products/productSlice'
-import api from '../../../api'
 import { FiTrash, FiEdit } from 'react-icons/fi'
+import { fetchProduct, productState } from '../../../redux/slices/products/productSlice'
 
 export const ProductsTable = () => {
   const dispatch = useDispatch<AppDispatch>()
-  const state = useSelector((state: RootState) => state)
-  const products = state.products
+  const products = useSelector(productState).items
 
   useEffect(() => {
-    handleGetProducts()
+    dispatch(fetchProduct())
   }, [])
 
-  const handleGetProducts = async () => {
-    dispatch(productsRequest())
-    const res = await api.get('/mock/e-commerce/products.json')
-    dispatch(productsSuccess(res.data))
-  }
   return (
     <table className="min-w-full table-auto text-xs">
       <thead>
@@ -33,8 +26,8 @@ export const ProductsTable = () => {
         </tr>
       </thead>
       <tbody>
-        {products.items.length > 0 &&
-          products.items.map((product, index) => {
+        {products.length > 0 &&
+          products.map((product, index) => {
             return (
               <tr key={product.id} className={index % 2 === 0 ? 'bg-gray-100' : ''}>
                 <td className="border p-2">{product.id}</td>
@@ -46,11 +39,11 @@ export const ProductsTable = () => {
                 <td className="border p-2">{product.variants.map((varient) => varient)}</td>
                 <td className="border p-2">{product.categories.map((id) => id)}</td>
                 <td className="border p-2 grid gap-3 justify-center">
-                  <button className="bg-yellow">
-                    <FiTrash />
+                  <button className="trashBtn">
+                    <FiTrash className="inline-block text-m align-text-top" />
                   </button>
-                  <button className="bg-yellow">
-                    <FiEdit />
+                  <button className="editBtn">
+                    <FiEdit className="inline-block text-m align-text-top" />
                   </button>
                 </td>
               </tr>
