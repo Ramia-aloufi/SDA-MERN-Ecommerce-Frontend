@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+
 import api from '../../../api'
 import { RootState } from '../../store'
 
@@ -19,12 +20,16 @@ export type userState = {
   userData: User | null
 }
 
+const data =
+  localStorage.getItem('LoginData') != null
+    ? JSON.parse(String(localStorage.getItem('LoginData')))
+    : []
 const initialState: userState = {
   items: [],
   error: null,
   isLoading: false,
-  isLogedIn: false,
-  userData: null
+  isLogedIn: data.isLogedIn,
+  userData: data.userData
 }
 
 export const fetchUser = createAsyncThunk('user/fetchData', async () => {
@@ -43,10 +48,24 @@ export const userSlice = createSlice({
     logIn: (state, action) => {
       state.isLogedIn = true
       state.userData = action.payload
+      localStorage.setItem(
+        'LoginData',
+        JSON.stringify({
+          isLogedIn: state.isLogedIn,
+          userData: state.userData
+        })
+      )
     },
     logOut: (state) => {
-      state.isLogedIn = true
+      state.isLogedIn = false
       state.userData = null
+      localStorage.setItem(
+        'LoginData',
+        JSON.stringify({
+          isLogedIn: state.isLogedIn,
+          userData: state.userData
+        })
+      )
     }
   },
   extraReducers: (builder) => {
@@ -66,6 +85,6 @@ export const userSlice = createSlice({
 })
 
 export const userState = (state: RootState) => state.users
-export const { logIn } = userSlice.actions
+export const { logIn, logOut } = userSlice.actions
 
 export default userSlice.reducer

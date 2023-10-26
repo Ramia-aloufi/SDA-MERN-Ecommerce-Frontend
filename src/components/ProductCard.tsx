@@ -12,6 +12,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const [selectedSize, setSelectedSize] = useState('')
   const [selecVariant, setSelectedVariant] = useState('')
   const categories = useSelector(categoryState)
+
   const handleVarientSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setSelectedVariant(event.target.value)
   }
@@ -32,6 +33,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
       </div>
       <div className="mt-1 flex justify-between">
         <div>
+          <h1>{product.name}</h1>
           <h3 className="text-sm text-gray-700">
             {product.categories.map((categoryId) => (
               <span key={categoryId}>

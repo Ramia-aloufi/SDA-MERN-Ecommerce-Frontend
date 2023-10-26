@@ -10,18 +10,23 @@ export type Product = {
   categories: number[]
   variants: string[]
   sizes: string[]
+  price: number
 }
 
 export type ProductState = {
   items: Product[]
   error: null | string
   isLoading: boolean
+  singleProduct: Product
+  searchTerm: string
 }
 
 const initialState: ProductState = {
   items: [],
   error: null,
-  isLoading: false
+  isLoading: false,
+  singleProduct: {} as Product,
+  searchTerm: ''
 }
 
 export const fetchProduct = createAsyncThunk('product/fetchData', async () => {
@@ -37,6 +42,30 @@ export const productSlice = createSlice({
   name: 'product',
   initialState,
   reducers: {
+    findById: (state, action) => {
+      const id = action.payload
+      const isExist = state.items.find((product) => product.id === id)
+      if (isExist) {
+        state.singleProduct = isExist
+      }
+    },
+    searchProduct: (state, action) => {
+      console.log(action.payload)
+      state.searchTerm = action.payload
+    },
+    sortProduct: (state, action) => {
+      const sortBy = action.payload
+      switch (sortBy) {
+        case 'price':
+          state.items.sort((a, b) => a.price - b.price)
+          break
+        case 'name':
+          state.items.sort((a, b) => a.name.localeCompare(b.name))
+          break
+        default:
+          state.items
+      }
+    }
     // productsRequest: (state) => {
     //   state.isLoading = true
     // },
@@ -68,6 +97,7 @@ export const productSlice = createSlice({
       })
   }
 })
+export const { findById, searchProduct, sortProduct } = productSlice.actions
 export const productState = (state: RootState) => state.products
 
 export default productSlice.reducer
