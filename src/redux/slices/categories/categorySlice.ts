@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { RootState } from '../../store'
 import api from '../../../api'
+import { Category } from '../../../components/admin/category/Category'
 
 export type Category = {
   id: number
@@ -9,14 +10,20 @@ export type Category = {
 
 export type CategoryState = {
   items: Category[]
+  categories: Category[]
   error: null | string
   isLoading: boolean
+  searchTerm: string
+  searchedResult: Category[]
 }
 
 const initialState: CategoryState = {
   items: [],
+  categories: [],
   error: null,
-  isLoading: false
+  isLoading: false,
+  searchTerm: '',
+  searchedResult: []
 }
 export const fetchCategory = createAsyncThunk('category/fetchData', async () => {
   const response = await api.get('/mock/e-commerce/categories.json')
@@ -31,21 +38,41 @@ export const categorySlice = createSlice({
   name: 'category',
   initialState,
   reducers: {
-    // categoriesRequest: (state) => {
-    //   state.isLoading = true
-    // },
-    // categoriesSuccess: (state, action) => {
-    //   state.isLoading = false
-    //   state.items = action.payload
-    // },
-    // addCategories: (state, action: { payload: { product: Category } }) => {
-    //   // let's append the new product to the beginning of the array
-    //   state.items = [action.payload.product, ...state.items]
-    // },
-    // removeCategories: (state, action: { payload: { productId: number } }) => {
-    //   const filteredItems = state.items.filter((product) => product.id !== action.payload.productId)
-    //   state.items = filteredItems
-    // }
+    searchCategory: (state, action) => {
+      console.log(action.payload)
+      state.searchTerm = action.payload
+      state.searchedResult = state.searchTerm
+        ? state.items.filter((category) =>
+            category.name.toLowerCase().includes(state.searchTerm.toLowerCase())
+          )
+        : state.items
+      state.categories = state.searchedResult.length > 0 ? state.searchedResult : state.items
+    },
+    deleteCategory: (state, action) => {
+      const id = action.payload
+      console.log(id)
+      state.items = state.items.filter((user) => user.id !== id)
+      state.categories = state.items
+      console.log(state.items)
+    },
+    addCategory: (state, action) => {
+      const id = state.items.length + 1
+      const name = action.payload
+      console.log(`name:${name}`)
+      const newCategory: Category = { id, name }
+      console.log(`newCategory:${newCategory}`)
+      state.items = [...state.items, newCategory]
+      state.categories = state.items
+    },
+    UpdateCategory: (state, action) => {
+      const updatedUser: Category = action.payload
+      console.log(`updatedUser: ${updatedUser.id} ${updatedUser.name}`)
+      const existUser = state.items.find((category) => category.id == updatedUser.id)
+      if (existUser) {
+        existUser.name = updatedUser.name
+        state.categories = state.items
+      }
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -55,6 +82,7 @@ export const categorySlice = createSlice({
       .addCase(fetchCategory.fulfilled, (state, action) => {
         state.isLoading = false
         state.items = action.payload
+        state.categories = state.items
       })
       .addCase(fetchCategory.rejected, (state, action) => {
         state.isLoading = false
@@ -62,6 +90,8 @@ export const categorySlice = createSlice({
       })
   }
 })
-export const categoryState = (state: RootState) => state.categories.items
+export const { searchCategory, deleteCategory, UpdateCategory, addCategory } = categorySlice.actions
+
+export const categoryState = (state: RootState) => state.categories
 
 export default categorySlice.reducer

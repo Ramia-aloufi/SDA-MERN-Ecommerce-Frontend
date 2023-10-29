@@ -1,16 +1,19 @@
-import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchUser, userState } from '../../../redux/slices/user/UserSlice'
+import { User, banUser, deleteUser, userState } from '../../../redux/slices/user/UserSlice'
+import { FiTrash } from 'react-icons/fi'
+import { FaBan, FaRegCheckCircle } from 'react-icons/fa'
 import { AppDispatch } from '../../../redux/store'
-import { FiTrash, FiEdit } from 'react-icons/fi'
 
 const UserLists = () => {
+  const { users, isLoading, error } = useSelector(userState)
   const dispatch = useDispatch<AppDispatch>()
-  const { items, isLoading, error } = useSelector(userState)
 
-  useEffect(() => {
-    dispatch(fetchUser())
-  }, [dispatch])
+  const handleDelete = (id: number) => {
+    dispatch(deleteUser(Number(id)))
+  }
+  const handleBan = (user: User) => {
+    dispatch(banUser(user))
+  }
 
   if (isLoading) {
     return <p>Loading Data</p>
@@ -33,7 +36,7 @@ const UserLists = () => {
         </tr>
       </thead>
       <tbody>
-        {items.map((item, index) => {
+        {users.map((item, index) => {
           return (
             <tr key={item.id} className={index % 2 === 0 ? 'bg-gray-100' : ''}>
               <td className="border p-2">{item.id}</td>
@@ -43,11 +46,11 @@ const UserLists = () => {
               <td className="border p-2">{item.role}</td>
               <td className="border p-2">{item.password}</td>
               <td className="border p-2 grid gap-3 justify-center">
-                <button className="trashBtn">
+                <button onClick={() => handleDelete(item.id)} className="trashBtn">
                   <FiTrash />
                 </button>
-                <button className="editBtn">
-                  <FiEdit />
+                <button onClick={() => handleBan(item)} className="editBtn">
+                  {item.ban ? <FaBan /> : <FaRegCheckCircle />}
                 </button>
               </td>
             </tr>

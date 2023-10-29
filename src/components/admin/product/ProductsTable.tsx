@@ -1,16 +1,20 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { AppDispatch } from '../../../redux/store'
-import { useEffect } from 'react'
 import { FiTrash, FiEdit } from 'react-icons/fi'
-import { fetchProduct, productState } from '../../../redux/slices/products/productSlice'
+import { deleteProduct, productState } from '../../../redux/slices/products/productSlice'
+import { useNavigate } from 'react-router-dom'
 
 export const ProductsTable = () => {
-  const dispatch = useDispatch<AppDispatch>()
-  const products = useSelector(productState).items
+  const products = useSelector(productState).products
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
-  useEffect(() => {
-    dispatch(fetchProduct())
-  }, [])
+  const handkeDelete = (id: number) => {
+    console.log(id)
+    dispatch(deleteProduct(Number(id)))
+  }
+  const handleEdit = (id: number) => {
+    navigate(`/admin/product/update/${id}`)
+  }
 
   return (
     <table className="min-w-full table-auto text-xs">
@@ -26,7 +30,7 @@ export const ProductsTable = () => {
         </tr>
       </thead>
       <tbody>
-        {products.length > 0 &&
+        {products &&
           products.map((product, index) => {
             return (
               <tr key={product.id} className={index % 2 === 0 ? 'bg-gray-100' : ''}>
@@ -40,10 +44,16 @@ export const ProductsTable = () => {
                 <td className="border p-2">{product.categories.map((id) => id)}</td>
                 <td className="border p-2 grid gap-3 justify-center">
                   <button className="trashBtn">
-                    <FiTrash className="inline-block text-m align-text-top" />
+                    <FiTrash
+                      className="inline-block text-m align-text-top"
+                      onClick={() => handkeDelete(product.id)}
+                    />
                   </button>
                   <button className="editBtn">
-                    <FiEdit className="inline-block text-m align-text-top" />
+                    <FiEdit
+                      className="inline-block text-m align-text-top"
+                      onClick={() => handleEdit(product.id)}
+                    />
                   </button>
                 </td>
               </tr>

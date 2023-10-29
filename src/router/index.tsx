@@ -5,14 +5,18 @@ import { AdminPage } from '../pages/AdminPage'
 import { NotFound } from '../pages/Error'
 import { Category } from '../components/admin/category/Category'
 import { Products } from '../components/admin/product/Products'
-import { AddNewProduct } from '../pages/AddNewProduct'
-import User from '../components/admin/user/User'
+import UserPage from '../pages/UserPage'
 import LoginForm from '../components/LoginForm'
 import ProtectedRoute from './ProtectedRoute'
 import AdminRouteProtected from './AdminRouteProtected'
 import NavBar from '../components/NavBar'
 import { Footer } from '../components/Footer'
 import ProductDetails from '../pages/ProductDetails'
+import { Order } from '../components/admin/order/Order'
+import User from '../components/admin/user/User'
+import AddCategotyForm from '../components/admin/category/AddCategotyForm'
+import UpdateCategoryForm from '../components/admin/category/UpdateCategoryForm'
+import { ProductForm } from '../components/admin/product/ProductForm'
 
 // function Index() {
 //   // const count = useSelector((state: RootState) => state.counter.value)
@@ -60,8 +64,20 @@ export const router = createBrowserRouter([
             element: <Category />
           },
           {
+            path: 'category/new',
+            element: <AddCategotyForm />
+          },
+          {
+            path: 'category/update/:id',
+            element: <UpdateCategoryForm />
+          },
+          {
             path: 'product',
             element: <Products />
+          },
+          {
+            path: 'order',
+            element: <Order />
           },
           {
             path: 'users',
@@ -69,7 +85,11 @@ export const router = createBrowserRouter([
           },
           {
             path: 'product/new',
-            element: <AddNewProduct />
+            element: <ProductForm />
+          },
+          {
+            path: 'product/update/:id',
+            element: <ProductForm />
           }
         ]
       },
@@ -80,7 +100,7 @@ export const router = createBrowserRouter([
         children: [
           {
             path: 'user',
-            element: <User />
+            element: <UserPage />
           }
         ]
       },

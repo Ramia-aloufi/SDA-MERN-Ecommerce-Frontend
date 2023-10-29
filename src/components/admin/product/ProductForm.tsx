@@ -1,101 +1,117 @@
-import { ChangeEvent, FormEvent } from 'react'
-import { Product } from '../../../redux/slices/products/productSlice'
+import { addProduct } from '../../../redux/slices/products/productSlice'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '../../../redux/store'
+import { object, string, z } from 'zod'
+import { toast } from 'react-toastify'
 
-type ProductFormProps = {
-  product: Product
-  handleSubmit: (e: FormEvent) => void
-  handleChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
-}
+const productSchema = object({
+  name: string().min(6),
+  image: string().min(6),
+  description: string().min(1),
+  categories: string().min(1),
+  variants: string().min(1),
+  sizes: string().min(1),
+  price: string().min(1)
+})
 
-export function ProductForm({ product, handleSubmit, handleChange }: ProductFormProps) {
-  const inputStyle =
-    'w-full px-3 py-2 text-white border rounded-lg focus:outline-none focus:border-blue-400'
-  const labelStyle = 'block text-sm font-medium text-gray-600'
+type ProductSchema = z.infer<typeof productSchema>
+
+export function ProductForm() {
+  const { id } = useParams()
+
+  if (typeof id === 'string') {
+    console.log('id is a string:', id)
+  } else if (id === undefined) {
+    console.log('id is undefined')
+  }
+
+  console.log(` id: ${id}`)
+  const navigate = useNavigate()
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors }
+  } = useForm<ProductSchema>({
+    resolver: zodResolver(productSchema)
+  })
+  const dispatch = useDispatch<AppDispatch>()
+
+  const onSubmit = (data: ProductSchema) => {
+    const transformedData = {
+      ...data,
+      categories: data.categories.split(',').map(Number),
+      variants: data.variants.split(',').map((variant: string) => variant.trim()),
+      sizes: data.sizes.split(',').map((size: string) => size.trim()),
+      price: Number(data.price)
+    }
+    console.log(transformedData)
+    try {
+      dispatch(addProduct(transformedData))
+      toast.success('Added New Product successfully!', {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000
+      })
+      reset()
+      navigate('/admin/product')
+    } catch (error) {
+      console.error('Validation error:')
+      // Handle validation error
+      // You can set an error state or display a notification to the user
+    }
+  }
 
   return (
-    <form onSubmit={handleSubmit} className="p-4 bg-gray-100 rounded-lg">
-      <div className="mb-4">
-        <label htmlFor="name" className={labelStyle}>
-          Name:
-        </label>
-        <input
-          type="text"
-          name="name"
-          id="name"
-          value={product.name}
-          onChange={handleChange}
-          className={inputStyle}
-        />
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
+      {/* <ToastContainer /> */}
+      <div className="max-w-md w-full space-y-8 p-6 bg-white rounded-lg shadow-lg">
+        <div>
+          <h2 className=" text-3xl font-extrabold text-gray-900">Add New Product</h2>
+        </div>
+        <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+          <div>
+            <label htmlFor="name">Name:</label>
+            <input type="text" id="name" {...register('name')} />
+            {errors.name && <p className="errorMessage">{errors.name.message}</p>}
+          </div>
+          <div>
+            <label htmlFor="image">Image URL:</label>
+            <input type="text" id="image" {...register('image')} />
+            {errors.image && <p className="errorMessage">{errors.image.message}</p>}
+          </div>
+          <div>
+            <label htmlFor="description"> Description: </label>
+            <textarea id="description" {...register('description')} />
+            {errors.description && <p className="errorMessage">{errors.description.message}</p>}
+          </div>
+          <div>
+            <label htmlFor="categories">Categories: (use comma , to create multiple)</label>
+            <input type="text" id="categories" {...register('categories')} />
+            {errors.categories && <p className="errorMessage">{errors.categories.message}</p>}
+          </div>
+          <div>
+            <label htmlFor="variants">Variants: (use comma , to create multiple)</label>
+            <input type="text" id="variants" {...register('variants')} />
+            {errors.variants && <p className="errorMessage">{errors.variants.message}</p>}
+          </div>
+          <div>
+            <label htmlFor="sizes">Sizes: (use comma , to create multiple)</label>
+            <input type="text" id="sizes" {...register('sizes')} />
+            {errors.sizes && <p className="errorMessage">{errors.sizes.message}</p>}
+          </div>
+          <div>
+            <label htmlFor="price">Price:</label>
+            <input type="number" id="price" {...register('price')} />
+            {errors.price && <p className="errorMessage">{errors.price.message}</p>}
+          </div>
+          <button type="submit" className="submit">
+            Add Product
+          </button>
+        </form>
       </div>
-      <div className="mb-4">
-        <label htmlFor="image" className={labelStyle}>
-          Image URL:
-        </label>
-        <input
-          type="text"
-          name="image"
-          id="image"
-          value={product.image}
-          onChange={handleChange}
-          className={inputStyle}
-        />
-      </div>
-      <div className="mb-4">
-        <label htmlFor="description" className={labelStyle}>
-          Description:
-        </label>
-        <textarea
-          name="description"
-          id="description"
-          value={product.description}
-          onChange={handleChange}
-          className={inputStyle}
-        />
-      </div>
-      <div className="mb-4">
-        <label htmlFor="categories" className={labelStyle}>
-          Categories: (use comma , to create multiple)
-        </label>
-        <input
-          type="text"
-          name="categories"
-          id="categories"
-          value={product.categories.join(',')}
-          onChange={handleChange}
-          className={inputStyle}
-        />
-      </div>
-      <div className="mb-4">
-        <label htmlFor="variants" className={labelStyle}>
-          Variants: (use comma , to create multiple)
-        </label>
-        <input
-          type="text"
-          name="variants"
-          id="variants"
-          value={product.variants.join(',')}
-          onChange={handleChange}
-          className={inputStyle}
-        />
-      </div>
-      <div className="mb-4">
-        <label htmlFor="sizes" className={labelStyle}>
-          Sizes: (use comma , to create multiple)
-        </label>
-        <input
-          type="text"
-          name="sizes"
-          id="sizes"
-          value={product.sizes.join(',')}
-          onChange={handleChange}
-          className="w-full px-3 py-2 text-white border rounded-lg focus:outline-none focus:border-blue-400"
-        />
-      </div>
-      <button
-        type="submit"
-        className="w-full px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600">
-        Add Product
-      </button>
-    </form>
+    </div>
   )
 }

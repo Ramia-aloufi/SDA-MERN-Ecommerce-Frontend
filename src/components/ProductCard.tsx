@@ -1,17 +1,16 @@
-import { ChangeEvent, useEffect, useState } from 'react'
+import { ChangeEvent, useState } from 'react'
+
 import { Product } from '../redux/slices/products/productSlice'
-import { AppDispatch } from '../redux/store'
-import { useDispatch, useSelector } from 'react-redux'
-import { categoryState, fetchCategory } from '../redux/slices/categories/categorySlice'
+import { useSelector } from 'react-redux'
+import { categoryState } from '../redux/slices/categories/categorySlice'
 
 type ProductCardProps = {
   product: Product
 }
 const ProductCard = ({ product }: ProductCardProps) => {
-  const dispatch = useDispatch<AppDispatch>()
+  const categories = useSelector(categoryState).categories
   const [selectedSize, setSelectedSize] = useState('')
   const [selecVariant, setSelectedVariant] = useState('')
-  const categories = useSelector(categoryState)
 
   const handleVarientSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setSelectedVariant(event.target.value)
@@ -19,9 +18,10 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const handleSizeSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setSelectedSize(event.target.value)
   }
-  useEffect(() => {
-    dispatch(fetchCategory())
-  }, [dispatch])
+  //   useEffect(() => {
+  //   dispatch()
+  // },[])
+
   return (
     <div className="group bg-white relative justify-evenly items-baseline text-left shadow-sm rounded-md p-4 h-[525px]">
       <div className=" w-full overflow-hidden rounded-lg lg:aspect-none group-hover:opacity-75 h-[250px]">

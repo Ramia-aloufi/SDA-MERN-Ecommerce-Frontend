@@ -9,11 +9,11 @@ const ProductDetails = () => {
   const { id } = useParams()
   const { singleProduct } = useSelector(productState)
   const dispatch = useDispatch<AppDispatch>()
-  console.log(singleProduct)
+  console.log(id)
 
   useEffect(() => {
     dispatch(findById(Number(id)))
-  }, [dispatch])
+  }, [dispatch, singleProduct])
   return (
     <div className="w-[300px] shadow-md my-4 rounded-md m-auto">
       {singleProduct.id != null && <ProductCard product={singleProduct} />}

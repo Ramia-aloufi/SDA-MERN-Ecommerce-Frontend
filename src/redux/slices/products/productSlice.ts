@@ -15,18 +15,21 @@ export type Product = {
 
 export type ProductState = {
   items: Product[]
+  products: Product[]
   error: null | string
   isLoading: boolean
   singleProduct: Product
   searchTerm: string
+  searchedResult: Product[]
 }
-
 const initialState: ProductState = {
   items: [],
   error: null,
+  products: [],
   isLoading: false,
   singleProduct: {} as Product,
-  searchTerm: ''
+  searchTerm: '',
+  searchedResult: []
 }
 
 export const fetchProduct = createAsyncThunk('product/fetchData', async () => {
@@ -51,36 +54,54 @@ export const productSlice = createSlice({
     },
     searchProduct: (state, action) => {
       console.log(action.payload)
-      state.searchTerm = action.payload
+      const search = action.payload
+      state.searchTerm = search
+      state.searchedResult = state.searchTerm
+        ? state.items.filter((product) =>
+            product.name.toLowerCase().includes(state.searchTerm.toLowerCase())
+          )
+        : []
+      state.products = state.searchedResult.length > 0 ? state.searchedResult : state.items
     },
     sortProduct: (state, action) => {
       const sortBy = action.payload
       switch (sortBy) {
         case 'price':
-          state.items.sort((a, b) => a.price - b.price)
+          state.products.sort((a, b) => a.price - b.price)
           break
         case 'name':
-          state.items.sort((a, b) => a.name.localeCompare(b.name))
+          state.products.sort((a, b) => a.name.localeCompare(b.name))
           break
         default:
-          state.items
+          state.products
+      }
+    },
+    deleteProduct: (state, action) => {
+      const id = action.payload
+      console.log(id)
+      state.items = state.items.filter((product) => product.id !== id)
+      state.products = state.items
+      console.log(state.items)
+    },
+    addProduct: (state, action) => {
+      const id = state.items.length + 1
+      const name = action.payload
+      console.log(`name:${name}`)
+      const newProduct: Product = { id, ...name }
+      console.log(`newProduct:${newProduct.id}`)
+      state.items = [...state.items, newProduct]
+      state.products = state.items
+      console.log(state.items.length)
+    },
+    UpdateProduct: (state, action) => {
+      const updatedProduct: Product = action.payload
+      console.log(`updatedProduct: ${updatedProduct.id} ${updatedProduct.name}`)
+      const existUser = state.items.find((category) => category.id == updatedProduct.id)
+      if (existUser) {
+        existUser.name = updatedProduct.name
+        state.products = state.items
       }
     }
-    // productsRequest: (state) => {
-    //   state.isLoading = true
-    // },
-    // productsSuccess: (state, action) => {
-    //   state.isLoading = false
-    //   state.items = action.payload
-    // },
-    // addProduct: (state, action: { payload: { product: Product } }) => {
-    //   // let's append the new product to the beginning of the array
-    //   state.items = [action.payload.product, ...state.items]
-    // },
-    // removeProduct: (state, action: { payload: { productId: number } }) => {
-    //   const filteredItems = state.items.filter((product) => product.id !== action.payload.productId)
-    //   state.items = filteredItems
-    // }
   },
   extraReducers: (builder) => {
     builder
@@ -90,6 +111,7 @@ export const productSlice = createSlice({
       .addCase(fetchProduct.fulfilled, (state, action) => {
         state.isLoading = false
         state.items = action.payload
+        state.products = state.items
       })
       .addCase(fetchProduct.rejected, (state, action) => {
         state.isLoading = false
@@ -97,7 +119,8 @@ export const productSlice = createSlice({
       })
   }
 })
-export const { findById, searchProduct, sortProduct } = productSlice.actions
+export const { findById, searchProduct, sortProduct, UpdateProduct, addProduct, deleteProduct } =
+  productSlice.actions
 export const productState = (state: RootState) => state.products
 
 export default productSlice.reducer

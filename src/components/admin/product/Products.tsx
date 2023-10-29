@@ -5,7 +5,7 @@ import { RiAddLine } from 'react-icons/ri'
 
 export const Products = () => {
   return (
-    <div className="h-[sreen - 100px] grid grid-cols-[1fr,4fr] ">
+    <div className="h-screen grid grid-cols-[1fr,4fr] ">
       <AdminSidbar />
       <div className="flex flex-col gap-5 text-center overflow-y-scroll p-6">
         <div className="flex justify-between py-2">

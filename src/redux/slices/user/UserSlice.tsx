@@ -10,14 +10,18 @@ export type User = {
   email: string
   password: string
   role: string
+  ban: boolean
 }
 
 export type userState = {
   items: User[]
+  users: User[]
   error: null | string
   isLoading: boolean
   isLogedIn: boolean
   userData: User | null
+  searchTerm: string
+  searchedResult: User[]
 }
 
 const data =
@@ -26,10 +30,13 @@ const data =
     : []
 const initialState: userState = {
   items: [],
+  users: [],
   error: null,
   isLoading: false,
   isLogedIn: data.isLogedIn,
-  userData: data.userData
+  userData: data.userData,
+  searchTerm: '',
+  searchedResult: []
 }
 
 export const fetchUser = createAsyncThunk('user/fetchData', async () => {
@@ -66,6 +73,45 @@ export const userSlice = createSlice({
           userData: state.userData
         })
       )
+    },
+    searchUser: (state, action) => {
+      console.log(action.payload)
+      state.searchTerm = action.payload
+      state.searchedResult = state.searchTerm
+        ? state.items.filter((user) =>
+            user.firstName.toLowerCase().includes(state.searchTerm.toLowerCase())
+          )
+        : []
+      state.users = state.searchedResult.length > 0 ? state.searchedResult : state.items
+    },
+    deleteUser: (state, action) => {
+      const id = action.payload
+      console.log(id)
+      state.items = state.items.filter((user) => user.id !== id)
+      state.users = state.items
+      console.log(state.items)
+    },
+    addUser: (state, action) => {
+      state.items = [action.payload.product, ...state.items]
+      state.users = state.items
+    },
+    UpdateUser: (state, action) => {
+      const updatedUser = action.payload
+      const existUser = state.items.find((user) => user.id == updatedUser.id)
+      if (existUser) {
+        existUser.firstName = updatedUser.firstName
+        existUser.lastName = updatedUser.lastName
+        state.users = state.items
+      }
+    },
+    banUser: (state, action) => {
+      const updatedUser = action.payload
+      console.log(updatedUser.ban)
+      const existUser = state.items.find((user) => user.id == updatedUser.id)
+      if (existUser) {
+        existUser.ban = !existUser.ban
+        state.users = state.items
+      }
     }
   },
   extraReducers: (builder) => {
@@ -76,6 +122,7 @@ export const userSlice = createSlice({
       .addCase(fetchUser.fulfilled, (state, action) => {
         state.isLoading = false
         state.items = action.payload
+        state.users = state.items
       })
       .addCase(fetchUser.rejected, (state, action) => {
         state.isLoading = false
@@ -85,6 +132,7 @@ export const userSlice = createSlice({
 })
 
 export const userState = (state: RootState) => state.users
-export const { logIn, logOut } = userSlice.actions
+export const { logIn, logOut, searchUser, deleteUser, banUser, addUser, UpdateUser } =
+  userSlice.actions
 
 export default userSlice.reducer

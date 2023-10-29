@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom'
-
-export const UserSidbar = () => {
+const UserSidbar = () => {
   return (
     <aside>
       <ul>
@@ -15,3 +14,4 @@ export const UserSidbar = () => {
     </aside>
   )
 }
+export default UserSidbar
