@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 type ProductCardProps = {
   product: Product
 }
-const ProductCard = ({ product }: ProductCardProps) => {
+const ProductDetailCard = ({ product }: ProductCardProps) => {
   const categories = useSelector(categoryState).categories
   const dispatch = useDispatch()
 
@@ -28,21 +28,19 @@ const ProductCard = ({ product }: ProductCardProps) => {
     setSelectedVarient(varient)
   }
   return (
-    <div className="grid space-y-2 max-w-[340px]  bg-white relative text-left shadow-sm rounded-md p-4  lg:h-[400px]">
-      <Link to={`/product/${product.id}`}>
-        <div className=" w-full overflow-hidden rounded-lg lg:aspect-none group-hover:opacity-75 h-[200px]  ">
+    <div className="grid space-y-2 grid-cols-[1fr,1fr]   bg-white relative text-left shadow-sm rounded-md p-4 ">
+        <div className=" w-full overflow-hidden rounded-lg lg:aspect-none group-hover:opacity-75   ">
           <img src={product.image} alt={product.name} className="h-full w-full  object-center" />
         </div>
-      </Link>
-      <div className="mt-1 flex justify-between">
+      <div className="mt-1 grid  justify-between">
         <div>
           <h2 className="block text-md font-semibold">{product.name}</h2>{' '}
-          {/* {product.categories.map((categoryId) => (
+          {product.categories.map((categoryId) => (
             <span key={categoryId}>
               {categories.map((category) => category.id == categoryId && category.name)}
             </span>
-          ))} */}
-          {/* {product.sizes.length > 0 && (
+          ))}
+          {product.sizes.length > 0 && (
             <div className="p-1 flex gap-2 items-center flex-wrap">
               <label htmlFor={`selectedSize-${product.id}`} className=" text-sm font-bold mb-2">
                 Size:
@@ -78,15 +76,16 @@ const ProductCard = ({ product }: ProductCardProps) => {
                 </span>
               ))}
             </div>
-          )} */}
+          )}
           <p className="mt-1 text-sm text-gray-500">{product.description}</p>
         </div>
-      </div>
-      <button className="btn" onClick={() => handeAddToCart(product)}>
+        <button className="btn h-[50px] mt-4 " onClick={() => handeAddToCart(product)}>
         add To Cart
       </button>
+      </div>
+
     </div>
   )
 }
 
-export default ProductCard
+export default ProductDetailCard

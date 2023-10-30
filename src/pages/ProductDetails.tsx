@@ -4,6 +4,7 @@ import { findById, productState } from '../redux/slices/products/productSlice'
 import ProductCard from '../components/ProductCard'
 import { useEffect } from 'react'
 import { AppDispatch } from '../redux/store'
+import ProductDetailCard from '../components/ProductDetailCard'
 
 const ProductDetails = () => {
   const { id } = useParams()
@@ -15,8 +16,8 @@ const ProductDetails = () => {
     dispatch(findById(Number(id)))
   }, [dispatch, singleProduct])
   return (
-    <div className="w-[300px] shadow-md my-4 rounded-md m-auto">
-      {singleProduct.id != null && <ProductCard product={singleProduct} />}
+    <div className=" w-1/2 shadow-md my-4 rounded-md m-auto">
+      {singleProduct.id != null && <ProductDetailCard product={singleProduct} />}
     </div>
   )
 }

@@ -11,6 +11,7 @@ export type Product = {
   variants: string[]
   sizes: string[]
   price: number
+  quantity: number
 }
 
 export type ProductState = {
@@ -19,8 +20,11 @@ export type ProductState = {
   error: null | string
   isLoading: boolean
   singleProduct: Product
+  inCart: Product[]
   searchTerm: string
   searchedResult: Product[]
+  totalQuantity: number
+  totalPrice: number
 }
 const initialState: ProductState = {
   items: [],
@@ -28,8 +32,11 @@ const initialState: ProductState = {
   products: [],
   isLoading: false,
   singleProduct: {} as Product,
+  inCart: [],
   searchTerm: '',
-  searchedResult: []
+  searchedResult: [],
+  totalQuantity: 0,
+  totalPrice: 0
 }
 
 export const fetchProduct = createAsyncThunk('product/fetchData', async () => {
@@ -101,6 +108,56 @@ export const productSlice = createSlice({
         existUser.name = updatedProduct.name
         state.products = state.items
       }
+    },
+    addToCart: (state, action) => {
+      let newProduct: Product = action.payload
+      newProduct = { ...newProduct, quantity: newProduct.quantity + 1 }
+      state.inCart = [...state.inCart, newProduct]
+      state.totalQuantity = state.inCart.reduce((total, product) => total + product.quantity, 0)
+      state.totalPrice = state.inCart.reduce(
+        (total, product) => total + product.quantity * product.price,
+        0
+      )
+    },
+    removeFromCart: (state, action) => {
+      const id: number = action.payload
+      state.inCart = state.inCart.filter((product) => product.id !== id)
+      state.totalQuantity = state.inCart.reduce((total, product) => total + product.quantity, 0)
+    },
+    IncreaseQuantity: (state, action) => {
+      const productIncreas: Product = action.payload
+      state.inCart.map((product) => {
+        if (product.id == productIncreas.id) {
+          product.quantity += 1
+        }
+        console.log(productIncreas)
+      })
+      state.totalQuantity = state.inCart.reduce((total, product) => total + product.quantity, 0)
+      state.totalPrice = state.inCart.reduce(
+        (total, product) => total + product.quantity * product.price,
+        0
+      )
+    },
+    DecreaseQuantity: (state, action) => {
+      const productIncreas: Product = action.payload
+      state.inCart.map((product) => {
+        if (product.id == productIncreas.id) {
+          if (product.quantity > 0) {
+            product.quantity -= 1
+          }
+        }
+        console.log(productIncreas)
+      })
+      state.totalQuantity = state.inCart.reduce((total, product) => total + product.quantity, 0)
+      state.totalPrice = state.inCart.reduce(
+        (total, product) => total + product.quantity * product.price,
+        0
+      )
+    },
+    FilterByCategory: (state, action) => {
+      const id = action.payload
+      state.products = state.items
+      state.products = state.products.filter((product) => product.categories.includes(id))
     }
   },
   extraReducers: (builder) => {
@@ -119,8 +176,19 @@ export const productSlice = createSlice({
       })
   }
 })
-export const { findById, searchProduct, sortProduct, UpdateProduct, addProduct, deleteProduct } =
-  productSlice.actions
+export const {
+  findById,
+  searchProduct,
+  sortProduct,
+  UpdateProduct,
+  addProduct,
+  deleteProduct,
+  addToCart,
+  removeFromCart,
+  IncreaseQuantity,
+  DecreaseQuantity,
+  FilterByCategory
+} = productSlice.actions
 export const productState = (state: RootState) => state.products
 
 export default productSlice.reducer

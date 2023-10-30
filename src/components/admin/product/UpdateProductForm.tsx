@@ -7,19 +7,31 @@ import { AppDispatch } from '../../../redux/store'
 import { object, string, z } from 'zod'
 import { toast } from 'react-toastify'
 
+// const productSchema = object({
+//   name: string().min(6),
+//   image: string().min(6),
+//   description: string().min(1),
+//   categories: string().min(1),
+//   variants: string().min(1),
+//   sizes: string().min(1),
+//   price: string().min(1)
+// })
 const productSchema = object({
-  name: string().min(6),
-  image: string().min(6),
-  description: string().min(1),
-  categories: string().min(1),
-  variants: string().min(1),
-  sizes: string().min(1),
-  price: string().min(1)
+  name: string().min(6).default('Default Product Name'),
+  image: string().min(6).default('default_image.jpg'),
+  description: string().min(1).default('Default product description'),
+  categories: string().min(1).default('Default Category'),
+  variants: string().min(1).default('Default Variant'),
+  sizes: string().min(1).default('Default Size'),
+  price: string().min(1).default('0.00') // Assuming price is a string
 })
 
 type ProductSchema = z.infer<typeof productSchema>
 
-export function ProductForm() {
+const UpdateProductForm = () => {
+  const { id } = useParams()
+
+  console.log(` id: ${id}`)
   const navigate = useNavigate()
   const {
     register,
@@ -60,7 +72,7 @@ export function ProductForm() {
       {/* <ToastContainer /> */}
       <div className="max-w-md w-full space-y-8 p-6 bg-white rounded-lg shadow-lg">
         <div>
-          <h2 className=" text-3xl font-extrabold text-gray-900">Add New Product</h2>
+          <h2 className=" text-3xl font-extrabold text-gray-900">Update Product</h2>
         </div>
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <div>
@@ -106,3 +118,4 @@ export function ProductForm() {
     </div>
   )
 }
+export default UpdateProductForm
