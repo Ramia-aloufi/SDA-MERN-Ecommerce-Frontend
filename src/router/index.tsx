@@ -6,7 +6,6 @@ import { NotFound } from '../pages/Error'
 import { Category } from '../components/admin/category/Category'
 import { Products } from '../components/admin/product/Products'
 import UserPage from '../pages/UserPage'
-import LoginForm from '../components/LoginForm'
 import ProtectedRoute from './ProtectedRoute'
 import AdminRouteProtected from './AdminRouteProtected'
 import NavBar from '../components/NavBar'
@@ -63,7 +62,7 @@ export const router = createBrowserRouter([
         element: <AdminRouteProtected />,
         children: [
           {
-            path: 'admin',
+            path: '/admin',
             element: <AdminPage />
           },
           {
@@ -106,7 +105,7 @@ export const router = createBrowserRouter([
         element: <ProtectedRoute />,
         children: [
           {
-            path: 'user',
+            path: '/user',
             element: <UserPage />
           }
         ]

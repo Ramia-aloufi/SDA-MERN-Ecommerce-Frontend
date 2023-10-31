@@ -111,9 +111,15 @@ export const userSlice = createSlice({
       const updatedUser = action.payload
       const existUser = state.items.find((user) => user.id == updatedUser.id)
       if (existUser) {
-        existUser.firstName = updatedUser.firstName
-        existUser.lastName = updatedUser.lastName
+        state.userData = action.payload
         state.users = state.items
+        localStorage.setItem(
+          'LoginData',
+          JSON.stringify({
+            isLogedIn: state.isLogedIn,
+            userData: state.userData
+          })
+        )
       }
     },
     banUser: (state, action) => {

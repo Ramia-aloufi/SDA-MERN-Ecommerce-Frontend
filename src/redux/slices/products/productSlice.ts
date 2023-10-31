@@ -174,8 +174,8 @@ export const productSlice = createSlice({
     FilterByCategory: (state, action) => {
       const id = action.payload
       state.products = state.items
-      state.items = state.products.filter((product) => product.categories.includes(id))
-      state.products = state.items
+      state.products = state.products.filter((product) => product.categories.includes(id))
+      // state.products = state.items
     }
   },
   extraReducers: (builder) => {

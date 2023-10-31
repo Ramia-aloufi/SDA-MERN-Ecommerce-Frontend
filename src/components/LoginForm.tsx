@@ -7,6 +7,7 @@ import { AppDispatch } from '../redux/store'
 import { logIn, userState } from '../redux/slices/user/UserSlice'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { useNavigate } from 'react-router-dom'
 
 const loginSchema = object({
   email: string().email(),
@@ -16,6 +17,7 @@ const loginSchema = object({
 type LoginSchema = z.infer<typeof loginSchema>
 
 function LoginForm() {
+  const navigate = useNavigate()
   const {
     register,
     handleSubmit,
@@ -30,6 +32,11 @@ function LoginForm() {
     const userExist = users.find((user) => user.email == data.email)
     if (userExist) {
       dispatch(logIn(userExist))
+      if (userExist.role == 'admin') {
+        navigate('/admin')
+      } else {
+        navigate('/user')
+      }
       toast.success('Login successful!', {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 3000 // Auto close the toast after 3 seconds
