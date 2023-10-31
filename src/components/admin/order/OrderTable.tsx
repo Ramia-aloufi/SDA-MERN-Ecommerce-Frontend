@@ -12,7 +12,7 @@ const OrderTable = () => {
   return (
     <table className="min-w-full table-auto text-xs">
       <thead>
-        <tr className="bg-gray-200">
+        <tr className="bg-[#434343] text-white">
           <th className="border p-2">Id</th>
           <th className="border p-2">userId</th>
           <th className="border p-2">productId</th>
@@ -23,7 +23,7 @@ const OrderTable = () => {
       <tbody>
         {orders.map(({ id, userId, productId, purchasedAt }, index) => {
           return (
-            <tr key={id} className={index % 2 === 0 ? 'bg-gray-100' : ''}>
+            <tr key={id} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}>
               <td className="border p-2">{id}</td>
               <td className="border p-2">{userId}</td>
               <td className="border p-2">{productId}</td>

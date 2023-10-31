@@ -92,8 +92,20 @@ export const userSlice = createSlice({
       console.log(state.items)
     },
     addUser: (state, action) => {
-      state.items = [action.payload.product, ...state.items]
+      const id = state.items.length + 1
+      const data = action.payload
+      const newUser: User = { ...data, id }
+      state.items = [newUser, ...state.items]
       state.users = state.items
+      state.isLogedIn = true
+      state.userData = newUser
+      localStorage.setItem(
+        'LoginData',
+        JSON.stringify({
+          isLogedIn: state.isLogedIn,
+          userData: state.userData
+        })
+      )
     },
     UpdateUser: (state, action) => {
       const updatedUser = action.payload

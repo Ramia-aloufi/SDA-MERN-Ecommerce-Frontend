@@ -4,7 +4,7 @@ const UserPage = () => {
   return (
     <div className="grid grid-cols-[1fr,3fr]">
       <UserSidbar />
-      <h1 className="">Admin bage</h1>
+      <h1 className="h-screen">Admin bage</h1>
     </div>
   )
 }

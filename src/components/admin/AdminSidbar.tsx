@@ -9,7 +9,7 @@ export const AdminSidbar = () => {
     dispatch(logOut())
   }
   return (
-    <aside className="h-full z-0 bg-slate-300 flex flex-col items-center justify-evenly p-1">
+    <aside className="h-full z-0 bg-[#434343] text-white border-y border-white flex flex-col items-center justify-evenly p-1">
       <h1 className="font-semibold">Admin Dashboard</h1>
       <div className="text-center  flex flex-col gap-7 text-sm">
         <Link to="/admin/category"> Category</Link>
@@ -18,7 +18,9 @@ export const AdminSidbar = () => {
         <Link to="/admin/users"> Users</Link>
       </div>
       <Link to="/">
-        <button onClick={logout}>Sign Out</button>
+        <button className="btn" onClick={logout}>
+          Sign Out
+        </button>
       </Link>
     </aside>
   )

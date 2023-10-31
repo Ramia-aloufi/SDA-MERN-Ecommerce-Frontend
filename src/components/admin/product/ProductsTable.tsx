@@ -13,13 +13,14 @@ export const ProductsTable = () => {
     dispatch(deleteProduct(Number(id)))
   }
   const handleEdit = (id: number) => {
-    navigate(`/admin/product/update/${id}`)
+    const product = id
+    navigate(`/admin/product/update/${product}`)
   }
 
   return (
     <table className="min-w-full table-auto text-xs">
       <thead>
-        <tr className="bg-gray-200">
+        <tr className="bg-[#434343] text-white">
           <th className="border p-2">Id</th>
           <th className="border p-2">Name</th>
           <th className="border p-2">Size</th>
@@ -33,7 +34,7 @@ export const ProductsTable = () => {
         {products &&
           products.map((product, index) => {
             return (
-              <tr key={product.id} className={index % 2 === 0 ? 'bg-gray-100' : ''}>
+              <tr key={product.id} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}>
                 <td className="border p-2">{product.id}</td>
                 <td className="border p-2">{product.name}</td>
                 <td className="border p-2">{product.sizes.map((size) => size)}</td>

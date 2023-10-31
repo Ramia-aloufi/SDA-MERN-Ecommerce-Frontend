@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 const UserSidbar = () => {
   return (
-    <aside>
+    <aside className="h-screen">
       <ul>
         <li>
           <Link to="/admin/category" /> Category

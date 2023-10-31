@@ -19,7 +19,7 @@ const Home = () => {
   }
   return (
     <div className="">
-      <div className=" m-auto px-4 py-4  sm:py-24 xs:px-10  lg:max-w-7xl lg:px-8">
+      <div className="space-y-4 px-8">
         <Banner />
         <Offer />
         <div className="flex items-end md:justify-end gap-4 py-4">

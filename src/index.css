@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .btn{
-  @apply px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300 active:bg-blue-800 text-sm 
+  @apply  px-4 py-2 text-white bg-[#f88648] w-full border border-transparent h-[45px] rounded hover:border hover:border-[#f88648] hover:bg-white hover:text-[#f88648] focus:outline-none focus:ring focus:ring-blue-300 active:bg-blue-800 text-sm 
 }
 .trashBtn{
   @apply bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded
@@ -12,7 +12,7 @@
   @apply bg-yellow-300  hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded
 }
 input,textarea{
-  @apply p-2 w-full rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-indigo-200
+  @apply p-2 w-full rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-[#f88648]
 }
 label{
   @apply block text-sm font-medium text-gray-700
@@ -24,5 +24,5 @@ label{
   @apply relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring focus:ring-indigo-200
 }
 body{
-  @apply bg-[#f7f2ef]
+  @apply bg-[#fcfaf9]
 }

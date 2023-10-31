@@ -54,9 +54,18 @@ export const productSlice = createSlice({
   reducers: {
     findById: (state, action) => {
       const id = action.payload
-      const isExist = state.items.find((product) => product.id === id)
-      if (isExist) {
-        state.singleProduct = isExist
+      console.log('findById')
+
+      const foundProduct = state.items.find((product) => product.id === Number(id))
+
+      if (foundProduct) {
+        console.log('Product found')
+        state.singleProduct = foundProduct
+        console.log(foundProduct)
+        console.log(state.singleProduct)
+      } else {
+        console.log('Product not found')
+        state.singleProduct = {} as Product
       }
     },
     searchProduct: (state, action) => {
@@ -85,10 +94,8 @@ export const productSlice = createSlice({
     },
     deleteProduct: (state, action) => {
       const id = action.payload
-      console.log(id)
       state.items = state.items.filter((product) => product.id !== id)
       state.products = state.items
-      console.log(state.items)
     },
     addProduct: (state, action) => {
       const id = state.items.length + 1
@@ -102,17 +109,23 @@ export const productSlice = createSlice({
     },
     UpdateProduct: (state, action) => {
       const updatedProduct: Product = action.payload
-      console.log(`updatedProduct: ${updatedProduct.id} ${updatedProduct.name}`)
-      const existUser = state.items.find((category) => category.id == updatedProduct.id)
-      if (existUser) {
-        existUser.name = updatedProduct.name
-        state.products = state.items
-      }
+      state.items = state.items.map((product) =>
+        product.id === updatedProduct.id ? updatedProduct : product
+      )
+      state.products = state.items
     },
     addToCart: (state, action) => {
-      let newProduct: Product = action.payload
-      newProduct = { ...newProduct, quantity: newProduct.quantity + 1 }
-      state.inCart = [...state.inCart, newProduct]
+      const newProduct: Product = action.payload
+      const isExist = state.inCart.find((cart) => cart.id === newProduct.id)
+
+      if (!isExist) {
+        state.inCart = [...state.inCart, { ...newProduct, quantity: 1 }]
+      } else {
+        state.inCart = state.inCart.map((product) =>
+          product.id === newProduct.id ? { ...product, quantity: product.quantity + 1 } : product
+        )
+      }
+
       state.totalQuantity = state.inCart.reduce((total, product) => total + product.quantity, 0)
       state.totalPrice = state.inCart.reduce(
         (total, product) => total + product.quantity * product.price,
@@ -123,6 +136,10 @@ export const productSlice = createSlice({
       const id: number = action.payload
       state.inCart = state.inCart.filter((product) => product.id !== id)
       state.totalQuantity = state.inCart.reduce((total, product) => total + product.quantity, 0)
+      state.totalPrice = state.inCart.reduce(
+        (total, product) => total + product.quantity * product.price,
+        0
+      )
     },
     IncreaseQuantity: (state, action) => {
       const productIncreas: Product = action.payload
@@ -157,7 +174,8 @@ export const productSlice = createSlice({
     FilterByCategory: (state, action) => {
       const id = action.payload
       state.products = state.items
-      state.products = state.products.filter((product) => product.categories.includes(id))
+      state.items = state.products.filter((product) => product.categories.includes(id))
+      state.products = state.items
     }
   },
   extraReducers: (builder) => {

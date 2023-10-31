@@ -19,7 +19,7 @@ const CategoryTable = () => {
   return (
     <table className="min-w-full table-auto text-xs">
       <thead>
-        <tr className="bg-gray-200">
+        <tr className="bg-[#434343] text-white">
           <th className="border p-2">Id</th>
           <th className="border p-2">Name</th>
           <th className="border p-2">Action</th>
@@ -28,7 +28,7 @@ const CategoryTable = () => {
       <tbody>
         {categories.map(({ id, name }, index) => {
           return (
-            <tr key={id} className={index % 2 === 0 ? 'bg-gray-100' : ''}>
+            <tr key={id} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}>
               <td className="border p-2">{id}</td>
               <td className="border p-2">{name}</td>
               <td className="border  py-2 grid gap-3 justify-center ">

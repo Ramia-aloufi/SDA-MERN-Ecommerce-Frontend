@@ -7,8 +7,8 @@ import {
 
 const Offer = () => {
   return (
-    <div className="flex gap-5 justify-between border p-4 flex-wrap border-separate">
-      <div className="flex items-center gap-2  ">
+    <div className="flex gap-5 justify-between border p-4  flex-wrap border-separate">
+      <div className="flex items-center  gap-2  ">
         <IoRocketOutline className="text-3xl" />
         <div className="grid">
           <span className="text-xs font-semibold">Free Delivery</span>

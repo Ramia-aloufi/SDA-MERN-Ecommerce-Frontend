@@ -1,47 +1,48 @@
-import { addProduct } from '../../../redux/slices/products/productSlice'
+import {
+  Product,
+  UpdateProduct,
+  findById,
+  productState
+} from '../../../redux/slices/products/productSlice'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch } from '../../../redux/store'
-import { object, string, z } from 'zod'
+import { array, object, string, z } from 'zod'
 import { toast } from 'react-toastify'
-
-// const productSchema = object({
-//   name: string().min(6),
-//   image: string().min(6),
-//   description: string().min(1),
-//   categories: string().min(1),
-//   variants: string().min(1),
-//   sizes: string().min(1),
-//   price: string().min(1)
-// })
-const productSchema = object({
-  name: string().min(6).default('Default Product Name'),
-  image: string().min(6).default('default_image.jpg'),
-  description: string().min(1).default('Default product description'),
-  categories: string().min(1).default('Default Category'),
-  variants: string().min(1).default('Default Variant'),
-  sizes: string().min(1).default('Default Size'),
-  price: string().min(1).default('0.00') // Assuming price is a string
-})
-
-type ProductSchema = z.infer<typeof productSchema>
+import { useEffect } from 'react'
 
 const UpdateProductForm = () => {
-  const { id } = useParams()
+  const { product } = useParams()
+  const id = Number(product)
 
-  console.log(` id: ${id}`)
+  const dispatch = useDispatch<AppDispatch>()
+  const { singleProduct } = useSelector(productState)
+  console.log(singleProduct.name)
   const navigate = useNavigate()
+  console.log('aa')
+
+  const productSchema = object({
+    name: string().min(6),
+    image: string().min(6),
+    description: string().min(1),
+    categories: string().min(1),
+    variants: string().min(1),
+    sizes: string().min(1),
+    price: string().min(1)
+  })
+
+  type ProductSchema = z.infer<typeof productSchema>
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors }
   } = useForm<ProductSchema>({
     resolver: zodResolver(productSchema)
   })
-  const dispatch = useDispatch<AppDispatch>()
 
   const onSubmit = (data: ProductSchema) => {
     const transformedData = {
@@ -51,9 +52,12 @@ const UpdateProductForm = () => {
       sizes: data.sizes.split(',').map((size: string) => size.trim()),
       price: Number(data.price)
     }
-    console.log(transformedData)
+    const id = Number(product)
+    const quantity = 0
+    const UpdatedProduct: Product = { ...transformedData, id, quantity }
+    console.log(UpdatedProduct)
     try {
-      dispatch(addProduct(transformedData))
+      dispatch(UpdateProduct(UpdatedProduct))
       toast.success('Added New Product successfully!', {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 3000
@@ -67,6 +71,21 @@ const UpdateProductForm = () => {
     }
   }
 
+  useEffect(() => {
+    console.log(id)
+    dispatch(findById(id))
+    if (typeof singleProduct.name !== undefined) {
+      setValue('name', singleProduct.name)
+      setValue('image', singleProduct.image)
+      setValue('description', singleProduct.description)
+      setValue('price', `${singleProduct.price}`)
+      setValue('categories', singleProduct.categories.join(', '))
+      setValue('variants', singleProduct.variants.join(', '))
+      setValue('sizes', singleProduct.sizes.join(', '))
+      setValue('price', `${singleProduct.price}`)
+    }
+  }, [id])
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
       {/* <ToastContainer /> */}
@@ -77,7 +96,7 @@ const UpdateProductForm = () => {
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <div>
             <label htmlFor="name">Name:</label>
-            <input type="text" id="name" {...register('name')} />
+            <input type="text" defaultValue={name} id="name" {...register('name')} />
             {errors.name && <p className="errorMessage">{errors.name.message}</p>}
           </div>
           <div>
@@ -110,7 +129,7 @@ const UpdateProductForm = () => {
             <input type="number" id="price" {...register('price')} />
             {errors.price && <p className="errorMessage">{errors.price.message}</p>}
           </div>
-          <button type="submit" className="submit">
+          <button type="submit" className="btn">
             Add Product
           </button>
         </form>

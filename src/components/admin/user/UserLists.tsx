@@ -25,7 +25,7 @@ const UserLists = () => {
   return (
     <table className="min-w-full table-auto text-xs">
       <thead>
-        <tr className="bg-gray-200">
+        <tr className="bg-[#434343] text-white">
           <th className="border p-2 uppercase">Id</th>
           <th className="border p-2 uppercase">firstName</th>
           <th className="border p-2 uppercase">lastName</th>
@@ -38,7 +38,7 @@ const UserLists = () => {
       <tbody>
         {users.map((item, index) => {
           return (
-            <tr key={item.id} className={index % 2 === 0 ? 'bg-gray-100' : ''}>
+            <tr key={item.id} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}>
               <td className="border p-2">{item.id}</td>
               <td className="border p-2">{item.firstName}</td>
               <td className="border p-2">{item.lastName}</td>

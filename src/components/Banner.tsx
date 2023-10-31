@@ -4,7 +4,7 @@ const Banner = () => {
   return (
     <div>
       {/* <div className="bg-gradient-to-bl h-[300px] from-50% from-[#d31027]  to-[#ea384d]"></div> */}
-      <div className="bg-[#f88648] h-[300px] rounded-lg mb-4 grid grid-cols-2 justify-center items-center px-4 ">
+      <div className="bg-[#f88648] mt-4 h-[300px] rounded-lg  grid grid-cols-2 justify-center items-center px-4 ">
         <div className="text-white">
           <span className="text-sm font-semibold">Up to #0% off</span>
           <h1 className="text-2xl font-bold">MackbookBro Collection</h1>

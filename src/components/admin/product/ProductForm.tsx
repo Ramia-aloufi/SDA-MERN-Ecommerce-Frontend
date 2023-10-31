@@ -98,7 +98,7 @@ export function ProductForm() {
             <input type="number" id="price" {...register('price')} />
             {errors.price && <p className="errorMessage">{errors.price.message}</p>}
           </div>
-          <button type="submit" className="submit">
+          <button type="submit" className="btn">
             Add Product
           </button>
         </form>

@@ -17,10 +17,9 @@ import User from '../components/admin/user/User'
 import AddCategotyForm from '../components/admin/category/AddCategotyForm'
 import UpdateCategoryForm from '../components/admin/category/UpdateCategoryForm'
 import { ProductForm } from '../components/admin/product/ProductForm'
-import { UpdateProduct } from '../redux/slices/products/productSlice'
 import UpdateProductForm from '../components/admin/product/UpdateProductForm'
-import CartProductCard from '../components/CartProductCard'
 import CartPage from '../pages/CartPage'
+import LoginSignupPage from '../pages/LoginSignupPage'
 
 // function Index() {
 //   // const count = useSelector((state: RootState) => state.counter.value)
@@ -57,7 +56,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/login',
-        element: <LoginForm />
+        element: <LoginSignupPage />
       },
       {
         path: '/admin',
@@ -96,7 +95,7 @@ export const router = createBrowserRouter([
             element: <ProductForm />
           },
           {
-            path: 'product/update/:id',
+            path: 'product/update/:product',
             element: <UpdateProductForm />
           }
         ]
@@ -110,7 +109,6 @@ export const router = createBrowserRouter([
             path: 'user',
             element: <UserPage />
           }
-
         ]
       },
       {

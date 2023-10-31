@@ -1,9 +1,8 @@
-import { ChangeEvent, useState } from 'react'
+import { useState } from 'react'
 
 import { Product, addToCart } from '../redux/slices/products/productSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { categoryState } from '../redux/slices/categories/categorySlice'
-import { Link } from 'react-router-dom'
 
 type ProductCardProps = {
   product: Product
@@ -29,9 +28,9 @@ const ProductDetailCard = ({ product }: ProductCardProps) => {
   }
   return (
     <div className="grid space-y-2 grid-cols-[1fr,1fr]   bg-white relative text-left shadow-sm rounded-md p-4 ">
-        <div className=" w-full overflow-hidden rounded-lg lg:aspect-none group-hover:opacity-75   ">
-          <img src={product.image} alt={product.name} className="h-full w-full  object-center" />
-        </div>
+      <div className=" w-full overflow-hidden rounded-lg lg:aspect-none group-hover:opacity-75   ">
+        <img src={product.image} alt={product.name} className="h-full w-full  object-center" />
+      </div>
       <div className="mt-1 grid  justify-between">
         <div>
           <h2 className="block text-md font-semibold">{product.name}</h2>{' '}
@@ -80,10 +79,9 @@ const ProductDetailCard = ({ product }: ProductCardProps) => {
           <p className="mt-1 text-sm text-gray-500">{product.description}</p>
         </div>
         <button className="btn h-[50px] mt-4 " onClick={() => handeAddToCart(product)}>
-        add To Cart
-      </button>
+          add To Cart
+        </button>
       </div>
-
     </div>
   )
 }

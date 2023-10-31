@@ -19,7 +19,7 @@ const NavBar = () => {
         <Link to="/cart">
           <button className="relative mb-1 items-center text-2xl font-medium text-center text-white">
             <IoCart className="text-center" />
-            <span className="absolute bottom-3 left-3 items-center justify-center w-4 h-4 text-xs font-semibold text-white bg-[#f88648] rounded-full">
+            <span className="absolute bottom-3 left-4 items-center justify-center w-4 h-4 text-xs font-semibold text-white bg-[#f88648] rounded-full">
               {totalQuantity}
             </span>
           </button>

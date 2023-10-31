@@ -7,10 +7,10 @@ export const Products = () => {
   return (
     <div className="h-screen grid grid-cols-[1fr,4fr] ">
       <AdminSidbar />
-      <div className="flex flex-col gap-5 text-center overflow-y-scroll p-6">
-        <div className="flex justify-between py-2">
+      <div className="flex flex-col gap-5  overflow-y-scroll p-6">
+        <div className="grid grid-cols-[2fr,1fr] items-center justify-between py-2">
           <h1 className="text-2xl font-bold">Products Page</h1>
-          <button>
+          <button className="btn">
             <Link className="flex justify-center items-center gap-1" to="/admin/product/new">
               add new product
               <RiAddLine className="text-xl" />
