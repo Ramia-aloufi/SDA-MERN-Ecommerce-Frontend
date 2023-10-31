@@ -9,17 +9,15 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch } from '../../../redux/store'
-import { array, object, string, z } from 'zod'
+import { object, string, z } from 'zod'
 import { toast } from 'react-toastify'
 import { useEffect } from 'react'
 
 const UpdateProductForm = () => {
   const { product } = useParams()
   const id = Number(product)
-
   const dispatch = useDispatch<AppDispatch>()
   const { singleProduct } = useSelector(productState)
-  console.log(singleProduct.name)
   const navigate = useNavigate()
   console.log('aa')
 
@@ -70,22 +68,19 @@ const UpdateProductForm = () => {
       // You can set an error state or display a notification to the user
     }
   }
+  useEffect(() => {
+    dispatch(findById(Number(id)))
+  }, [product])
 
   useEffect(() => {
-    console.log(id)
-    dispatch(findById(id))
-    if (typeof singleProduct.name !== undefined) {
-      setValue('name', singleProduct.name)
-      setValue('image', singleProduct.image)
-      setValue('description', singleProduct.description)
-      setValue('price', `${singleProduct.price}`)
-      setValue('categories', singleProduct.categories.join(', '))
-      setValue('variants', singleProduct.variants.join(', '))
-      setValue('sizes', singleProduct.sizes.join(', '))
-      setValue('price', `${singleProduct.price}`)
-    }
-  }, [id])
-
+    setValue('name', singleProduct.name || '')
+    setValue('image', singleProduct.image || '')
+    setValue('description', singleProduct.description || '')
+    setValue('categories', singleProduct.categories?.join(', ') || '')
+    setValue('variants', singleProduct.variants?.join(', ') || '')
+    setValue('sizes', singleProduct.sizes?.join(', ') || '')
+    setValue('price', `${singleProduct.price}` || '')
+  }, [singleProduct])
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
       {/* <ToastContainer /> */}
@@ -96,7 +91,7 @@ const UpdateProductForm = () => {
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <div>
             <label htmlFor="name">Name:</label>
-            <input type="text" defaultValue={name} id="name" {...register('name')} />
+            <input type="text" id="name" {...register('name')} />
             {errors.name && <p className="errorMessage">{errors.name.message}</p>}
           </div>
           <div>
