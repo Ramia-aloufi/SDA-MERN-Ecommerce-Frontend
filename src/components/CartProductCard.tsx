@@ -1,11 +1,11 @@
-import React from 'react'
+import { useDispatch } from 'react-redux'
+
 import {
   DecreaseQuantity,
   IncreaseQuantity,
   Product,
   removeFromCart
 } from '../redux/slices/products/productSlice'
-import { useDispatch } from 'react-redux'
 type Props = {
   product: Product
 }

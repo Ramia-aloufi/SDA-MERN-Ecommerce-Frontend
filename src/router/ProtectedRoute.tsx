@@ -1,7 +1,7 @@
-import React from 'react'
 import { useSelector } from 'react-redux'
-import { userState } from '../redux/slices/user/UserSlice'
 import { Outlet } from 'react-router-dom'
+
+import { userState } from '../redux/slices/user/UserSlice'
 import LoginForm from '../components/LoginForm'
 
 const ProtectedRoute = () => {

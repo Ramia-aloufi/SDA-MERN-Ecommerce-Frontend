@@ -1,10 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux'
-import UserSidbar from '../components/user/UserSidbar'
-import { UpdateUser, userState } from '../redux/slices/user/UserSlice'
-import { ChangeEvent, FormEvent, useState } from 'react'
+import { useState } from 'react'
 import { object, string, z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { IoCreateOutline } from 'react-icons/io5'
+
+import UserSidbar from '../components/user/UserSidbar'
+import { UpdateUser, userState } from '../redux/slices/user/UserSlice'
 
 const UserPage = () => {
   const userSchema = object({
@@ -37,7 +39,7 @@ const UserPage = () => {
   }
 
   return (
-    <div className="h-screen grid grid-cols-[1fr,3fr]">
+    <div className=" h-full grid grid-cols-[1fr,3fr]">
       <UserSidbar />
       <div className="flex justify-center items-center">
         {!isEdit && (
@@ -49,8 +51,9 @@ const UserPage = () => {
               onClick={() => {
                 onEdit()
               }}
-              className="btn">
+              className="btn flex justify-center gap-2">
               Edit
+              <IoCreateOutline className="text-lg" />
             </button>
           </div>
         )}

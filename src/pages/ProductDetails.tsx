@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { findById, productState } from '../redux/slices/products/productSlice'
-import ProductCard from '../components/ProductCard'
 import { useEffect } from 'react'
+
+import { findById, productState } from '../redux/slices/products/productSlice'
 import { AppDispatch } from '../redux/store'
 import ProductDetailCard from '../components/ProductDetailCard'
 
@@ -14,7 +14,7 @@ const ProductDetails = () => {
 
   useEffect(() => {
     dispatch(findById(Number(id)))
-  }, [dispatch, singleProduct])
+  }, [id])
   return (
     <div className=" w-1/2 shadow-md my-4 rounded-md m-auto">
       {singleProduct.id != null && <ProductDetailCard product={singleProduct} />}

@@ -16,7 +16,7 @@ const OrderTable = () => {
           <th className="border p-2">Id</th>
           <th className="border p-2">userId</th>
           <th className="border p-2">productId</th>
-          <th className="border p-2">purchasedAt</th>
+          <th className="border p-2 hidden sm:table-cell">purchasedAt</th>
           <th className="border p-2">Action</th>
         </tr>
       </thead>
@@ -27,7 +27,7 @@ const OrderTable = () => {
               <td className="border p-2">{id}</td>
               <td className="border p-2">{userId}</td>
               <td className="border p-2">{productId}</td>
-              <td className="border p-2">{`${purchasedAt}`}</td>
+              <td className="border p-2 hidden sm:table-cell">{`${purchasedAt}`}</td>
               <td className="border  py-2 grid gap-3 justify-center ">
                 <button onClick={() => handleDelete(id)} className="trashBtn">
                   <FiTrash />

@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { User, banUser, deleteUser, userState } from '../../../redux/slices/user/UserSlice'
 import { FiTrash } from 'react-icons/fi'
 import { FaBan, FaRegCheckCircle } from 'react-icons/fa'
+
+import { User, banUser, deleteUser, userState } from '../../../redux/slices/user/UserSlice'
 import { AppDispatch } from '../../../redux/store'
 
 const UserLists = () => {
@@ -28,10 +29,10 @@ const UserLists = () => {
         <tr className="bg-[#434343] text-white">
           <th className="border p-2 uppercase">Id</th>
           <th className="border p-2 uppercase">firstName</th>
-          <th className="border p-2 uppercase">lastName</th>
-          <th className="border p-2 uppercase">email</th>
-          <th className="border p-2 uppercase">role</th>
-          <th className="border p-2 uppercase">password</th>
+          <th className="border p-2 uppercase hidden lg:table-cell">lastName</th>
+          <th className="border p-2 uppercase hidden sm:table-cell">email</th>
+          <th className="border p-2 uppercase ">role</th>
+          <th className="border p-2 uppercase hidden md:table-cell">password</th>
           <th className="border p-2 uppercase">action</th>
         </tr>
       </thead>
@@ -41,10 +42,10 @@ const UserLists = () => {
             <tr key={item.id} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}>
               <td className="border p-2">{item.id}</td>
               <td className="border p-2">{item.firstName}</td>
-              <td className="border p-2">{item.lastName}</td>
-              <td className="border p-2">{item.email}</td>
-              <td className="border p-2">{item.role}</td>
-              <td className="border p-2">{item.password}</td>
+              <td className="border p-2 hidden lg:table-cell">{item.lastName}</td>
+              <td className="border p-2 hidden sm:table-cell">{item.email}</td>
+              <td className="border p-2 ">{item.role}</td>
+              <td className="border p-2 hidden md:table-cell">{item.password}</td>
               <td className="border p-2 grid gap-3 justify-center">
                 <button onClick={() => handleDelete(item.id)} className="trashBtn">
                   <FiTrash />

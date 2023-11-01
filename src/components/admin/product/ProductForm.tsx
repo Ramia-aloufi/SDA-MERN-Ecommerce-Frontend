@@ -1,11 +1,12 @@
-import { addProduct } from '../../../redux/slices/products/productSlice'
 import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useDispatch } from 'react-redux'
-import { AppDispatch } from '../../../redux/store'
 import { object, string, z } from 'zod'
 import { toast } from 'react-toastify'
+
+import { Product, addProduct } from '../../../redux/slices/products/productSlice'
+import { AppDispatch } from '../../../redux/store'
 
 const productSchema = object({
   name: string().min(6),
@@ -30,13 +31,19 @@ export function ProductForm() {
     resolver: zodResolver(productSchema)
   })
   const dispatch = useDispatch<AppDispatch>()
+  const convertToArrayString = (data: string): string[] | number[] => {
+    return data.split(',').map((size: string) => size.trim())
+  }
+  const convertToArrayNumber = (data: string): number[] => {
+    return data.split(',').map(Number)
+  }
 
   const onSubmit = (data: ProductSchema) => {
     const transformedData = {
       ...data,
-      categories: data.categories.split(',').map(Number),
-      variants: data.variants.split(',').map((variant: string) => variant.trim()),
-      sizes: data.sizes.split(',').map((size: string) => size.trim()),
+      categories: convertToArrayNumber(data.categories),
+      variants: convertToArrayString(data.variants),
+      sizes: convertToArrayString(data.sizes),
       price: Number(data.price)
     }
     console.log(transformedData)

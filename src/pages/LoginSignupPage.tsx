@@ -1,7 +1,8 @@
 import { useState } from 'react'
+import { ToastContainer } from 'react-toastify'
+
 import LoginForm from '../components/LoginForm'
 import SignupForm from '../components/SignupForm'
-import { ToastContainer } from 'react-toastify'
 
 const LoginSignupPage = () => {
   const [loginForm, setLoginForm] = useState<boolean>(true)
@@ -9,8 +10,9 @@ const LoginSignupPage = () => {
   const handleChangeForm = () => {
     setLoginForm((prev) => !prev)
   }
+
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
+    <div className="h-full flex flex-col items-center justify-center bg-gray-50">
       <ToastContainer />
       <div className="max-w-md w-full space-y-8 p-6 bg-white rounded-lg shadow-lg px-8 ">
         <div className="flex gap-4">

@@ -33,11 +33,19 @@ import LoginSignupPage from '../pages/LoginSignupPage'
 // }
 function Layout() {
   return (
-    <>
-      <NavBar />
-      <Outlet />
-      <Footer />
-    </>
+    <div className="flex flex-col h-screen">
+      <div className="h-16">
+        <NavBar />
+      </div>
+
+      <div className="flex-1">
+        <Outlet />
+      </div>
+
+      <div className="h-14">
+        <Footer />
+      </div>
+    </div>
   )
 }
 

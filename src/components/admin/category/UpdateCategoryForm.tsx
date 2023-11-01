@@ -1,11 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
-import { AppDispatch } from '../../../redux/store'
-import { Category, UpdateCategory } from '../../../redux/slices/categories/categorySlice'
 import { object, string, z } from 'zod'
 import { ToastContainer, toast } from 'react-toastify'
 import { useNavigate, useParams } from 'react-router-dom'
+
+import { AppDispatch } from '../../../redux/store'
+import { Category, UpdateCategory } from '../../../redux/slices/categories/categorySlice'
 
 const categorySchema = object({
   name: string().min(3)

@@ -2,12 +2,12 @@ import { useForm } from 'react-hook-form'
 import { object, string, z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useDispatch, useSelector } from 'react-redux'
-
-import { AppDispatch } from '../redux/store'
-import { logIn, userState } from '../redux/slices/user/UserSlice'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { useNavigate } from 'react-router-dom'
+
+import { AppDispatch } from '../redux/store'
+import { logIn, userState } from '../redux/slices/user/UserSlice'
 
 const loginSchema = object({
   email: string().email(),

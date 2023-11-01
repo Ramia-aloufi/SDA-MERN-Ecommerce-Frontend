@@ -2,12 +2,12 @@ import { useForm } from 'react-hook-form'
 import { object, string, z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useDispatch, useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
 
 import { AppDispatch } from '../redux/store'
-import { addUser, logIn, userState } from '../redux/slices/user/UserSlice'
-import { ToastContainer, toast } from 'react-toastify'
+import { addUser, userState } from '../redux/slices/user/UserSlice'
 import 'react-toastify/dist/ReactToastify.css'
-import { useNavigate } from 'react-router-dom'
 
 const signupSchema = object({
   firstName: string().min(3),
@@ -38,7 +38,7 @@ const SignupForm = () => {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 3000 // Auto close the toast after 3 seconds
       })
-      navigate('/')
+      navigate('/user')
     } else {
       toast.error('Signup failed. Please check your credentials!', {
         position: toast.POSITION.TOP_RIGHT,

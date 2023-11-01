@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+
 import { RootState } from '../../store'
 import api from '../../../api'
 
@@ -172,10 +173,12 @@ export const productSlice = createSlice({
       )
     },
     FilterByCategory: (state, action) => {
-      const id = action.payload
+      const id: number = action.payload
       state.products = state.items
-      state.products = state.products.filter((product) => product.categories.includes(id))
-      // state.products = state.items
+      if (id != 0) {
+        state.products = state.products.filter((product) => product.categories.includes(id))
+        // state.products = state.items
+      }
     }
   },
   extraReducers: (builder) => {

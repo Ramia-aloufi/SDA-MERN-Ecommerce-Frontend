@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { FiTrash, FiEdit } from 'react-icons/fi'
+import { useNavigate } from 'react-router-dom'
 
 import { categoryState, deleteCategory } from '../../../redux/slices/categories/categorySlice'
 import { AppDispatch } from '../../../redux/store'
-import { useNavigate } from 'react-router-dom'
 
 const CategoryTable = () => {
   const navigate = useNavigate()

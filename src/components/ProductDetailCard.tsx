@@ -1,7 +1,7 @@
 import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { Product, addToCart } from '../redux/slices/products/productSlice'
-import { useDispatch, useSelector } from 'react-redux'
 import { categoryState } from '../redux/slices/categories/categorySlice'
 
 type ProductCardProps = {
