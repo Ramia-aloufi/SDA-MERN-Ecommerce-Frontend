@@ -11,16 +11,15 @@ const NavBar = () => {
   const { userData } = useSelector(userState)
 
   return (
-    <nav className="bg-[#434343] w-screen flex p-3 items-center justify-evenly sticky top-0">
+    <nav className="bg-[#434343] w-screen flex p-3 px-9 items-center justify-between sticky top-0">
       <Link to="/">
         <h1 className="font-semibold text-2xl text-white logo flex items-center">
           ELEC
           <span className="w-3 h-3 bg-[#f88648] rounded-full ml-1"></span>
         </h1>
       </Link>
-      <div className="text-sm"></div>
       <SearchInput />
-      <div className="flex gap-4 justify-center items-center text-center">
+      <div className="flex gap-4  justify-center items-center text-center">
         <Link to="/cart">
           <button className="relative mb-1 items-center text-2xl font-medium text-center text-white">
             <IoCart className="text-center hover:text-[#f88648]" />

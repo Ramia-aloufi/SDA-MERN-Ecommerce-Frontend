@@ -50,7 +50,7 @@ const SearchInput = () => {
       autoComplete="false"
       type="search"
       onChange={handeChange}
-      className="p-2 rounded-md w-1/3"
+      className="p-2 rounded-md w-1/2 "
       name="search"
       placeholder="Search here"
       id=""
