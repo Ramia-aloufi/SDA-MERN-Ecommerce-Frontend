@@ -19,7 +19,11 @@ const ProductCard = ({ product }: ProductCardProps) => {
       <IoHeartOutline className="absolute top-3 right-3 text-lg text-gray-300" />
       <Link to={`/product/${product.id}`}>
         <div className=" w-full overflow-hidden rounded-lg lg:aspect-none group-hover:opacity-75 h-[200px]  ">
-          <img src={product.image} alt={product.name} className="h-full w-full  object-center" />
+          <img
+            src={product.image}
+            alt={product.name}
+            className="h-full w-full hover:scale-105 transition duration-300 ease-in-out object-center"
+          />
         </div>
       </Link>
       <div className="mt-1 flex justify-between">

@@ -28,8 +28,12 @@ const ProductDetailCard = ({ product }: ProductCardProps) => {
   }
   return (
     <div className="grid space-y-2 md:grid-cols-[1fr,1fr] xs:grid-flow-row  bg-white relative text-left shadow-sm rounded-md p-4 ">
-      <div className=" w-full rounded-lg lg:aspect-none group-hover:opacity-75   ">
-        <img src={product.image} alt={product.name} className="h-full w-full  object-center" />
+      <div className=" w-full overflow-hidden rounded-lg lg:aspect-none group-hover:opacity-75   ">
+        <img
+          src={product.image}
+          alt={product.name}
+          className="h-full w-full hover:scale-105 transition duration-300 ease-in-out  object-center"
+        />
       </div>
       <div className="w-full mt-1 grid  justify-between">
         <div>
