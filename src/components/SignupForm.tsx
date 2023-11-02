@@ -55,12 +55,12 @@ const SignupForm = () => {
       <div>
         <label htmlFor="firstName">FirstName</label>
         <input {...register('firstName')} id="firstName" type="text" />
-        {errors.email && <p className="errorMessage">{errors.email.message}</p>}
+        {errors.firstName && <p className="errorMessage">{errors.firstName.message}</p>}
       </div>
       <div>
         <label htmlFor="lastName">LastName</label>
         <input {...register('lastName')} id="lastName" type="text" />
-        {errors.email && <p className="errorMessage">{errors.email.message}</p>}
+        {errors.lastName && <p className="errorMessage">{errors.lastName.message}</p>}
       </div>
       <div>
         <label htmlFor="email">Email</label>

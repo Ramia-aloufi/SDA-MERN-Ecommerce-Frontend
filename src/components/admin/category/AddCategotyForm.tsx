@@ -36,7 +36,6 @@ const AddCategotyForm = () => {
   }
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
-      <ToastContainer />
       <div className="max-w-md w-full space-y-8 p-6 bg-white rounded-lg shadow-lg">
         <div>
           <h2 className="mt-6 text-3xl font-extrabold text-gray-900">Add New Category</h2>

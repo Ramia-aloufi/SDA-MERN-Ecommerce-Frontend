@@ -11,6 +11,9 @@
 .editBtn{
   @apply bg-yellow-300  hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded
 }
+.banBtn{
+  @apply bg-green-300  hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded
+}
 input,textarea{
   @apply p-2 w-full rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-[#f88648]
 }

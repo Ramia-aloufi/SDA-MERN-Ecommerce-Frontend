@@ -50,7 +50,9 @@ const UserLists = () => {
                 <button onClick={() => handleDelete(item.id)} className="trashBtn">
                   <FiTrash />
                 </button>
-                <button onClick={() => handleBan(item)} className="editBtn">
+                <button
+                  onClick={() => handleBan(item)}
+                  className={!item.ban ? 'banBtn' : 'editBtn'}>
                   {item.ban ? <FaBan /> : <FaRegCheckCircle />}
                 </button>
               </td>
