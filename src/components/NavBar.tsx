@@ -13,7 +13,10 @@ const NavBar = () => {
   return (
     <nav className="bg-[#434343] w-screen flex p-3 items-center justify-evenly sticky top-0">
       <Link to="/">
-        <span className="font-semibold text-2xl text-white logo">ELEC</span>
+        <h1 className="font-semibold text-2xl text-white logo flex items-center">
+          ELEC
+          <span className="w-3 h-3 bg-[#f88648] rounded-full ml-1"></span>
+        </h1>
       </Link>
       <div className="text-sm"></div>
       <SearchInput />
