@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 
 import { AdminSidbar } from '../AdminSidbar'
 import CategoryTable from './CategoryTable'
-import { ToastContainer } from 'react-toastify'
 
 export const Category = () => {
   return (

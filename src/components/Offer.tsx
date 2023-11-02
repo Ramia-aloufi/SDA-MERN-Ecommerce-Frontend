@@ -1,10 +1,4 @@
-import {
-  IoRocketOutline,
-  IoGiftOutline,
-  IoCardOutline,
-  IoChatboxEllipsesOutline,
-  IoReturnDownBack
-} from 'react-icons/io5'
+import { IoRocketOutline, IoGiftOutline, IoCardOutline } from 'react-icons/io5'
 
 const Offer = () => {
   return (
