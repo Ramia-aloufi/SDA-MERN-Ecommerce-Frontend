@@ -1,22 +1,35 @@
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { IoHeartOutline } from 'react-icons/io5'
-import { Product, addToCart } from '../redux/slices/products/productSlice'
+import { IoHeart, IoHeartOutline } from 'react-icons/io5'
+import { Product, SavedItem, addToCart } from '../redux/slices/products/productSlice'
 
 type ProductCardProps = {
   product: Product
 }
 const ProductCard = ({ product }: ProductCardProps) => {
   const dispatch = useDispatch()
-
   const handeAddToCart = (product: Product) => {
     console.log(product)
     dispatch(addToCart(product))
   }
+  const handeSaveProduct = (product: Product) => {
+    console.log(product.saved)
+    dispatch(SavedItem(product))
+  }
 
   return (
     <div className="grid  space-y-2 xs:w-[310px] md:w-auto  bg-white relative text-left shadow-sm rounded-md p-4  lg:h-[400px]">
-      <IoHeartOutline className="absolute top-3 right-3 text-lg text-gray-300" />
+      {!product.saved ? (
+        <IoHeartOutline
+          onClick={() => handeSaveProduct(product)}
+          className="absolute top-3 right-3 text-lg text-gray-300 z-30 "
+        />
+      ) : (
+        <IoHeart
+          onClick={() => handeSaveProduct(product)}
+          className="absolute top-3 right-3 text-lg text-[#419cb6] z-30 "
+        />
+      )}
       <Link to={`/product/${product.id}`}>
         <div className=" w-full overflow-hidden rounded-lg lg:aspect-none group-hover:opacity-75 h-[200px]  ">
           <img

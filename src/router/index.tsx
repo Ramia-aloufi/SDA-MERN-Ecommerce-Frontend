@@ -19,6 +19,7 @@ import { ProductForm } from '../components/admin/product/ProductForm'
 import UpdateProductForm from '../components/admin/product/UpdateProductForm'
 import CartPage from '../pages/CartPage'
 import LoginSignupPage from '../pages/LoginSignupPage'
+import SavedProduct from '../pages/SavedProduct'
 
 // function Index() {
 //   // const count = useSelector((state: RootState) => state.counter.value)
@@ -58,12 +59,16 @@ export const router = createBrowserRouter([
         element: <Home />
       },
       {
-        path: 'cart',
-        element: <CartPage />
-      },
-      {
         path: '/login',
         element: <LoginSignupPage />
+      },
+      {
+        path: '/product/:id',
+        element: <ProductDetails />
+      },
+      {
+        path: '*',
+        element: <NotFound />
       },
       {
         path: '/admin',
@@ -115,16 +120,16 @@ export const router = createBrowserRouter([
           {
             path: '/user',
             element: <UserPage />
+          },
+          {
+            path: 'savedproduct',
+            element: <SavedProduct />
+          },
+          {
+            path: 'cart',
+            element: <CartPage />
           }
         ]
-      },
-      {
-        path: '*',
-        element: <NotFound />
-      },
-      {
-        path: '/product/:id',
-        element: <ProductDetails />
       }
     ]
   }

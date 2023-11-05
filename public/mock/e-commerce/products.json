@@ -8,7 +8,8 @@
     "variants": ["8GB RAM", "16GB RAM"],
     "sizes": ["13-inch", "15-inch"],
     "price":600,
-    "quantity":0
+    "quantity":0,
+    "saved": false
   },
   {
     "id": 2,
@@ -19,7 +20,8 @@
     "variants": ["64GB", "128GB"],
     "sizes": [],
     "price":78,
-    "quantity":0
+    "quantity":0,
+    "saved": false
   },
   {
     "id": 3,
@@ -30,7 +32,8 @@
     "variants": ["32GB", "64GB"],
     "sizes": ["10-inch", "12-inch"],
     "price":900,
-    "quantity":0
+    "quantity":0,
+    "saved": false
   },
   {
     "id": 4,
@@ -41,7 +44,8 @@
     "variants": ["500GB", "1TB"],
     "sizes": [],
     "price":1400,
-    "quantity":0
+    "quantity":0,
+    "saved": false
   },
   {
     "id": 5,
@@ -52,7 +56,8 @@
     "variants": ["24MP", "36MP"],
     "sizes": [],
     "price":999,
-    "quantity":0
+    "quantity":0,
+    "saved": false
   },
   {
     "id": 6,
@@ -63,7 +68,8 @@
     "variants": ["Small", "Large"],
     "sizes": [],
     "price":980,
-    "quantity":0
+    "quantity":0,
+    "saved": false
   },
   {
     "id": 7,
@@ -74,7 +80,8 @@
     "variants": ["5.1 Surround Sound", "7.1 Surround Sound"],
     "sizes": [],
     "price":876,
-    "quantity":0
+    "quantity":0,
+    "saved": false
   },
   {
     "id": 8,
@@ -85,7 +92,8 @@
     "variants": ["Single Serve", "Drip Coffee Maker"],
     "sizes": [],
     "price":676,
-    "quantity":0
+    "quantity":0,
+    "saved": false
   },
   {
     "id": 9,
@@ -96,7 +104,8 @@
     "variants": ["Black", "White"],
     "sizes": [],
     "price":444,
-    "quantity":0
+    "quantity":0,
+    "saved": false
   },
   {
     "id": 10,
@@ -107,7 +116,8 @@
     "variants": ["1TB", "2TB"],
     "sizes": [],
     "price":332,
-    "quantity":0
+    "quantity":0,
+    "saved": false
   },
   {
     "id": 11,
@@ -118,7 +128,8 @@
     "variants": ["Over-Ear", "In-Ear"],
     "sizes": [],
     "price":109,
-    "quantity":0
+    "quantity":0,
+    "saved": false
   },
   {
     "id": 12,
@@ -129,7 +140,8 @@
     "variants": ["Titanium"],
     "sizes": [],
     "price":245,
-    "quantity":0
+    "quantity":0,
+    "saved": false
   },  
   {
     "id": 13,
@@ -140,7 +152,8 @@
     "variants": ["Over-Ear", "In-Ear"],
     "sizes": [],
     "price":559,
-    "quantity":0
+    "quantity":0,
+    "saved": false
   },
   {
     "id": 14,
@@ -151,7 +164,8 @@
     "variants": ["64GB", "128GB"],
     "sizes": [],
     "price":335,
-    "quantity":0
+    "quantity":0,
+    "saved": false
   },
   {
     "id": 15,
@@ -162,7 +176,8 @@
     "variants": ["64GB", "128GB"],
     "sizes": [],
     "price":431,
-    "quantity":0
+    "quantity":0,
+    "saved": false
   },
   {
     "id": 16,
@@ -173,7 +188,8 @@
     "variants": ["64GB", "128GB"],
     "sizes": [],
     "price":980,
-    "quantity":0
+    "quantity":0,
+    "saved": false
   },
   {
     "id": 17,
@@ -184,6 +200,7 @@
     "variants": ["64GB", "128GB"],
     "sizes": [],
     "price":887,
-    "quantity":0
+    "quantity":0,
+    "saved": false
   }
 ]

@@ -31,7 +31,7 @@ const Home = () => {
     setCurrentPage(page)
   }
   return (
-    <div className="overflow-hidden space-y-4 px-8">
+    <div className="overflow-hidden relative space-y-4 px-8">
       <Banner />
       <Offer />
       <CategoryFilter />

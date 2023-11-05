@@ -13,6 +13,7 @@ export type Product = {
   sizes: string[]
   price: number
   quantity: number
+  saved: boolean
 }
 
 export type ProductState = {
@@ -26,6 +27,7 @@ export type ProductState = {
   searchedResult: Product[]
   totalQuantity: number
   totalPrice: number
+  savedItem: Product[]
 }
 const initialState: ProductState = {
   items: [],
@@ -37,7 +39,8 @@ const initialState: ProductState = {
   searchTerm: '',
   searchedResult: [],
   totalQuantity: 0,
-  totalPrice: 0
+  totalPrice: 0,
+  savedItem: []
 }
 
 export const fetchProduct = createAsyncThunk('product/fetchData', async () => {
@@ -179,6 +182,13 @@ export const productSlice = createSlice({
         state.products = state.products.filter((product) => product.categories.includes(id))
         // state.products = state.items
       }
+    },
+    SavedItem: (state, action) => {
+      const item: Product = action.payload
+      console.log(item.id)
+      state.items.map((product) => product.id == item.id && (product.saved = !product.saved))
+      state.products = state.items
+      state.savedItem = state.items.filter((product) => product.saved == true)
     }
   },
   extraReducers: (builder) => {
@@ -208,7 +218,8 @@ export const {
   removeFromCart,
   IncreaseQuantity,
   DecreaseQuantity,
-  FilterByCategory
+  FilterByCategory,
+  SavedItem
 } = productSlice.actions
 export const productState = (state: RootState) => state.products
 
