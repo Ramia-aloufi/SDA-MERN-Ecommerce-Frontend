@@ -10,12 +10,13 @@ const CategoryTable = () => {
   const { categories } = useSelector(categoryState)
   const dispatch = useDispatch<AppDispatch>()
   const handleDelete = (id: number) => {
-    console.log(id)
     dispatch(deleteCategory(Number(id)))
   }
+
   const handleEdit = (id: number) => {
     navigate(`/admin/category/update/${id}`)
   }
+
   return (
     <table className="min-w-full table-auto text-xs">
       <thead>

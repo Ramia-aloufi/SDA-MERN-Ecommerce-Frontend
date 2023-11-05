@@ -8,7 +8,9 @@ const Banner = () => {
       <div className="bg-[#f88648] h-full p-4 rounded-lg  grid grid-cols-2 justify-center items-center backdrop-blur-[20px]">
         <div className="text-white">
           <span className="md:text-sm xs:text-[11px] font-semibold">Up to 50% off</span>
-          <h1 className="md:text-[32px] mb-2 xs:text-lg font-bold text-[#419cb6] ">Mackbook Pro M3 Collection</h1>
+          <h1 className="md:text-[32px] mb-2 xs:text-lg font-bold text-[#419cb6] ">
+            Mackbook Pro M3 Collection
+          </h1>
           <p className="md:text-xs xs:text-[11px] opacity-80">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos dicta velit nam,
             corporis fugiat voluptatibus!

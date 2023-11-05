@@ -6,7 +6,7 @@ import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 
 import { AppDispatch } from '../redux/store'
-import { addUser, userState } from '../redux/slices/user/UserSlice'
+import { addUser, userState } from '../redux/slices/user/userSlice'
 import 'react-toastify/dist/ReactToastify.css'
 
 const signupSchema = object({

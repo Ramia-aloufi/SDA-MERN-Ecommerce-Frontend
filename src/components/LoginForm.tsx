@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import { useNavigate } from 'react-router-dom'
 
 import { AppDispatch } from '../redux/store'
-import { logIn, userState } from '../redux/slices/user/UserSlice'
+import { logIn, userState } from '../redux/slices/user/userSlice'
 
 const loginSchema = object({
   email: string().email(),

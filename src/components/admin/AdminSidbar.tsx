@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { IoPersonCircleOutline, IoLogOutOutline } from 'react-icons/io5'
 
 import { AppDispatch } from '../../redux/store'
-import { logOut, userState } from '../../redux/slices/user/UserSlice'
+import { logOut, userState } from '../../redux/slices/user/userSlice'
 
 export const AdminSidbar = () => {
   const dispatch = useDispatch<AppDispatch>()

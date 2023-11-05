@@ -24,18 +24,18 @@ const UpdateCategoryForm = () => {
   } = useForm<CategorySchema>({
     resolver: zodResolver(categorySchema) // Use Zod schema resolver
   })
+
   const dispatch = useDispatch<AppDispatch>()
   const onSubmit = ({ name }: CategorySchema) => {
     if (id) {
       const categoryId = Number(id)
-      const newCategory: Category = { id: categoryId, name }
-      dispatch(UpdateCategory(newCategory))
+      const updatedCategory: Category = { id: categoryId, name }
+      dispatch(UpdateCategory(updatedCategory))
       toast.success('Added New Category successful!', {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 3000
       })
     }
-    console.log('Form values:', name)
     reset()
     navigate('/admin/category')
   }

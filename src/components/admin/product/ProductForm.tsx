@@ -57,8 +57,6 @@ export function ProductForm() {
       navigate('/admin/product')
     } catch (error) {
       console.error('Validation error:')
-      // Handle validation error
-      // You can set an error state or display a notification to the user
     }
   }
 

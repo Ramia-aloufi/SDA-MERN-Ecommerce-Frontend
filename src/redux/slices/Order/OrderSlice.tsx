@@ -35,20 +35,10 @@ export const fetchOrder = createAsyncThunk('order/fetchData', async () => {
   return data
 })
 
-export const OrderSlice = createSlice({
+export const orderSlice = createSlice({
   name: 'order',
   initialState,
   reducers: {
-    // searchCategory: (state, action) => {
-    //   console.log(action.payload)
-    //   state.searchTerm = action.payload
-    //   state.searchedResult = state.searchTerm
-    //     ? state.items.filter((category) =>
-    //         category.id.toLowerCase().includes(state.searchTerm.toLowerCase())
-    //       )
-    //     : state.items
-    //   state.categories = state.searchedResult.length > 0 ? state.searchedResult : state.items
-    // },
     deldeteOrder: (state, action) => {
       const id = action.payload
       console.log(typeof id)
@@ -73,8 +63,8 @@ export const OrderSlice = createSlice({
       })
   }
 })
-export const { deldeteOrder } = OrderSlice.actions
+export const { deldeteOrder } = orderSlice.actions
 
 export const orderState = (state: RootState) => state.orders
 
-export default OrderSlice.reducer
+export default orderSlice.reducer

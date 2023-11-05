@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 
 import SearchInput from './SearchInput'
 import { productState } from '../redux/slices/products/productSlice'
-import { userState } from '../redux/slices/user/UserSlice'
+import { userState } from '../redux/slices/user/userSlice'
 
 const NavBar = () => {
   const { totalQuantity } = useSelector(productState)

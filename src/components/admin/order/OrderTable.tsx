@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux'
 import { FiTrash, FiEdit } from 'react-icons/fi'
 
-import { orderState } from '../../../redux/slices/Order/OrderSlice'
+import { orderState } from '../../../redux/slices/Order/orderSlice'
 
 const OrderTable = () => {
   const { orders } = useSelector(orderState)

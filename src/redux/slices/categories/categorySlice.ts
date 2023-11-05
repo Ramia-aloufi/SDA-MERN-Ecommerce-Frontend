@@ -27,12 +27,16 @@ const initialState: CategoryState = {
   searchedResult: []
 }
 export const fetchCategory = createAsyncThunk('category/fetchData', async () => {
-  const response = await api.get('/mock/e-commerce/categories.json')
-  if (!response.statusText) {
-    throw new Error('Network response error')
+  try {
+    const response = await api.get('/mock/e-commerce/categories.json')
+    if (!response.statusText) {
+      throw new Error('Network response error')
+    }
+    const data: Category[] = await response.data
+    return data
+  } catch (error) {
+    console.log('error fetching category')
   }
-  const data: Category[] = await response.data
-  return data
 })
 
 export const categorySlice = createSlice({

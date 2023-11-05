@@ -6,7 +6,7 @@ import { object, string, z } from 'zod'
 import { IoCreateOutline } from 'react-icons/io5'
 
 import { AdminSidbar } from '../components/admin/AdminSidbar'
-import { UpdateUser, userState } from '../redux/slices/user/UserSlice'
+import { UpdateUser, userState } from '../redux/slices/user/userSlice'
 
 export const AdminPage = () => {
   const userSchema = object({

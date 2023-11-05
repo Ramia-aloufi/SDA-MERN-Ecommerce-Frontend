@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { FiTrash } from 'react-icons/fi'
 import { FaBan, FaRegCheckCircle } from 'react-icons/fa'
 
-import { User, banUser, deleteUser, userState } from '../../../redux/slices/user/UserSlice'
+import { User, banUser, deleteUser, userState } from '../../../redux/slices/user/userSlice'
 import { AppDispatch } from '../../../redux/store'
 
 const UserLists = () => {

@@ -23,6 +23,7 @@ const AddCategotyForm = () => {
   } = useForm<CategorySchema>({
     resolver: zodResolver(categorySchema)
   })
+
   const dispatch = useDispatch<AppDispatch>()
   const onSubmit = (data: CategorySchema) => {
     dispatch(addCategory(data.name))
@@ -30,7 +31,6 @@ const AddCategotyForm = () => {
       position: toast.POSITION.TOP_CENTER,
       autoClose: 3000
     })
-    console.log('Form values:', data.name)
     reset()
     navigate('/admin/category')
   }

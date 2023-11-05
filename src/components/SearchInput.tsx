@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch } from '../redux/store'
 import { productState, searchProduct } from '../redux/slices/products/productSlice'
 import { categoryState, searchCategory } from '../redux/slices/categories/categorySlice'
-import { searchUser, userState } from '../redux/slices/user/UserSlice'
+import { searchUser, userState } from '../redux/slices/user/userSlice'
 
 const SearchInput = () => {
   const currentPath = location.pathname
