@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 import { RootState } from '../../store'
-import api from '../../../api'
+import axios from 'axios'
 
 export type Order = {
   id: number
@@ -27,7 +27,7 @@ const initialState: OrderState = {
   searchedResult: []
 }
 export const fetchOrder = createAsyncThunk('order/fetchData', async () => {
-  const response = await api.get('/mock/e-commerce/orders.json')
+  const response = await axios.get('/mock/e-commerce/orders.json')
   if (!response.statusText) {
     throw new Error('Network response error')
   }

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
-import api from '../../../api'
 import { RootState } from '../../store'
+import axios from 'axios'
 
 export type User = {
   id: number
@@ -40,10 +40,7 @@ const initialState: userState = {
 }
 
 export const fetchUser = createAsyncThunk('user/fetchData', async () => {
-  const response = await api.get('/mock/e-commerce/users.json')
-  if (!response.statusText) {
-    throw new Error('Network response error')
-  }
+  const response = await axios.get(`${banUser}/users`)
   const data: User[] = await response.data
   return data
 })

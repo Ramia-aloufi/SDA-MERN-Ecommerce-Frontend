@@ -1,8 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 import { RootState } from '../../store'
-import api from '../../../api'
 import { Category } from '../../../components/admin/category/Category'
+import axios from 'axios'
+import { banUser } from '../user/userSlice'
+import { baseURL } from '../../../api'
 
 export type Category = {
   id: number
@@ -27,16 +29,9 @@ const initialState: CategoryState = {
   searchedResult: []
 }
 export const fetchCategory = createAsyncThunk('category/fetchData', async () => {
-  try {
-    const response = await api.get('/mock/e-commerce/categories.json')
-    if (!response.statusText) {
-      throw new Error('Network response error')
-    }
-    const data: Category[] = await response.data
-    return data
-  } catch (error) {
-    console.log('error fetching category')
-  }
+  const response = await axios.get(`${baseURL}/categories`)
+  const data: Category[] = await response.data
+  return data
 })
 
 export const categorySlice = createSlice({
