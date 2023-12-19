@@ -49,7 +49,7 @@ const Home = () => {
       </div>
       <div className=" w-full gap-x-4 gap-y-4 grid place-items-center sm:grid-cols-2 xs:grid-cols-1 md:grid-cols-3 lg:grid-cols-4">
         {currentProducts.map((product) => (
-          <ProductCard key={product.id} product={product} />
+          <ProductCard key={product._id} product={product} />
         ))}
       </div>
       <Pagination

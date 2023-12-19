@@ -27,16 +27,16 @@ const CategoryTable = () => {
         </tr>
       </thead>
       <tbody>
-        {categories.map(({ id, name }, index) => {
+        {categories.map(({ _id, title }, index) => {
           return (
-            <tr key={id} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}>
-              <td className="border p-2">{id}</td>
-              <td className="border p-2">{name}</td>
+            <tr key={_id} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}>
+              <td className="border p-2">{index}</td>
+              <td className="border p-2">{title}</td>
               <td className="border  py-2 grid gap-3 justify-center ">
-                <button onClick={() => handleDelete(id)} className="trashBtn">
+                <button onClick={() => handleDelete(_id)} className="trashBtn">
                   <FiTrash />
                 </button>
-                <button onClick={() => handleEdit(id)} className="editBtn">
+                <button onClick={() => handleEdit(_id)} className="editBtn">
                   <FiEdit />
                 </button>
               </td>

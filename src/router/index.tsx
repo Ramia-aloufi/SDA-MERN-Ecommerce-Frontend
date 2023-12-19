@@ -20,6 +20,7 @@ import UpdateProductForm from '../components/admin/product/UpdateProductForm'
 import CartPage from '../pages/CartPage'
 import LoginSignupPage from '../pages/LoginSignupPage'
 import SavedProduct from '../pages/SavedProduct'
+import Activate from '../components/Activate'
 
 // function Index() {
 //   // const count = useSelector((state: RootState) => state.counter.value)
@@ -63,8 +64,12 @@ export const router = createBrowserRouter([
         element: <LoginSignupPage />
       },
       {
-        path: '/product/:id',
+        path: '/product/:slug',
         element: <ProductDetails />
+      },
+      {
+        path: 'user/activate/:token',
+        element: <Activate />
       },
       {
         path: '*',
@@ -107,7 +112,7 @@ export const router = createBrowserRouter([
             element: <ProductForm />
           },
           {
-            path: 'product/update/:product',
+            path: 'product/update/:slug',
             element: <UpdateProductForm />
           }
         ]
@@ -121,6 +126,7 @@ export const router = createBrowserRouter([
             path: '/user',
             element: <UserPage />
           },
+
           {
             path: 'savedproduct',
             element: <SavedProduct />

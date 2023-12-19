@@ -1,6 +1,6 @@
 import { categoryState } from '../redux/slices/categories/categorySlice'
 import { useDispatch, useSelector } from 'react-redux'
-import { FilterByCategory, fetchProduct } from '../redux/slices/products/productSlice'
+import { FilterByCategory } from '../redux/slices/products/productSlice'
 
 const CategoryFilter = () => {
   const { categories } = useSelector(categoryState)
@@ -21,10 +21,10 @@ const CategoryFilter = () => {
           </button>
           {categories.map((category) => (
             <button
-              onClick={() => onCategoryClicked(category.id)}
+              onClick={() => onCategoryClicked(category._id)}
               className="border p-2 bg-white rounded-md block whitespace-nowrap text-left text-base font-light"
-              key={category.id}>
-              {category.name}
+              key={category._id}>
+              {category.title}
             </button>
           ))}
         </div>

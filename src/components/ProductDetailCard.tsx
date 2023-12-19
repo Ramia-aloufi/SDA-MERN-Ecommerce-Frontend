@@ -1,49 +1,34 @@
-import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { baseURL } from '../api'
+import { Product, addToCart, productState } from '../redux/slices/products/productSlice'
 
-import { Product, addToCart } from '../redux/slices/products/productSlice'
-import { categoryState } from '../redux/slices/categories/categorySlice'
-
-type ProductCardProps = {
-  product: Product
-}
-const ProductDetailCard = ({ product }: ProductCardProps) => {
-  const categories = useSelector(categoryState).categories
+const ProductDetailCard = () => {
   const dispatch = useDispatch()
-
+  const product = useSelector(productState).singleProduct
+  console.log('product', product)
   const handeAddToCart = (product: Product) => {
     console.log(product)
     dispatch(addToCart(product))
   }
-  const [selectedSize, setSelectedSize] = useState('')
-  const [selectedVarient, setSelectedVarient] = useState('')
 
-  const handleSizeSelection = (size: string) => {
-    console.log(size)
-    setSelectedSize(size)
-  }
-  const handleVarientSelection = (varient: string) => {
-    console.log(varient)
-    setSelectedVarient(varient)
-  }
   return (
     <div className="grid space-y-2 md:grid-cols-[1fr,1fr] xs:grid-flow-row  bg-white relative text-left shadow-sm rounded-md p-4 ">
       <div className=" w-full overflow-hidden rounded-lg lg:aspect-none group-hover:opacity-75   ">
         <img
-          src={product.image}
-          alt={product.name}
+          src={`${baseURL}/${product.image}`}
+          alt={product.title}
           className="h-full w-full hover:scale-105 transition duration-300 ease-in-out  object-center"
         />
       </div>
       <div className="w-full mt-1 grid  justify-between">
         <div>
-          <h2 className="block text-md font-semibold">{product.name}</h2>{' '}
-          {product.categories.map((categoryId) => (
+          <h2 className="block text-md font-semibold">{product.title}</h2>{' '}
+          {/* {product.category.map((categoryId) => (
             <span key={categoryId}>
               {categories.map((category) => category.id == categoryId && category.name)}
             </span>
-          ))}
-          {product.sizes.length > 0 && (
+          ))} */}
+          {/* {product.sizes.length > 0 && (
             <div className="p-1 flex gap-2 items-center flex-wrap">
               <label
                 htmlFor={`selectedSize-${product.id}`}
@@ -62,8 +47,8 @@ const ProductDetailCard = ({ product }: ProductCardProps) => {
                 </span>
               ))}
             </div>
-          )}
-          {product.variants.length > 0 && (
+          )} */}
+          {/* {product.variants.length > 0 && (
             <div className="p-1 flex gap-2 items-center flex-wrap">
               <label
                 htmlFor={`selecVariant-${product.id}`}
@@ -83,7 +68,7 @@ const ProductDetailCard = ({ product }: ProductCardProps) => {
                 </span>
               ))}
             </div>
-          )}
+          )} */}
           <p className="mt-1 text-sm text-gray-500">{product.description}</p>
         </div>
         <button className="btn h-[50px] mt-4 " onClick={() => handeAddToCart(product)}>
@@ -93,5 +78,4 @@ const ProductDetailCard = ({ product }: ProductCardProps) => {
     </div>
   )
 }
-
 export default ProductDetailCard

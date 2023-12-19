@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom'
 
 import { AppDispatch } from '../../../redux/store'
 import { addCategory } from '../../../redux/slices/categories/categorySlice'
+import { postCategory } from '../../../Servies/category'
+import { showToast } from '../../../helper/toast'
 
 const categorySchema = object({
   name: string().min(3)
@@ -24,13 +26,9 @@ const AddCategotyForm = () => {
     resolver: zodResolver(categorySchema)
   })
 
-  const dispatch = useDispatch<AppDispatch>()
-  const onSubmit = (data: CategorySchema) => {
-    dispatch(addCategory(data.name))
-    toast.success('Added New Category successful!', {
-      position: toast.POSITION.TOP_CENTER,
-      autoClose: 3000
-    })
+  const onSubmit = async (data: CategorySchema) => {
+    const response = await postCategory(data.name)
+    showToast(response, true)
     reset()
     navigate('/admin/category')
   }

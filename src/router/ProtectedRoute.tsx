@@ -5,7 +5,8 @@ import { userState } from '../redux/slices/user/userSlice'
 import LoginForm from '../components/LoginForm'
 
 const ProtectedRoute = () => {
-  const { isLogedIn } = useSelector(userState)
+  // const { isLogedIn } = useSelector(userState)
+  const isLogedIn = true
 
   return isLogedIn ? <Outlet /> : <LoginForm />
 }

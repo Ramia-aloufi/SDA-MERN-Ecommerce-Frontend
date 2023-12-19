@@ -2,6 +2,7 @@ import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { IoHeart, IoHeartOutline } from 'react-icons/io5'
 import { Product, SavedItem, addToCart } from '../redux/slices/products/productSlice'
+import { baseURL } from '../api'
 
 type ProductCardProps = {
   product: Product
@@ -16,6 +17,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
     console.log(product.saved)
     dispatch(SavedItem(product))
   }
+  console.log(product.image)
 
   return (
     <div className="grid  space-y-2 xs:w-[310px] md:w-auto  bg-white relative text-left shadow-sm rounded-md p-4  lg:h-[400px]">
@@ -30,11 +32,11 @@ const ProductCard = ({ product }: ProductCardProps) => {
           className="absolute top-3 right-3 text-lg text-[#419cb6] z-30 "
         />
       )}
-      <Link to={`/product/${product.id}`}>
+      <Link to={`/product/${product.slug}`}>
         <div className=" w-full overflow-hidden rounded-lg lg:aspect-none group-hover:opacity-75 h-[200px]  ">
           <img
-            src={product.image}
-            alt={product.name}
+            src={`${baseURL}/${product.image}`}
+            alt={product.title}
             className="h-full w-full hover:scale-105 transition duration-300 ease-in-out object-center"
           />
         </div>
@@ -42,7 +44,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
       <div className="mt-1 flex justify-between">
         <div>
           <div className="flex justify-between">
-            <h2 className="block nameLines text-md font-semibold">{product.name}</h2>{' '}
+            <h2 className="block nameLines text-md font-semibold">{product.title}</h2>{' '}
             <span className="font-semibold">${product.price}</span>
           </div>
           <p className="mt-1 limitedLines text-sm text-gray-500">{product.description}</p>

@@ -1,17 +1,13 @@
 import { useForm } from 'react-hook-form'
 import { object, string, z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useDispatch, useSelector } from 'react-redux'
-import { toast } from 'react-toastify'
-import { useNavigate } from 'react-router-dom'
 
-import { AppDispatch } from '../redux/store'
-import { addUser, userState } from '../redux/slices/user/userSlice'
 import 'react-toastify/dist/ReactToastify.css'
+import { showToast } from '../helper/toast'
+import { postUser } from '../Servies/user'
 
 const signupSchema = object({
-  firstName: string().min(3),
-  lastName: string().min(3),
+  username: string().min(3),
   email: string().email(),
   password: string().min(6)
 })
@@ -19,7 +15,7 @@ const signupSchema = object({
 type SignupSchema = z.infer<typeof signupSchema>
 
 const SignupForm = () => {
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
   const {
     register,
     handleSubmit,
@@ -28,39 +24,35 @@ const SignupForm = () => {
   } = useForm<SignupSchema>({
     resolver: zodResolver(signupSchema) // Use Zod schema resolver
   })
-  const dispatch = useDispatch<AppDispatch>()
-  const { users, userData } = useSelector(userState)
-  const onSubmit = (data: SignupSchema) => {
-    const userExist = users.find((user) => user.email == data.email)
-    if (!userExist) {
-      dispatch(addUser(data))
-      toast.success('Signup successful!', {
-        position: toast.POSITION.TOP_CENTER,
-        autoClose: 3000 // Auto close the toast after 3 seconds
-      })
-      navigate('/user')
-    } else {
-      toast.error('Signup failed. Please check your credentials!', {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 3000 // Auto close the toast after 3 seconds
-      })
-    }
+  // const dispatch = useDispatch<AppDispatch>()
+  // const { users, userData } = useSelector(userState)
+  const onSubmit = async (data: SignupSchema) => {
+    const message = await postUser(data)
+    showToast(message, true)
+    // const userExist = users.find((user) => user.email == data.email)
+    // if (!userExist) {
+    //   dispatch(addUser(data))
+    //   toast.success('Signup successful!', {
+    //     position: toast.POSITION.TOP_CENTER,
+    //     autoClose: 3000 // Auto close the toast after 3 seconds
+    //   })
+    //   navigate('/user')
+    // } else {
+    //   toast.error('Signup failed. Please check your credentials!', {
+    //     position: toast.POSITION.TOP_RIGHT,
+    //     autoClose: 3000 // Auto close the toast after 3 seconds
+    //   })
+    // }
     console.log('Form values:', data)
-    console.log('Form values:', userData)
     reset()
   }
 
   return (
     <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
       <div>
-        <label htmlFor="firstName">FirstName</label>
-        <input {...register('firstName')} id="firstName" type="text" />
-        {errors.firstName && <p className="errorMessage">{errors.firstName.message}</p>}
-      </div>
-      <div>
-        <label htmlFor="lastName">LastName</label>
-        <input {...register('lastName')} id="lastName" type="text" />
-        {errors.lastName && <p className="errorMessage">{errors.lastName.message}</p>}
+        <label htmlFor="userName">UserName</label>
+        <input {...register('username')} id="username" type="text" />
+        {errors.username && <p className="errorMessage">{errors.username.message}</p>}
       </div>
       <div>
         <label htmlFor="email">Email</label>

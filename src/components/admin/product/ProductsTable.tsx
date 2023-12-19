@@ -2,18 +2,21 @@ import { useDispatch, useSelector } from 'react-redux'
 import { FiTrash, FiEdit } from 'react-icons/fi'
 import { useNavigate } from 'react-router-dom'
 
-import { deleteProduct, productState } from '../../../redux/slices/products/productSlice'
+import { productState } from '../../../redux/slices/products/productSlice'
+import { baseURL } from '../../../api'
+import { deleteSingleProduct, fetchProduct } from '../../../Servies/product'
+import { AppDispatch } from '../../../redux/store'
 
 export const ProductsTable = () => {
   const products = useSelector(productState).products
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
 
-  const handkeDelete = (id: number) => {
-    console.log(id)
-    dispatch(deleteProduct(Number(id)))
+  const handleDelete = (slug: string) => {
+    dispatch(deleteSingleProduct(slug))
   }
-  const handleEdit = (id: number) => {
+
+  const handleEdit = (id: string) => {
     const product = id
     navigate(`/admin/product/update/${product}`)
   }
@@ -24,10 +27,9 @@ export const ProductsTable = () => {
         <tr className="bg-[#434343] text-white">
           <th className="border p-2">Id</th>
           <th className="border p-2">Name</th>
-          <th className="border p-2 hidden lg:table-cell">Size</th>
+          <th className="border p-2">Description</th>
           <th className="border p-2">Image</th>
-          <th className="border p-2 hidden md:table-cell">Varients</th>
-          <th className="border p-2 hidden sm:table-cell">Catergories</th>
+          <th className="border p-2 hidden sm:table-cell">Catergory</th>
           <th className="border p-2">Actions</th>
         </tr>
       </thead>
@@ -35,32 +37,29 @@ export const ProductsTable = () => {
         {products &&
           products.map((product, index) => {
             return (
-              <tr key={product.id} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}>
-                <td className="border p-2">{product.id}</td>
-                <td className="border p-2 xs:text-[10px] md:text-xs">{product.name}</td>
-                <td className="border p-2 hidden lg:table-cell">
-                  {product.sizes.map((size) => size)}
-                </td>
+              <tr key={product._id} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}>
+                <td className="border p-2">{index}</td>
+                <td className="border p-2 xs:text-[10px] md:text-xs">{product.title}</td>
+                <td className="border p-2 xs:text-[10px] md:text-xs">{product.description}</td>
                 <td className="border p-2">
-                  <img className="w-20 h-20" src={product.image} alt={product.name} />
+                  <img
+                    className="w-20 h-20"
+                    src={`${baseURL}/${product.image}`}
+                    alt={product.title}
+                  />
                 </td>
-                <td className="border p-2 hidden md:table-cell">
-                  {product.variants.map((varient) => varient)}
-                </td>
-                <td className="border p-2 hidden sm:table-cell">
-                  {product.categories.map((id) => id)}
-                </td>
+                <td className="border p-2 hidden sm:table-cell">{product.category.title}</td>
                 <td className="border p-2 grid gap-3 justify-center">
                   <button className="trashBtn">
                     <FiTrash
                       className="inline-block text-m align-text-top"
-                      onClick={() => handkeDelete(product.id)}
+                      onClick={() => handleDelete(product.slug)}
                     />
                   </button>
                   <button className="editBtn">
                     <FiEdit
                       className="inline-block text-m align-text-top"
-                      onClick={() => handleEdit(product.id)}
+                      onClick={() => handleEdit(product.slug)}
                     />
                   </button>
                 </td>

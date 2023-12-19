@@ -1,19 +1,36 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
 import { RootState } from '../../store'
+import {
+  fetchProduct,
+  deleteSingleProduct,
+  updateSingleProduct,
+  getSingleProduct
+} from '../../../Servies/product'
 import axios from 'axios'
+import { Category } from '../categories/categorySlice'
 
 export type Product = {
-  id: number
-  name: string
-  image: string
+  _id: string
+  title: string
+  slug: string
   description: string
-  categories: number[]
-  variants: string[]
-  sizes: string[]
   price: number
   quantity: number
-  saved: boolean
+  sold: number
+  image: string
+  category: Category
+  createdAt?: Date
+  updatedAt?: Date
+  __v: number
+}
+export type ProductInput = {
+  title: string
+  description: string
+  price: number
+  quantity: number
+  image?: string
+  category: string
 }
 
 export type ProductState = {
@@ -43,45 +60,24 @@ const initialState: ProductState = {
   savedItem: []
 }
 
-export const fetchProduct = createAsyncThunk('product/fetchData', async () => {
-  const response = await axios.get('/mock/e-commerce/products.json')
-  if (!response.statusText) {
-    throw new Error('Network response error')
-  }
-  const data: Product[] = await response.data
-  return data
-})
-
 export const productSlice = createSlice({
   name: 'product',
   initialState,
   reducers: {
     findById: (state, action) => {
-      const id = action.payload
-      console.log('findById')
-
-      const foundProduct = state.items.find((product) => product.id === Number(id))
-
-      if (foundProduct) {
-        console.log('Product found')
-        state.singleProduct = foundProduct
-        console.log(foundProduct)
-        console.log(state.singleProduct)
-      } else {
-        console.log('Product not found')
-        state.singleProduct = {} as Product
-      }
+      // console.log('action', action)
+      // state.singleProduct = action.payload
     },
     searchProduct: (state, action) => {
       console.log(action.payload)
       const search = action.payload
       state.searchTerm = search
-      state.searchedResult = state.searchTerm
-        ? state.items.filter((product) =>
-            product.name.toLowerCase().includes(state.searchTerm.toLowerCase())
-          )
-        : []
-      state.products = state.searchedResult.length > 0 ? state.searchedResult : state.items
+      // state.searchedResult = state.searchTerm
+      //   ? state.items.filter((product) =>
+      //       product.name.toLowerCase().includes(state.searchTerm.toLowerCase())
+      //     )
+      //   : []
+      // state.products = state.searchedResult.length > 0 ? state.searchedResult : state.items
     },
     sortProduct: (state, action) => {
       const sortBy = action.payload
@@ -90,7 +86,7 @@ export const productSlice = createSlice({
           state.products.sort((a, b) => a.price - b.price)
           break
         case 'name':
-          state.products.sort((a, b) => a.name.localeCompare(b.name))
+          // state.products.sort((a, b) => a.name.localeCompare(b.name))
           break
         default:
           state.products
@@ -98,7 +94,7 @@ export const productSlice = createSlice({
     },
     deleteProduct: (state, action) => {
       const id = action.payload
-      state.items = state.items.filter((product) => product.id !== id)
+      // state.items = state.items.filter((product) => product.id !== id)
       state.products = state.items
     },
     addProduct: (state, action) => {
@@ -106,28 +102,29 @@ export const productSlice = createSlice({
       const name = action.payload
       console.log(`name:${name}`)
       const newProduct: Product = { id, ...name }
-      console.log(`newProduct:${newProduct.id}`)
+      // console.log(`newProduct:${newProduct.id}`)
       state.items = [...state.items, newProduct]
       state.products = state.items
       console.log(state.items.length)
     },
     UpdateProduct: (state, action) => {
-      const updatedProduct: Product = action.payload
-      state.items = state.items.map((product) =>
-        product.id === updatedProduct.id ? updatedProduct : product
-      )
+      // const updatedProduct: Product = action.payload
+      // axios.put('/products', updatedProduct).then()
+      // state.items = state.items.map((product) =>
+      //   // product.id === updatedProduct.id ? updatedProduct : product
+      // )
       state.products = state.items
     },
     addToCart: (state, action) => {
       const newProduct: Product = action.payload
-      const isExist = state.inCart.find((cart) => cart.id === newProduct.id)
+      const isExist = state.inCart.find((cart) => cart._id === newProduct._id)
 
       if (!isExist) {
         state.inCart = [...state.inCart, { ...newProduct, quantity: 1 }]
       } else {
-        state.inCart = state.inCart.map((product) =>
-          product.id === newProduct.id ? { ...product, quantity: product.quantity + 1 } : product
-        )
+        // state.inCart = state.inCart.map((product) =>
+        //   product.id === newProduct.id ? { ...product, quantity: product.quantity + 1 } : product
+        // )
       }
 
       state.totalQuantity = state.inCart.reduce((total, product) => total + product.quantity, 0)
@@ -138,7 +135,7 @@ export const productSlice = createSlice({
     },
     removeFromCart: (state, action) => {
       const id: number = action.payload
-      state.inCart = state.inCart.filter((product) => product.id !== id)
+      // state.inCart = state.inCart.filter((product) => product.id !== id)
       state.totalQuantity = state.inCart.reduce((total, product) => total + product.quantity, 0)
       state.totalPrice = state.inCart.reduce(
         (total, product) => total + product.quantity * product.price,
@@ -147,12 +144,12 @@ export const productSlice = createSlice({
     },
     IncreaseQuantity: (state, action) => {
       const productIncreas: Product = action.payload
-      state.inCart.map((product) => {
-        if (product.id == productIncreas.id) {
-          product.quantity += 1
-        }
-        console.log(productIncreas)
-      })
+      // state.inCart.map((product) => {
+      // //   if (product.id == productIncreas.id) {
+      // //     product.quantity += 1
+      // //   }
+      // //   console.log(productIncreas)
+      // // })
       state.totalQuantity = state.inCart.reduce((total, product) => total + product.quantity, 0)
       state.totalPrice = state.inCart.reduce(
         (total, product) => total + product.quantity * product.price,
@@ -162,11 +159,11 @@ export const productSlice = createSlice({
     DecreaseQuantity: (state, action) => {
       const productIncreas: Product = action.payload
       state.inCart.map((product) => {
-        if (product.id == productIncreas.id) {
-          if (product.quantity > 0) {
-            product.quantity -= 1
-          }
-        }
+        // if (product.id == productIncreas.id) {
+        //   if (product.quantity > 0) {
+        //     product.quantity -= 1
+        //   }
+        // }
         console.log(productIncreas)
       })
       state.totalQuantity = state.inCart.reduce((total, product) => total + product.quantity, 0)
@@ -178,33 +175,58 @@ export const productSlice = createSlice({
     FilterByCategory: (state, action) => {
       const id: number = action.payload
       state.products = state.items
-      if (id != 0) {
-        state.products = state.products.filter((product) => product.categories.includes(id))
-        // state.products = state.items
-      }
+      // if (id != 0) {
+      //   state.products = state.products.filter((product) => product.categories.includes(id))
+      //   // state.products = state.items
+      // }
     },
     SavedItem: (state, action) => {
       const item: Product = action.payload
-      console.log(item.id)
-      state.items.map((product) => product.id == item.id && (product.saved = !product.saved))
-      state.products = state.items
-      state.savedItem = state.items.filter((product) => product.saved == true)
+      // state.items.map((product) => product._id == item._id && (product.saved = !product.saved))
+      // state.items.map((product) => product._id == item._id)
+
+      // state.products = state.items
+      // state.savedItem = state.items.filter((product) => product.saved == true)
     }
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchProduct.pending, (state) => {
-        state.isLoading = true
-      })
       .addCase(fetchProduct.fulfilled, (state, action) => {
         state.isLoading = false
         state.items = action.payload
         state.products = state.items
       })
-      .addCase(fetchProduct.rejected, (state, action) => {
+      .addCase(deleteSingleProduct.fulfilled, (state, action) => {
         state.isLoading = false
-        state.error = action.error.message || 'An error occurred.'
+        console.log(action.payload)
+        state.items = state.items.filter((product) => product.slug != String(action.payload))
+        state.products = state.items
       })
+      .addCase(getSingleProduct.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.singleProduct = action.payload
+      })
+
+      .addMatcher(
+        (action) => action.type.endsWith('/pending'),
+        (state) => {
+          state.isLoading = true
+        }
+      )
+      .addMatcher(
+        (action) => action.type.endsWith('/fulfilled'),
+        (state) => {
+          state.isLoading = false
+          state.error = ''
+        }
+      )
+      .addMatcher(
+        (action) => action.type.endsWith('/rejected'),
+        (state, action) => {
+          state.isLoading = false
+          state.error = action.error.message || 'An error occurred.'
+        }
+      )
   }
 })
 export const {
@@ -221,6 +243,7 @@ export const {
   FilterByCategory,
   SavedItem
 } = productSlice.actions
+
 export const productState = (state: RootState) => state.products
 
 export default productSlice.reducer

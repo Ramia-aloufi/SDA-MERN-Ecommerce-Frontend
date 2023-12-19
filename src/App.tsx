@@ -5,11 +5,11 @@ import { RouterProvider } from 'react-router-dom'
 import { router } from './router/index'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from './redux/store'
-import { fetchCategory } from './redux/slices/categories/categorySlice'
 import { useEffect } from 'react'
-import { fetchProduct } from './redux/slices/products/productSlice'
-import { fetchUser } from './redux/slices/user/userSlice'
 import { fetchOrder } from './redux/slices/Order/orderSlice'
+import { fetchUser } from './Servies/user'
+import { fetchProduct } from './Servies/product'
+import { fetchCategory } from './Servies/category'
 
 function App() {
   const dispatch = useDispatch<AppDispatch>()

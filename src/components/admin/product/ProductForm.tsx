@@ -1,20 +1,17 @@
 import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useDispatch } from 'react-redux'
-import { object, string, z } from 'zod'
-import { toast } from 'react-toastify'
+import { any, object, string, z } from 'zod'
 
-import { Product, addProduct } from '../../../redux/slices/products/productSlice'
-import { AppDispatch } from '../../../redux/store'
+import { postProduct } from '../../../Servies/product'
+import { showToast } from '../../../helper/toast'
 
 const productSchema = object({
-  name: string().min(6),
-  image: string().min(6),
+  title: string().min(6),
+  image: any().optional(),
   description: string().min(1),
-  categories: string().min(1),
-  variants: string().min(1),
-  sizes: string().min(1),
+  category: string().min(1),
+  quantity: string(),
   price: string().min(1)
 })
 
@@ -30,33 +27,27 @@ export function ProductForm() {
   } = useForm<ProductSchema>({
     resolver: zodResolver(productSchema)
   })
-  const dispatch = useDispatch<AppDispatch>()
-  const convertToArrayString = (data: string): string[] | number[] => {
-    return data.split(',').map((size: string) => size.trim())
-  }
-  const convertToArrayNumber = (data: string): number[] => {
-    return data.split(',').map(Number)
-  }
 
-  const onSubmit = (data: ProductSchema) => {
+  const onSubmit = async (data: ProductSchema) => {
+    console.log('image', data.image[0])
     const transformedData = {
       ...data,
-      categories: convertToArrayNumber(data.categories),
-      variants: convertToArrayString(data.variants),
-      sizes: convertToArrayString(data.sizes),
-      price: Number(data.price)
+      image: data.image[0],
+      price: Number(data.price),
+      quantity: Number(data.quantity)
     }
+    const formdata = new FormData()
+    formdata.append('title', data.title)
+    formdata.append('image', data.image[0])
+    formdata.append('description', data.description)
+    formdata.append('quantity', data.quantity)
+    formdata.append('price', data.price)
+    formdata.append('category', data.category)
     console.log(transformedData)
     try {
-      dispatch(addProduct(transformedData))
-      toast.success('Added New Product successfully!', {
-        position: toast.POSITION.TOP_CENTER,
-        autoClose: 3000
-      })
-      reset()
-      navigate('/admin/product')
-    } catch (error) {
-      console.error('Validation error:')
+      await postProduct(formdata)
+    } catch (err) {
+      showToast(`${err}`, true)
     }
   }
 
@@ -70,13 +61,12 @@ export function ProductForm() {
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <div>
             <label htmlFor="name">Name:</label>
-            <input type="text" id="name" {...register('name')} />
-            {errors.name && <p className="errorMessage">{errors.name.message}</p>}
+            <input type="text" id="name" {...register('title')} />
+            {errors.title && <p className="errorMessage">{errors.title.message}</p>}
           </div>
           <div>
             <label htmlFor="image">Image URL:</label>
-            <input type="text" id="image" {...register('image')} />
-            {errors.image && <p className="errorMessage">{errors.image.message}</p>}
+            <input type="file" id="image" {...register('image')} />
           </div>
           <div>
             <label htmlFor="description"> Description: </label>
@@ -85,18 +75,13 @@ export function ProductForm() {
           </div>
           <div>
             <label htmlFor="categories">Categories: (use comma , to create multiple)</label>
-            <input type="text" id="categories" {...register('categories')} />
-            {errors.categories && <p className="errorMessage">{errors.categories.message}</p>}
+            <input type="text" id="categories" {...register('category')} />
+            {errors.category && <p className="errorMessage">{errors.category.message}</p>}
           </div>
           <div>
-            <label htmlFor="variants">Variants: (use comma , to create multiple)</label>
-            <input type="text" id="variants" {...register('variants')} />
-            {errors.variants && <p className="errorMessage">{errors.variants.message}</p>}
-          </div>
-          <div>
-            <label htmlFor="sizes">Sizes: (use comma , to create multiple)</label>
-            <input type="text" id="sizes" {...register('sizes')} />
-            {errors.sizes && <p className="errorMessage">{errors.sizes.message}</p>}
+            <label htmlFor="sizes">Quantity:</label>
+            <input type="text" id="sizes" {...register('quantity')} />
+            {errors.quantity && <p className="errorMessage">{errors.quantity.message}</p>}
           </div>
           <div>
             <label htmlFor="price">Price:</label>

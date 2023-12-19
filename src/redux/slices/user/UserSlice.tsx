@@ -1,7 +1,7 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
 import { RootState } from '../../store'
-import axios from 'axios'
+import { fetchUser } from '../../../Servies/user'
 
 export type User = {
   id: number
@@ -38,12 +38,6 @@ const initialState: userState = {
   searchTerm: '',
   searchedResult: []
 }
-
-export const fetchUser = createAsyncThunk('user/fetchData', async () => {
-  const response = await axios.get(`${banUser}/users`)
-  const data: User[] = await response.data
-  return data
-})
 
 export const userSlice = createSlice({
   name: 'user',

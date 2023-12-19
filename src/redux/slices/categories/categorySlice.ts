@@ -5,10 +5,11 @@ import { Category } from '../../../components/admin/category/Category'
 import axios from 'axios'
 import { banUser } from '../user/userSlice'
 import { baseURL } from '../../../api'
+import { fetchCategory } from '../../../Servies/category'
 
 export type Category = {
-  id: number
-  name: string
+  _id: number
+  title: string
 }
 
 export type CategoryState = {
@@ -28,11 +29,6 @@ const initialState: CategoryState = {
   searchTerm: '',
   searchedResult: []
 }
-export const fetchCategory = createAsyncThunk('category/fetchData', async () => {
-  const response = await axios.get(`${baseURL}/categories`)
-  const data: Category[] = await response.data
-  return data
-})
 
 export const categorySlice = createSlice({
   name: 'category',
@@ -43,7 +39,7 @@ export const categorySlice = createSlice({
       state.searchTerm = action.payload
       state.searchedResult = state.searchTerm
         ? state.items.filter((category) =>
-            category.name.toLowerCase().includes(state.searchTerm.toLowerCase())
+            category.title.toLowerCase().includes(state.searchTerm.toLowerCase())
           )
         : state.items
       state.categories = state.searchedResult.length > 0 ? state.searchedResult : state.items
@@ -51,25 +47,25 @@ export const categorySlice = createSlice({
     deleteCategory: (state, action) => {
       const id = action.payload
       console.log(id)
-      state.items = state.items.filter((user) => user.id !== id)
+      state.items = state.items.filter((user) => user._id !== id)
       state.categories = state.items
       console.log(state.items)
     },
     addCategory: (state, action) => {
-      const id = state.items.length + 1
-      const name = action.payload
+      const _id = state.items.length + 1
+      const title = action.payload
       console.log(`name:${name}`)
-      const newCategory: Category = { id, name }
+      const newCategory: Category = { _id, title }
       console.log(`newCategory:${newCategory}`)
       state.items = [...state.items, newCategory]
       state.categories = state.items
     },
     UpdateCategory: (state, action) => {
       const updatedUser: Category = action.payload
-      console.log(`updatedUser: ${updatedUser.id} ${updatedUser.name}`)
-      const existUser = state.items.find((category) => category.id == updatedUser.id)
+      console.log(`updatedUser: ${updatedUser._id} ${updatedUser.title}`)
+      const existUser = state.items.find((category) => category._id == updatedUser._id)
       if (existUser) {
-        existUser.name = updatedUser.name
+        existUser.title = updatedUser.title
         state.categories = state.items
       }
     }

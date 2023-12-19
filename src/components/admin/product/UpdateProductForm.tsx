@@ -1,34 +1,28 @@
-import {
-  Product,
-  UpdateProduct,
-  findById,
-  productState
-} from '../../../redux/slices/products/productSlice'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useDispatch, useSelector } from 'react-redux'
-import { AppDispatch } from '../../../redux/store'
-import { object, string, z } from 'zod'
-import { toast } from 'react-toastify'
+import { any, object, string, z } from 'zod'
 import { useEffect } from 'react'
 
+import { productState } from '../../../redux/slices/products/productSlice'
+import { AppDispatch } from '../../../redux/store'
+import { getSingleProduct, updateSingleProduct } from '../../../Servies/product'
+import { showToast } from '../../../helper/toast'
+
 const UpdateProductForm = () => {
-  const { product } = useParams()
-  const id = Number(product)
+  const { slug } = useParams()
   const dispatch = useDispatch<AppDispatch>()
   const { singleProduct } = useSelector(productState)
   const navigate = useNavigate()
-  console.log('aa')
 
   const productSchema = object({
-    name: string().min(6),
-    image: string().min(6),
+    title: string().min(6),
+    image: any().optional(),
     description: string().min(1),
-    categories: string().min(1),
-    variants: string().min(1),
-    sizes: string().min(1),
-    price: string().min(1)
+    category: string().min(1),
+    price: string().min(1),
+    quantity: string().min(1)
   })
 
   type ProductSchema = z.infer<typeof productSchema>
@@ -43,43 +37,33 @@ const UpdateProductForm = () => {
   })
 
   const onSubmit = (data: ProductSchema) => {
-    const transformedData = {
-      ...data,
-      categories: data.categories.split(',').map(Number),
-      variants: data.variants.split(',').map((variant: string) => variant.trim()),
-      sizes: data.sizes.split(',').map((size: string) => size.trim()),
-      price: Number(data.price)
-    }
-    const id = Number(product)
-    const quantity = 0
-    const UpdatedProduct: Product = { ...transformedData, id, quantity }
-    console.log(UpdatedProduct)
+    const product = new FormData()
+    console.log(data.image[0])
+    product.append('title', data.title)
+    product.append('image', data.image[0])
+    product.append('description', data.description)
+    product.append('quantity', data.quantity)
+    product.append('price', data.price)
+    product.append('category', data.category)
     try {
-      dispatch(UpdateProduct(UpdatedProduct))
-      toast.success('Added New Product successfully!', {
-        position: toast.POSITION.TOP_CENTER,
-        autoClose: 3000
-      })
+      dispatch(updateSingleProduct({ product, slug }))
       reset()
       navigate('/admin/product')
     } catch (error) {
-      console.error('Validation error:')
-      // Handle validation error
-      // You can set an error state or display a notification to the user
+      showToast(`Validation error:${error}`, false)
     }
   }
   useEffect(() => {
-    dispatch(findById(Number(id)))
-  }, [product])
+    dispatch(getSingleProduct(slug))
+  }, [slug, dispatch])
 
   useEffect(() => {
-    setValue('name', singleProduct.name || '')
+    setValue('title', singleProduct.title || '')
     setValue('image', singleProduct.image || '')
     setValue('description', singleProduct.description || '')
-    setValue('categories', singleProduct.categories?.join(', ') || '')
-    setValue('variants', singleProduct.variants?.join(', ') || '')
-    setValue('sizes', singleProduct.sizes?.join(', ') || '')
+    setValue('category', `${singleProduct.category._id}` || '')
     setValue('price', `${singleProduct.price}` || '')
+    setValue('quantity', `${singleProduct.quantity}` || '')
   }, [singleProduct])
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
@@ -90,14 +74,13 @@ const UpdateProductForm = () => {
         </div>
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <div>
-            <label htmlFor="name">Name:</label>
-            <input type="text" id="name" {...register('name')} />
-            {errors.name && <p className="errorMessage">{errors.name.message}</p>}
+            <label htmlFor="name">Title:</label>
+            <input type="text" id="name" {...register('title')} />
+            {errors.title && <p className="errorMessage">{errors.title.message}</p>}
           </div>
           <div>
             <label htmlFor="image">Image URL:</label>
-            <input type="text" id="image" {...register('image')} />
-            {errors.image && <p className="errorMessage">{errors.image.message}</p>}
+            <input type="file" id="image" {...register('image')} />
           </div>
           <div>
             <label htmlFor="description"> Description: </label>
@@ -105,24 +88,19 @@ const UpdateProductForm = () => {
             {errors.description && <p className="errorMessage">{errors.description.message}</p>}
           </div>
           <div>
-            <label htmlFor="categories">Categories: (use comma , to create multiple)</label>
-            <input type="text" id="categories" {...register('categories')} />
-            {errors.categories && <p className="errorMessage">{errors.categories.message}</p>}
-          </div>
-          <div>
-            <label htmlFor="variants">Variants: (use comma , to create multiple)</label>
-            <input type="text" id="variants" {...register('variants')} />
-            {errors.variants && <p className="errorMessage">{errors.variants.message}</p>}
-          </div>
-          <div>
-            <label htmlFor="sizes">Sizes: (use comma , to create multiple)</label>
-            <input type="text" id="sizes" {...register('sizes')} />
-            {errors.sizes && <p className="errorMessage">{errors.sizes.message}</p>}
+            <label htmlFor="categories">Category</label>
+            <input type="text" id="categories" {...register('category')} />
+            {errors.category && <p className="errorMessage">{errors.category.message}</p>}
           </div>
           <div>
             <label htmlFor="price">Price:</label>
             <input type="number" id="price" {...register('price')} />
             {errors.price && <p className="errorMessage">{errors.price.message}</p>}
+          </div>
+          <div>
+            <label htmlFor="price">Quantity:</label>
+            <input type="number" id="price" {...register('quantity')} />
+            {errors.quantity && <p className="errorMessage">{errors.quantity.message}</p>}
           </div>
           <button type="submit" className="btn">
             Add Product
