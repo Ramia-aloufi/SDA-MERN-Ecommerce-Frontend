@@ -8,13 +8,14 @@ import { useEffect } from 'react'
 import { productState } from '../../../redux/slices/products/productSlice'
 import { AppDispatch } from '../../../redux/store'
 import { getSingleProduct, updateSingleProduct } from '../../../Servies/product'
-import { showToast } from '../../../helper/toast'
+import { Category, categoryState } from '../../../redux/slices/categories/categorySlice'
 
 const UpdateProductForm = () => {
   const { slug } = useParams()
   const dispatch = useDispatch<AppDispatch>()
   const { singleProduct } = useSelector(productState)
   const navigate = useNavigate()
+  const { categories } = useSelector(categoryState)
 
   const productSchema = object({
     title: string().min(6),
@@ -37,37 +38,48 @@ const UpdateProductForm = () => {
   })
 
   const onSubmit = (data: ProductSchema) => {
-    const product = new FormData()
-    console.log(data.image[0])
-    product.append('title', data.title)
-    product.append('image', data.image[0])
-    product.append('description', data.description)
-    product.append('quantity', data.quantity)
-    product.append('price', data.price)
-    product.append('category', data.category)
-    try {
+    if (data.image[0].name) {
+      const product = new FormData()
+      console.log(data)
+      console.log(data.image[0])
+      product.append('title', data.title)
+      product.append('image', data.image[0])
+      product.append('description', data.description)
+      product.append('quantity', data.quantity)
+      product.append('price', data.price)
+      product.append('category', data.category)
       dispatch(updateSingleProduct({ product, slug }))
-      reset()
-      navigate('/admin/product')
-    } catch (error) {
-      showToast(`Validation error:${error}`, false)
+    } else {
+      const product = {
+        ...data,
+        price: Number(data.price),
+        quantity: Number(data.quantity),
+        image: singleProduct.image
+      }
+      console.log(product)
+      dispatch(updateSingleProduct({ product, slug }))
     }
+    reset()
+    navigate('/admin/product')
   }
   useEffect(() => {
     dispatch(getSingleProduct(slug))
   }, [slug, dispatch])
 
   useEffect(() => {
-    setValue('title', singleProduct.title || '')
-    setValue('image', singleProduct.image || '')
-    setValue('description', singleProduct.description || '')
-    setValue('category', `${singleProduct.category._id}` || '')
-    setValue('price', `${singleProduct.price}` || '')
-    setValue('quantity', `${singleProduct.quantity}` || '')
+    if (singleProduct.category !== undefined) {
+      console.log(singleProduct.category)
+      setValue('title', singleProduct.title || '')
+      setValue('image', singleProduct.image || '')
+      setValue('description', singleProduct.description || '')
+      setValue('category', (singleProduct.category as unknown as Category)._id || '')
+      setValue('price', `${singleProduct.price}` || '')
+      setValue('quantity', `${singleProduct.quantity}` || '')
+    }
   }, [singleProduct])
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
-      {/* <ToastContainer /> */}
       <div className="max-w-md w-full space-y-8 p-6 bg-white rounded-lg shadow-lg">
         <div>
           <h2 className=" text-3xl font-extrabold text-gray-900">Update Product</h2>
@@ -89,7 +101,17 @@ const UpdateProductForm = () => {
           </div>
           <div>
             <label htmlFor="categories">Category</label>
-            <input type="text" id="categories" {...register('category')} />
+            <select {...register('category')}>
+              <option value="">select category</option>
+              {categories &&
+                categories.map((category) => {
+                  return (
+                    <option key={category._id} value={category._id}>
+                      {category.title}
+                    </option>
+                  )
+                })}
+            </select>
             {errors.category && <p className="errorMessage">{errors.category.message}</p>}
           </div>
           <div>

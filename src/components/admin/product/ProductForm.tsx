@@ -5,6 +5,11 @@ import { any, object, string, z } from 'zod'
 
 import { postProduct } from '../../../Servies/product'
 import { showToast } from '../../../helper/toast'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch } from '../../../redux/store'
+import { productState } from '../../../redux/slices/products/productSlice'
+import { useEffect } from 'react'
+import { categoryState } from '../../../redux/slices/categories/categorySlice'
 
 const productSchema = object({
   title: string().min(6),
@@ -18,7 +23,10 @@ const productSchema = object({
 type ProductSchema = z.infer<typeof productSchema>
 
 export function ProductForm() {
+  const { isLoading, error } = useSelector(productState)
+  const { categories } = useSelector(categoryState)
   const navigate = useNavigate()
+  const dispatch = useDispatch<AppDispatch>()
   const {
     register,
     handleSubmit,
@@ -29,13 +37,6 @@ export function ProductForm() {
   })
 
   const onSubmit = async (data: ProductSchema) => {
-    console.log('image', data.image[0])
-    const transformedData = {
-      ...data,
-      image: data.image[0],
-      price: Number(data.price),
-      quantity: Number(data.quantity)
-    }
     const formdata = new FormData()
     formdata.append('title', data.title)
     formdata.append('image', data.image[0])
@@ -43,13 +44,22 @@ export function ProductForm() {
     formdata.append('quantity', data.quantity)
     formdata.append('price', data.price)
     formdata.append('category', data.category)
-    console.log(transformedData)
-    try {
-      await postProduct(formdata)
-    } catch (err) {
-      showToast(`${err}`, true)
-    }
+
+    formdata.forEach((value, key) => {
+      console.log(`${key}: ${value}`)
+    })
+
+    dispatch(postProduct(formdata))
   }
+
+  {
+    isLoading && <h1>Loading.. </h1>
+  }
+  useEffect(() => {
+    if (error) {
+      showToast(error, false, dispatch)
+    }
+  }, [error])
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
@@ -74,8 +84,20 @@ export function ProductForm() {
             {errors.description && <p className="errorMessage">{errors.description.message}</p>}
           </div>
           <div>
-            <label htmlFor="categories">Categories: (use comma , to create multiple)</label>
-            <input type="text" id="categories" {...register('category')} />
+            <label htmlFor="categories" defaultValue="">
+              Categories:
+            </label>
+            <select {...register('category')}>
+              <option value="">select category</option>
+              {categories &&
+                categories.map((category) => {
+                  return (
+                    <option key={category._id} value={category._id}>
+                      {category.title}
+                    </option>
+                  )
+                })}
+            </select>
             {errors.category && <p className="errorMessage">{errors.category.message}</p>}
           </div>
           <div>

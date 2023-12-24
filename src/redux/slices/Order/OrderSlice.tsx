@@ -6,7 +6,7 @@ import axios from 'axios'
 export type Order = {
   id: number
   productId: number
-  userId: number
+  buyer: number
   purchasedAt: Date
 }
 export type OrderState = {

@@ -5,9 +5,9 @@ import {
   fetchProduct,
   deleteSingleProduct,
   updateSingleProduct,
-  getSingleProduct
+  getSingleProduct,
+  postProduct
 } from '../../../Servies/product'
-import axios from 'axios'
 import { Category } from '../categories/categorySlice'
 
 export type Product = {
@@ -19,24 +19,25 @@ export type Product = {
   quantity: number
   sold: number
   image: string
-  category: Category
+  category: Category['_id']
   createdAt?: Date
   updatedAt?: Date
   __v: number
 }
-export type ProductInput = {
-  title: string
-  description: string
-  price: number
-  quantity: number
-  image?: string
-  category: string
-}
+// export type ProductInput = {
+//   title: string
+//   description: string
+//   price: number
+//   quantity: number
+//   image?: string
+//   category: string
+// }
 
 export type ProductState = {
   items: Product[]
   products: Product[]
   error: null | string
+  status: null | string
   isLoading: boolean
   singleProduct: Product
   inCart: Product[]
@@ -49,6 +50,7 @@ export type ProductState = {
 const initialState: ProductState = {
   items: [],
   error: null,
+  status: null,
   products: [],
   isLoading: false,
   singleProduct: {} as Product,
@@ -64,9 +66,9 @@ export const productSlice = createSlice({
   name: 'product',
   initialState,
   reducers: {
-    findById: (state, action) => {
-      // console.log('action', action)
-      // state.singleProduct = action.payload
+    clearError: (state) => {
+      state.error = null
+      state.status = null
     },
     searchProduct: (state, action) => {
       console.log(action.payload)
@@ -91,29 +93,6 @@ export const productSlice = createSlice({
         default:
           state.products
       }
-    },
-    deleteProduct: (state, action) => {
-      const id = action.payload
-      // state.items = state.items.filter((product) => product.id !== id)
-      state.products = state.items
-    },
-    addProduct: (state, action) => {
-      const id = state.items.length + 1
-      const name = action.payload
-      console.log(`name:${name}`)
-      const newProduct: Product = { id, ...name }
-      // console.log(`newProduct:${newProduct.id}`)
-      state.items = [...state.items, newProduct]
-      state.products = state.items
-      console.log(state.items.length)
-    },
-    UpdateProduct: (state, action) => {
-      // const updatedProduct: Product = action.payload
-      // axios.put('/products', updatedProduct).then()
-      // state.items = state.items.map((product) =>
-      //   // product.id === updatedProduct.id ? updatedProduct : product
-      // )
-      state.products = state.items
     },
     addToCart: (state, action) => {
       const newProduct: Product = action.payload
@@ -196,15 +175,31 @@ export const productSlice = createSlice({
         state.items = action.payload
         state.products = state.items
       })
+      .addCase(postProduct.fulfilled, (state, action) => {
+        state.isLoading = false
+        const { payload, message } = action.payload
+        state.status = message
+        state.items.push(payload)
+        state.products = state.items
+      })
       .addCase(deleteSingleProduct.fulfilled, (state, action) => {
         state.isLoading = false
-        console.log(action.payload)
-        state.items = state.items.filter((product) => product.slug != String(action.payload))
+        const { payload, message } = action.payload
+        state.status = message
+        state.items = state.items.filter((product) => product.slug != payload.slug)
         state.products = state.items
       })
       .addCase(getSingleProduct.fulfilled, (state, action) => {
         state.isLoading = false
         state.singleProduct = action.payload
+      })
+      .addCase(updateSingleProduct.fulfilled, (state, action) => {
+        const { payload, message } = action.payload
+        state.status = message
+        state.items = state.items.map((category) =>
+          category._id === payload._id ? payload : category
+        )
+        state.products = state.items
       })
 
       .addMatcher(
@@ -224,23 +219,21 @@ export const productSlice = createSlice({
         (action) => action.type.endsWith('/rejected'),
         (state, action) => {
           state.isLoading = false
-          state.error = action.error.message || 'An error occurred.'
+          state.error = action.payload || 'An error occurred.'
+          console.log(state.error)
         }
       )
   }
 })
 export const {
-  findById,
   searchProduct,
   sortProduct,
-  UpdateProduct,
-  addProduct,
-  deleteProduct,
   addToCart,
   removeFromCart,
   IncreaseQuantity,
   DecreaseQuantity,
   FilterByCategory,
+  clearError,
   SavedItem
 } = productSlice.actions
 

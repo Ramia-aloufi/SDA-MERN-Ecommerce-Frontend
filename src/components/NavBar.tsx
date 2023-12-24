@@ -8,7 +8,7 @@ import { userState } from '../redux/slices/user/userSlice'
 
 const NavBar = () => {
   const { totalQuantity } = useSelector(productState)
-  const { userData } = useSelector(userState)
+  const { userData, isLogedIn } = useSelector(userState)
 
   return (
     <nav className="bg-[#434343] w-screen flex p-3 md:px-9  items-center justify-between sticky top-0">
@@ -28,15 +28,12 @@ const NavBar = () => {
             </span>
           </button>
         </Link>
-        <Link
-          to={
-            userData?.role == 'admin' ? '/admin' : userData?.role == 'visitor' ? '/user' : '/login'
-          }>
+        <Link to={isLogedIn ? (userData?.isAdmin ? '/admin' : '/user') : '/login'}>
           <button className="inline-flex items-center  text-2xl font-medium text-center text-white">
             <IoPersonSharp className="text-center hover:text-[#f88648]" />
           </button>
         </Link>
-        <Link to={userData?.role == 'visitor' ? '/user/savedproduct' : '/login'}>
+        <Link to={isLogedIn ? '/user/savedproduct' : '/login'}>
           <button className="inline-flex items-center text-2xl font-medium text-center text-white ">
             <IoHeart className="text-center hover:text-[#f88648]" />
           </button>

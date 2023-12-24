@@ -2,13 +2,10 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import { object, string, z } from 'zod'
-import { ToastContainer, toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 
 import { AppDispatch } from '../../../redux/store'
-import { addCategory } from '../../../redux/slices/categories/categorySlice'
 import { postCategory } from '../../../Servies/category'
-import { showToast } from '../../../helper/toast'
 
 const categorySchema = object({
   name: string().min(3)
@@ -17,6 +14,7 @@ const categorySchema = object({
 type CategorySchema = z.infer<typeof categorySchema>
 const AddCategotyForm = () => {
   const navigate = useNavigate()
+  const dispatch = useDispatch<AppDispatch>()
   const {
     register,
     handleSubmit,
@@ -27,8 +25,7 @@ const AddCategotyForm = () => {
   })
 
   const onSubmit = async (data: CategorySchema) => {
-    const response = await postCategory(data.name)
-    showToast(response, true)
+    dispatch(postCategory(data.name))
     reset()
     navigate('/admin/category')
   }

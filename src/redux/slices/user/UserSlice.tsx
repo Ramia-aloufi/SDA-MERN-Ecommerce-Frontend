@@ -1,16 +1,26 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 import { RootState } from '../../store'
-import { fetchUser } from '../../../Servies/user'
+import { banStatus, fetchUser, login, logout, postUser, updateUser } from '../../../Servies/user'
+import { Order } from '../Order/orderSlice'
+import axios from 'axios'
 
+axios.defaults.withCredentials = true
 export type User = {
-  id: number
-  firstName: string
-  lastName: string
+  _id: string
+  username: string
+  slug: string
   email: string
   password: string
-  role: string
-  ban: boolean
+  image?: string
+  orders: Order['buyer'][]
+  address: string
+  phone: string
+  isAdmin: boolean
+  isBanned: boolean
+  createdAt?: Date
+  updatedAt?: Date
+  __v: number
 }
 
 export type userState = {
@@ -22,6 +32,7 @@ export type userState = {
   userData: User | null
   searchTerm: string
   searchedResult: User[]
+  status: string | null
 }
 
 const data =
@@ -36,41 +47,20 @@ const initialState: userState = {
   isLogedIn: data.isLogedIn,
   userData: data.userData,
   searchTerm: '',
-  searchedResult: []
+  searchedResult: [],
+  status: null
 }
 
 export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    logIn: (state, action) => {
-      state.isLogedIn = true
-      state.userData = action.payload
-      localStorage.setItem(
-        'LoginData',
-        JSON.stringify({
-          isLogedIn: state.isLogedIn,
-          userData: state.userData
-        })
-      )
-    },
-    logOut: (state) => {
-      state.isLogedIn = false
-      state.userData = null
-      localStorage.setItem(
-        'LoginData',
-        JSON.stringify({
-          isLogedIn: state.isLogedIn,
-          userData: state.userData
-        })
-      )
-    },
     searchUser: (state, action) => {
       console.log(action.payload)
       state.searchTerm = action.payload
       state.searchedResult = state.searchTerm
         ? state.items.filter((user) =>
-            user.firstName.toLowerCase().includes(state.searchTerm.toLowerCase())
+            user.username.toLowerCase().includes(state.searchTerm.toLowerCase())
           )
         : []
       state.users = state.searchedResult.length > 0 ? state.searchedResult : state.items
@@ -78,32 +68,24 @@ export const userSlice = createSlice({
     deleteUser: (state, action) => {
       const id = action.payload
       console.log(id)
-      state.items = state.items.filter((user) => user.id !== id)
+      state.items = state.items.filter((user) => user._id !== id)
       state.users = state.items
       console.log(state.items)
-    },
-    addUser: (state, action) => {
-      const id = state.items.length + 1
-      const data = action.payload
-      const newUser: User = { ...data, id }
-      state.items = [newUser, ...state.items]
-      state.users = state.items
-      state.isLogedIn = true
-      state.userData = newUser
-      localStorage.setItem(
-        'LoginData',
-        JSON.stringify({
-          isLogedIn: state.isLogedIn,
-          userData: state.userData
-        })
-      )
-    },
-    UpdateUser: (state, action) => {
-      const updatedUser = action.payload
-      const existUser = state.items.find((user) => user.id == updatedUser.id)
-      if (existUser) {
-        state.userData = action.payload
+    }
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchUser.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.items = action.payload.payload
+        state.status = action.payload.message
         state.users = state.items
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.isLogedIn = true
+        state.userData = action.payload.payload
+        state.status = action.payload.message
+        console.log(action.payload)
         localStorage.setItem(
           'LoginData',
           JSON.stringify({
@@ -111,37 +93,74 @@ export const userSlice = createSlice({
             userData: state.userData
           })
         )
-      }
-    },
-    banUser: (state, action) => {
-      const updatedUser = action.payload
-      console.log(updatedUser.ban)
-      const existUser = state.items.find((user) => user.id == updatedUser.id)
-      if (existUser) {
-        existUser.ban = !existUser.ban
-        state.users = state.items
-      }
-    }
-  },
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchUser.pending, (state) => {
-        state.isLoading = true
       })
-      .addCase(fetchUser.fulfilled, (state, action) => {
-        state.isLoading = false
-        state.items = action.payload
-        state.users = state.items
+      .addCase(logout.fulfilled, (state, action) => {
+        state.isLogedIn = false
+        state.userData = null
+        state.status = action.payload.message
+        localStorage.setItem(
+          'LoginData',
+          JSON.stringify({
+            isLogedIn: state.isLogedIn,
+            userData: state.userData
+          })
+        )
       })
-      .addCase(fetchUser.rejected, (state, action) => {
-        state.isLoading = false
-        state.error = action.error.message || 'An error occurred.'
+      .addCase(postUser.fulfilled, (state, action) => {
+        state.status = action.payload.message
+        state.items.push(action.payload.payload)
       })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        const updatedUser = action.payload.payload
+        const existUser = state.items.find((user) => user._id == updatedUser._id)
+        if (existUser) {
+          state.userData = action.payload.payload
+          state.users = state.items
+          localStorage.setItem(
+            'LoginData',
+            JSON.stringify({
+              isLogedIn: state.isLogedIn,
+              userData: state.userData
+            })
+          )
+        }
+      })
+      .addCase(banStatus.fulfilled, (state, action) => {
+        const { message, payload } = action.payload
+        console.log('payload', payload)
+        console.log('message', message)
+        state.status = message
+        const existUser = state.items.find((user) => user._id == payload._id)
+        if (existUser) {
+          existUser.isBanned = !existUser.isBanned
+          state.users = state.items
+        }
+      })
+      .addMatcher(
+        (action) => action.type.endsWith('/pending'),
+        (state) => {
+          state.isLoading = true
+        }
+      )
+      .addMatcher(
+        (action) => action.type.endsWith('/fulfilled'),
+        (state) => {
+          state.isLoading = false
+          state.error = ''
+        }
+      )
+      .addMatcher(
+        (action) => action.type.endsWith('/rejected'),
+        (state, action) => {
+          state.isLoading = false
+          state.error = action.payload || 'An error occurred.'
+          console.log(state.error)
+        }
+      )
   }
 })
 
 export const userState = (state: RootState) => state.users
-export const { logIn, logOut, searchUser, deleteUser, banUser, addUser, UpdateUser } =
-  userSlice.actions
+export const { searchUser, deleteUser } = userSlice.actions
 
 export default userSlice.reducer

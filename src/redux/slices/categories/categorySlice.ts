@@ -1,15 +1,21 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
 import { RootState } from '../../store'
 import { Category } from '../../../components/admin/category/Category'
-import axios from 'axios'
-import { banUser } from '../user/userSlice'
-import { baseURL } from '../../../api'
-import { fetchCategory } from '../../../Servies/category'
+import {
+  deleteSingleCategory,
+  fetchCategory,
+  postCategory,
+  updateSingleCategory
+} from '../../../Servies/category'
 
 export type Category = {
-  _id: number
+  _id: string
   title: string
+  slug: string
+  createdAt?: Date
+  updatedAt?: Date
+  __v: number
 }
 
 export type CategoryState = {
@@ -19,6 +25,7 @@ export type CategoryState = {
   isLoading: boolean
   searchTerm: string
   searchedResult: Category[]
+  status: null | string
 }
 
 const initialState: CategoryState = {
@@ -27,7 +34,8 @@ const initialState: CategoryState = {
   error: null,
   isLoading: false,
   searchTerm: '',
-  searchedResult: []
+  searchedResult: [],
+  status: null
 }
 
 export const categorySlice = createSlice({
@@ -44,49 +52,69 @@ export const categorySlice = createSlice({
         : state.items
       state.categories = state.searchedResult.length > 0 ? state.searchedResult : state.items
     },
-    deleteCategory: (state, action) => {
-      const id = action.payload
-      console.log(id)
-      state.items = state.items.filter((user) => user._id !== id)
-      state.categories = state.items
-      console.log(state.items)
-    },
-    addCategory: (state, action) => {
-      const _id = state.items.length + 1
-      const title = action.payload
-      console.log(`name:${name}`)
-      const newCategory: Category = { _id, title }
-      console.log(`newCategory:${newCategory}`)
-      state.items = [...state.items, newCategory]
-      state.categories = state.items
-    },
-    UpdateCategory: (state, action) => {
-      const updatedUser: Category = action.payload
-      console.log(`updatedUser: ${updatedUser._id} ${updatedUser.title}`)
-      const existUser = state.items.find((category) => category._id == updatedUser._id)
-      if (existUser) {
-        existUser.title = updatedUser.title
-        state.categories = state.items
-      }
+    clearError: (state) => {
+      state.error = null
+      state.status = null
     }
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchCategory.pending, (state) => {
-        state.isLoading = true
-      })
       .addCase(fetchCategory.fulfilled, (state, action) => {
         state.isLoading = false
         state.items = action.payload
         state.categories = state.items
       })
-      .addCase(fetchCategory.rejected, (state, action) => {
+      .addCase(postCategory.fulfilled, (state, action) => {
         state.isLoading = false
-        state.error = action.error.message || 'An error occurred.'
+        const product = action.payload.payload
+        state.items.push(product)
+        state.categories = state.items
+        state.status = action.payload.message
       })
+      .addCase(deleteSingleCategory.fulfilled, (state, action) => {
+        state.isLoading = false
+        console.log(action.payload)
+        state.items = state.items.filter(
+          (category) => category.slug != String(action.payload.payload.slug)
+        )
+        state.categories = state.items
+        state.status = action.payload.message
+      })
+      .addCase(updateSingleCategory.fulfilled, (state, action) => {
+        const updatedUser: Category = action.payload.payload
+        state.items = state.items.map((category) =>
+          category._id === updatedUser._id ? updatedUser : category
+        )
+        state.categories = state.items
+      })
+
+      .addMatcher(
+        (action) => action.type.endsWith('/pending'),
+        (state) => {
+          state.isLoading = true
+        }
+      )
+
+      .addMatcher(
+        (action) => action.type.endsWith('/fulfilled'),
+        (state) => {
+          state.isLoading = false
+          state.error = ''
+        }
+      )
+
+      .addMatcher(
+        (action) => action.type.endsWith('/rejected'),
+        (state, action) => {
+          state.isLoading = false
+          state.error = action.payload || 'An error occurred.'
+          console.log(state.error)
+        }
+      )
   }
 })
-export const { searchCategory, deleteCategory, UpdateCategory, addCategory } = categorySlice.actions
+
+export const { searchCategory } = categorySlice.actions
 
 export const categoryState = (state: RootState) => state.categories
 

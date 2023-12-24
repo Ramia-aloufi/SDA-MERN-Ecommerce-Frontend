@@ -2,20 +2,30 @@ import { useDispatch, useSelector } from 'react-redux'
 import { FiTrash, FiEdit } from 'react-icons/fi'
 import { useNavigate } from 'react-router-dom'
 
-import { categoryState, deleteCategory } from '../../../redux/slices/categories/categorySlice'
+import { categoryState } from '../../../redux/slices/categories/categorySlice'
 import { AppDispatch } from '../../../redux/store'
+import { deleteSingleCategory } from '../../../Servies/category'
+import { useEffect } from 'react'
+import { showToast } from '../../../helper/toast'
 
 const CategoryTable = () => {
   const navigate = useNavigate()
   const { categories } = useSelector(categoryState)
   const dispatch = useDispatch<AppDispatch>()
-  const handleDelete = (id: number) => {
-    dispatch(deleteCategory(Number(id)))
+  const { error, status } = useSelector(categoryState)
+
+  const handleDelete = (slug: string) => {
+    console.log('slug', slug)
+    dispatch(deleteSingleCategory(slug))
   }
 
-  const handleEdit = (id: number) => {
-    navigate(`/admin/category/update/${id}`)
+  const handleEdit = (slug: string) => {
+    navigate(`/admin/category/update/${slug}`)
   }
+  useEffect(() => {
+    status && showToast(status, true, dispatch)
+    error && showToast(error, false, dispatch)
+  }, [status, error])
 
   return (
     <table className="min-w-full table-auto text-xs">
@@ -27,16 +37,16 @@ const CategoryTable = () => {
         </tr>
       </thead>
       <tbody>
-        {categories.map(({ _id, title }, index) => {
+        {categories.map(({ slug, title }, index) => {
           return (
-            <tr key={_id} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}>
+            <tr key={index} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}>
               <td className="border p-2">{index}</td>
               <td className="border p-2">{title}</td>
               <td className="border  py-2 grid gap-3 justify-center ">
-                <button onClick={() => handleDelete(_id)} className="trashBtn">
+                <button onClick={() => handleDelete(slug)} className="trashBtn">
                   <FiTrash />
                 </button>
-                <button onClick={() => handleEdit(_id)} className="editBtn">
+                <button onClick={() => handleEdit(slug)} className="editBtn">
                   <FiEdit />
                 </button>
               </td>

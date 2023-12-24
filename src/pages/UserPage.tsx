@@ -6,12 +6,13 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { IoCreateOutline } from 'react-icons/io5'
 
 import UserSidbar from '../components/user/UserSidbar'
-import { UpdateUser, userState } from '../redux/slices/user/userSlice'
+import { userState } from '../redux/slices/user/userSlice'
+import { updateUser } from '../Servies/user'
+import { AppDispatch } from '../redux/store'
 
 const UserPage = () => {
   const userSchema = object({
-    firstName: string().min(3),
-    lastName: string().min(3)
+    username: string().min(3)
   })
 
   type UserSchema = z.infer<typeof userSchema>
@@ -25,16 +26,19 @@ const UserPage = () => {
   })
   const [isEdit, setIsEdit] = useState(false)
   const { userData } = useSelector(userState)
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
 
   const onEdit = () => {
     console.log('onEdit')
     setIsEdit(true)
-    setValue('firstName', userData?.firstName || '')
-    setValue('lastName', userData?.lastName || '')
+    setValue('username', userData?.username || '')
   }
   const onSubmit = (data: UserSchema) => {
-    dispatch(UpdateUser({ ...userData, firstName: data.firstName, lastName: data.lastName }))
+    const user = { ...userData, username: data.username }
+    const slug = userData?.slug
+    if (slug) {
+      dispatch(updateUser({ user, slug }))
+    }
     setIsEdit(false)
   }
 
@@ -45,8 +49,7 @@ const UserPage = () => {
         {!isEdit && (
           <div className="bg-white space-y-4 p-8 px-16 rounded-lg shadow-md grid">
             <h1 className="mb-4 font-semibold">User Informations</h1>
-            <span>First Name: {userData?.firstName}</span>
-            <span>Last Name :{userData?.lastName}</span>
+            <span>First Name: {userData?.username}</span>
             <button
               onClick={() => {
                 onEdit()
@@ -61,10 +64,8 @@ const UserPage = () => {
           <div className="bg-white p-8  rounded-lg shadow-md grid">
             <h1 className="mb-4 font-semibold">Update Informations</h1>
             <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
-              <input type="text" {...register('firstName')} />
-              {errors.firstName && <p className="errorMessage">{errors.firstName.message}</p>}
-              <input type="text" {...register('lastName')} />
-              {errors.lastName && <p className="errorMessage">{errors.lastName.message}</p>}
+              <input type="text" {...register('username')} />
+              {errors.username && <p className="errorMessage">{errors.username.message}</p>}
               <input type="submit" className="btn" />
             </form>
           </div>

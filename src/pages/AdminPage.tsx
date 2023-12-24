@@ -6,7 +6,8 @@ import { object, string, z } from 'zod'
 import { IoCreateOutline } from 'react-icons/io5'
 
 import { AdminSidbar } from '../components/admin/AdminSidbar'
-import { UpdateUser, userState } from '../redux/slices/user/userSlice'
+import { userState } from '../redux/slices/user/userSlice'
+import { updateUser } from '../Servies/user'
 
 export const AdminPage = () => {
   const userSchema = object({
@@ -30,11 +31,10 @@ export const AdminPage = () => {
   const onEdit = () => {
     console.log('onEdit')
     setIsEdit(true)
-    setValue('firstName', userData?.firstName || '')
-    setValue('lastName', userData?.lastName || '')
+    setValue('username', userData?.username || '')
   }
   const onSubmit = (data: UserSchema) => {
-    dispatch(UpdateUser({ ...userData, firstName: data.firstName, lastName: data.lastName }))
+    dispatch(updateUser({ ...userData, username: data.username }))
     setIsEdit(false)
   }
 
@@ -45,8 +45,7 @@ export const AdminPage = () => {
         {!isEdit && (
           <div className="bg-white space-y-4 p-8 px-16 rounded-lg shadow-md grid">
             <h1 className="mb-4 font-semibold">User Informations</h1>
-            <span>First Name: {userData?.firstName}</span>
-            <span>Last Name :{userData?.lastName}</span>
+            <span>First Name: {userData?.username}</span>
             <button
               onClick={() => {
                 onEdit()

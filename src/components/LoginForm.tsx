@@ -4,7 +4,10 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useNavigate } from 'react-router-dom'
 
 import { login } from '../Servies/user'
-import { showToast } from '../helper/toast'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch } from '../redux/store'
+import { userState } from '../redux/slices/user/userSlice'
+import { useEffect } from 'react'
 
 const loginSchema = object({
   email: string().email(),
@@ -15,6 +18,8 @@ type LoginSchema = z.infer<typeof loginSchema>
 
 function LoginForm() {
   const navigate = useNavigate()
+  const dispatch = useDispatch<AppDispatch>()
+  const { userData } = useSelector(userState)
 
   const {
     register,
@@ -26,16 +31,14 @@ function LoginForm() {
   })
 
   const onSubmit = async (data: LoginSchema) => {
-    await login(data)
-
-    // if (userExist.role == 'admin') {
-    //   navigate('/admin')
-    // } else {
-    //   navigate('/user')
-    // }
-
+    dispatch(login(data))
     reset()
   }
+  useEffect(() => {
+    if (userData) {
+      navigate(`${userData?.isAdmin ? '/admin' : '/user'}`)
+    }
+  }, [userData])
 
   return (
     <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>

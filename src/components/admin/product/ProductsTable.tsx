@@ -4,22 +4,31 @@ import { useNavigate } from 'react-router-dom'
 
 import { productState } from '../../../redux/slices/products/productSlice'
 import { baseURL } from '../../../api'
-import { deleteSingleProduct, fetchProduct } from '../../../Servies/product'
+import { deleteSingleProduct } from '../../../Servies/product'
 import { AppDispatch } from '../../../redux/store'
+import { useEffect } from 'react'
+import { showToast } from '../../../helper/toast'
+import { Category } from '../../../redux/slices/categories/categorySlice'
 
 export const ProductsTable = () => {
   const products = useSelector(productState).products
   const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
 
+  const { status, error } = useSelector(productState)
+
   const handleDelete = (slug: string) => {
     dispatch(deleteSingleProduct(slug))
   }
 
-  const handleEdit = (id: string) => {
-    const product = id
-    navigate(`/admin/product/update/${product}`)
+  const handleEdit = (slug: string) => {
+    navigate(`/admin/product/update/${slug}`)
   }
+
+  useEffect(() => {
+    status && showToast(status, true, dispatch)
+    error && showToast(error, false, dispatch)
+  }, [status, error])
 
   return (
     <table className="min-w-full table-auto text-xs">
@@ -48,7 +57,9 @@ export const ProductsTable = () => {
                     alt={product.title}
                   />
                 </td>
-                <td className="border p-2 hidden sm:table-cell">{product.category.title}</td>
+                <td className="border p-2 hidden sm:table-cell">
+                  {(product.category as unknown as Category).title}
+                </td>
                 <td className="border p-2 grid gap-3 justify-center">
                   <button className="trashBtn">
                     <FiTrash

@@ -92,7 +92,7 @@ export const router = createBrowserRouter([
             element: <AddCategotyForm />
           },
           {
-            path: 'category/update/:id',
+            path: 'category/update/:slug',
             element: <UpdateCategoryForm />
           },
           {

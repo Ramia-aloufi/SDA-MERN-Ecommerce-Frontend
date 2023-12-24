@@ -1,15 +1,30 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ToastContainer } from 'react-toastify'
 
 import LoginForm from '../components/LoginForm'
 import SignupForm from '../components/SignupForm'
+import { showToast } from '../helper/toast'
+import { useDispatch, useSelector } from 'react-redux'
+import { userState } from '../redux/slices/user/userSlice'
+import { AppDispatch } from '../redux/store'
 
 const LoginSignupPage = () => {
   const [loginForm, setLoginForm] = useState<boolean>(true)
+  const { status, error } = useSelector(userState)
+  const dispatch = useDispatch<AppDispatch>()
 
   const handleChangeForm = () => {
     setLoginForm((prev) => !prev)
   }
+
+  useEffect(() => {
+    if (status) {
+      showToast(status, true, dispatch)
+    }
+    if (error) {
+      showToast(error, false, dispatch)
+    }
+  }, [status])
 
   return (
     <div className="h-full flex flex-col items-center justify-center bg-gray-50">
