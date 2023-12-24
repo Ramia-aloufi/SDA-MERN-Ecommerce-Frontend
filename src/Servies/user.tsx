@@ -58,7 +58,7 @@ export const logout = createAsyncThunk('user/logout', async () => {
 })
 export const updateUser = createAsyncThunk(
   'user/updateUser',
-  async (payload: { user: Partial<User>; slug: string }) => {
+  async (payload: { user: FormData | User; slug: string }) => {
     try {
       const { user, slug } = payload
       const { data } = await axios.put(`${baseURL}/users/${slug}`, user)
@@ -100,7 +100,28 @@ export const roleStatus = createAsyncThunk('user/roleStatus', async (user: User)
     console.log(data)
     return data
   } catch (error) {
-    const message = error.response.data.errors
+    const message = error.response.data.errors || 'Error update data'
     return message
   }
 })
+export const forgotPassword = createAsyncThunk('user/forgotPassword', async (email: string) => {
+  try {
+    const { data } = await axios.post(`${baseURL}/users/forgot-password`, { email: email })
+    return data
+  } catch (error) {
+    const message = error.response.message || 'Error reset password'
+    return message
+  }
+})
+export const resetPassword = createAsyncThunk(
+  'user/resetPassword',
+  async (payload: { password: string; token: string }) => {
+    try {
+      const { data } = await axios.post(`${baseURL}/users/reset-password`, payload)
+      return data
+    } catch (error) {
+      const message = error.response.message || 'Error reset password'
+      return message
+    }
+  }
+)

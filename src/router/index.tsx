@@ -21,6 +21,8 @@ import CartPage from '../pages/CartPage'
 import LoginSignupPage from '../pages/LoginSignupPage'
 import SavedProduct from '../pages/SavedProduct'
 import Activate from '../components/Activate'
+import ForgotPassword from '../pages/ForgotPassword'
+import ResetPassword from '../pages/ResetPassword'
 
 // function Index() {
 //   // const count = useSelector((state: RootState) => state.counter.value)
@@ -62,6 +64,14 @@ export const router = createBrowserRouter([
       {
         path: '/login',
         element: <LoginSignupPage />
+      },
+      {
+        path: '/forgot-password',
+        element: <ForgotPassword />
+      },
+      {
+        path: '/reset-password/:token',
+        element: <ResetPassword />
       },
       {
         path: '/product/:slug',

@@ -5,9 +5,11 @@ import {
   banStatus,
   deleteSingleUser,
   fetchUser,
+  forgotPassword,
   login,
   logout,
   postUser,
+  resetPassword,
   roleStatus,
   updateUser
 } from '../../../Servies/user'
@@ -78,16 +80,17 @@ export const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchUser.fulfilled, (state, action) => {
+        const { payload, message } = action.payload
         state.isLoading = false
-        state.items = action.payload.payload
-        state.status = action.payload.message
+        state.items = payload
+        state.status = message
         state.users = state.items
       })
       .addCase(login.fulfilled, (state, action) => {
+        const { payload, message } = action.payload
         state.isLogedIn = true
-        state.userData = action.payload.payload
-        state.status = action.payload.message
-        console.log(action.payload)
+        state.userData = payload
+        state.status = message
         localStorage.setItem(
           'LoginData',
           JSON.stringify({
@@ -109,23 +112,23 @@ export const userSlice = createSlice({
         )
       })
       .addCase(postUser.fulfilled, (state, action) => {
-        state.status = action.payload.message
-        state.items.push(action.payload.payload)
+        const { payload, message } = action.payload
+        state.status = message
+        state.items.push(payload)
       })
       .addCase(updateUser.fulfilled, (state, action) => {
-        const updatedUser = action.payload.payload
-        const existUser = state.items.find((user) => user._id == updatedUser._id)
-        if (existUser) {
-          state.userData = action.payload.payload
-          state.users = state.items
-          localStorage.setItem(
-            'LoginData',
-            JSON.stringify({
-              isLogedIn: state.isLogedIn,
-              userData: state.userData
-            })
-          )
-        }
+        const { payload, message } = action.payload
+        state.items = state.items.map((user) => (user.slug == payload.slug ? payload : user))
+        state.status = message
+        state.userData = payload
+        state.users = state.items
+        localStorage.setItem(
+          'LoginData',
+          JSON.stringify({
+            isLogedIn: state.isLogedIn,
+            userData: state.userData
+          })
+        )
       })
       .addCase(banStatus.fulfilled, (state, action) => {
         const { message, payload } = action.payload
@@ -166,6 +169,17 @@ export const userSlice = createSlice({
         state.isLoading = false
         state.items = state.items.filter((category) => category.slug != String(payload.slug))
         state.users = state.items
+        state.status = message
+      })
+      .addCase(forgotPassword.fulfilled, (state, action) => {
+        const { message } = action.payload
+        state.isLoading = false
+
+        state.status = message
+      })
+      .addCase(resetPassword.fulfilled, (state, action) => {
+        const { message } = action.payload
+        state.isLoading = false
         state.status = message
       })
       .addMatcher(

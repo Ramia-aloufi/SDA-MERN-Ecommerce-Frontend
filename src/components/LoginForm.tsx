@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form'
 import { object, string, z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import { login } from '../Servies/user'
 import { useDispatch, useSelector } from 'react-redux'
@@ -54,6 +54,7 @@ function LoginForm() {
         {errors.password && <p className="errorMessage">{errors.password.message}</p>}
       </div>
       <div>
+        <Link to="/forgot-password">Forgot Password ?</Link>
         <button type="submit" className="btn">
           Log in
         </button>

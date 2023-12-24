@@ -8,11 +8,11 @@ import { IoCreateOutline } from 'react-icons/io5'
 import { AdminSidbar } from '../components/admin/AdminSidbar'
 import { userState } from '../redux/slices/user/userSlice'
 import { updateUser } from '../Servies/user'
+import { AppDispatch } from '../redux/store'
 
 export const AdminPage = () => {
   const userSchema = object({
-    firstName: string().min(3),
-    lastName: string().min(3)
+    username: string().min(3)
   })
   type UserSchema = z.infer<typeof userSchema>
 
@@ -26,16 +26,24 @@ export const AdminPage = () => {
   })
   const [isEdit, setIsEdit] = useState(false)
   const { userData } = useSelector(userState)
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
 
   const onEdit = () => {
     console.log('onEdit')
     setIsEdit(true)
     setValue('username', userData?.username || '')
   }
+
   const onSubmit = (data: UserSchema) => {
-    dispatch(updateUser({ ...userData, username: data.username }))
-    setIsEdit(false)
+    if (userData?.slug) {
+      dispatch(
+        updateUser({
+          user: { ...userData, username: data.username },
+          slug: userData?.slug
+        })
+      )
+      setIsEdit(false)
+    }
   }
 
   return (
@@ -58,13 +66,11 @@ export const AdminPage = () => {
         )}
         {isEdit && (
           <div className="bg-white p-8  rounded-lg shadow-md grid">
-            <h1 className="mb-4 font-semibold">Update Informations</h1>
+            <h1 className="mb-4 font-semibold">Update user Informations</h1>
             <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
-              <input type="text" {...register('firstName')} />
-              {errors.firstName && <p className="errorMessage">{errors.firstName.message}</p>}
-              <input type="text" {...register('lastName')} />
-              {errors.lastName && <p className="errorMessage">{errors.lastName.message}</p>}
-              <input type="submit" className="btn" />
+              <input type="text" {...register('username')} />
+              {errors.username && <p className="errorMessage">{errors.username.message}</p>}
+              <input type="submit" value="update" className="btn" />
             </form>
           </div>
         )}
