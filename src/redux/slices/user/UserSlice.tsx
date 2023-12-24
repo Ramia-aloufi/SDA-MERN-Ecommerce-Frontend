@@ -1,7 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 import { RootState } from '../../store'
-import { banStatus, fetchUser, login, logout, postUser, updateUser } from '../../../Servies/user'
+import {
+  banStatus,
+  deleteSingleUser,
+  fetchUser,
+  login,
+  logout,
+  postUser,
+  roleStatus,
+  updateUser
+} from '../../../Servies/user'
 import { Order } from '../Order/orderSlice'
 import axios from 'axios'
 
@@ -64,13 +73,6 @@ export const userSlice = createSlice({
           )
         : []
       state.users = state.searchedResult.length > 0 ? state.searchedResult : state.items
-    },
-    deleteUser: (state, action) => {
-      const id = action.payload
-      console.log(id)
-      state.items = state.items.filter((user) => user._id !== id)
-      state.users = state.items
-      console.log(state.items)
     }
   },
   extraReducers: (builder) => {
@@ -132,9 +134,39 @@ export const userSlice = createSlice({
         state.status = message
         const existUser = state.items.find((user) => user._id == payload._id)
         if (existUser) {
-          existUser.isBanned = !existUser.isBanned
+          existUser.isAdmin = !existUser.isAdmin
           state.users = state.items
+          state.userData = existUser
+          localStorage.setItem(
+            'LoginData',
+            JSON.stringify({
+              isLogedIn: state.isLogedIn,
+              userData: state.userData
+            })
+          )
         }
+      })
+      .addCase(roleStatus.fulfilled, (state, action) => {
+        const { payload, message } = action.payload
+        console.log('updatedUser', payload)
+        state.items = state.items.map((user) => (user.slug == payload.slug ? payload : user))
+        state.status = message
+        state.userData = payload
+        state.users = state.items
+        localStorage.setItem(
+          'LoginData',
+          JSON.stringify({
+            isLogedIn: state.isLogedIn,
+            userData: state.userData
+          })
+        )
+      })
+      .addCase(deleteSingleUser.fulfilled, (state, action) => {
+        const { payload, message } = action.payload
+        state.isLoading = false
+        state.items = state.items.filter((category) => category.slug != String(payload.slug))
+        state.users = state.items
+        state.status = message
       })
       .addMatcher(
         (action) => action.type.endsWith('/pending'),
@@ -161,6 +193,6 @@ export const userSlice = createSlice({
 })
 
 export const userState = (state: RootState) => state.users
-export const { searchUser, deleteUser } = userSlice.actions
+export const { searchUser } = userSlice.actions
 
 export default userSlice.reducer
