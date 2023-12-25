@@ -16,7 +16,8 @@ export const fetchProduct = createAsyncThunk(
         `${baseURL}/products/?page=${query?.page}${
           query?.categoryId ? `&categoryId=${query.categoryId}` : ''
         }${query?.maxPrice ? `&maxPrice=${query.maxPrice}` : ''}
-        ${query?.minPrice ? `&minPrice=${query.minPrice}` : ''}`
+        ${query?.minPrice ? `&minPrice=${query.minPrice}` : ''}
+        ${query?.sort ? `&sort=${query.sort}` : ''}`
       )
       return data
     } catch (err) {

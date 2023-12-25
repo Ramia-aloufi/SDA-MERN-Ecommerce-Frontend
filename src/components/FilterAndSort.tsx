@@ -5,26 +5,34 @@ import { AppDispatch } from '../redux/store'
 import { fetchProduct } from '../Servies/product'
 
 const FilterAndSort = () => {
-  const [isOpen, setIsOpen] = useState({ type: false, price: false })
+  const [isOpen, setIsOpen] = useState({ type: false, price: false, sort: false })
   const [selectedOption, setSelectedOption] = useState<string | null>(null)
-  const [priceFormData, setPriceFormData] = useState({ minPrice: undefined, maxPrice: undefined })
+  const [priceFormData, setPriceFormData] = useState({
+    minPrice: undefined,
+    maxPrice: undefined,
+    sort: undefined
+  })
   const dropdownRef = useRef<HTMLDivElement>(null)
+  const sortRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLDivElement>(null)
   const { categories } = useSelector(categoryState)
   const dispatch = useDispatch<AppDispatch>()
 
   const toggleDropdown = (filter: string) => {
     setIsOpen((prevIsOpen) => {
-      return filter === 'price'
-        ? { ...prevIsOpen, price: !prevIsOpen.price }
-        : { ...prevIsOpen, type: !prevIsOpen.type }
+      return {
+        ...prevIsOpen,
+        price: filter === 'price' ? !prevIsOpen.price : prevIsOpen.price,
+        type: filter === 'type' ? !prevIsOpen.type : prevIsOpen.type,
+        sort: filter === 'sort' ? !prevIsOpen.sort : prevIsOpen.sort
+      }
     })
   }
 
   const handleTypeClick = (category: Category) => {
     setSelectedOption(category.title)
     dispatch(fetchProduct({ categoryId: category._id }))
-    setIsOpen({ type: false, price: false })
+    setIsOpen({ type: false, price: false, sort: false })
   }
   const handlePriceChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPriceFormData({
@@ -36,17 +44,23 @@ const FilterAndSort = () => {
     e.preventDefault()
     console.log(priceFormData)
     dispatch(fetchProduct(priceFormData))
-    setIsOpen({ type: false, price: false })
+    setIsOpen({ type: false, price: false, sort: false })
   }
 
   const handleOutsideClick = (event: MouseEvent) => {
     if (
       dropdownRef.current &&
       !dropdownRef.current.contains(event.target as Node) &&
-      !inputRef.current?.contains(event.target as Node)
+      !inputRef.current?.contains(event.target as Node) &&
+      !sortRef.current?.contains(event.target as Node)
     ) {
-      setIsOpen({ type: false, price: false })
+      setIsOpen({ type: false, price: false, sort: false })
     }
+  }
+  const handleSortOptionClick = (sort: string) => {
+    console.log(sort)
+    dispatch(fetchProduct({ sort: sort }))
+    toggleDropdown('sort')
   }
 
   useEffect(() => {
@@ -57,7 +71,7 @@ const FilterAndSort = () => {
     }
   }, [])
   return (
-    <div className="">
+    <div className="flex justify-between">
       <div className="filter">
         <label htmlFor="">Filter</label>
         <div className="dropdown" ref={dropdownRef}>
@@ -94,6 +108,24 @@ const FilterAndSort = () => {
               <input type="reset" />
               <input className="btn" type="submit" />
             </form>
+          )}
+        </div>
+      </div>
+      <div className="filter">
+        <label htmlFor="">Sort</label>
+        <div className="dropdown">
+          <div className="selected-option" onClick={() => toggleDropdown('sort')}>
+            {'Relevance'}
+          </div>
+          {isOpen.sort && (
+            <div className="options" ref={sortRef}>
+              <div className="option text-sm" onClick={() => handleSortOptionClick('asc')}>
+                Price - low to height
+              </div>
+              <div className="option text-sm" onClick={() => handleSortOptionClick('desc')}>
+                Price - height to low
+              </div>
+            </div>
           )}
         </div>
       </div>
