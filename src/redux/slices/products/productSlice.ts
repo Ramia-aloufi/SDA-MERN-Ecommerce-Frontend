@@ -37,6 +37,16 @@ export type CartItem = {
   quantity: number
 }
 
+export type QueryParams = {
+  page: number | undefined
+  limit: number | undefined
+  maxPrice: number | undefined
+  minPrice: number | undefined
+  search: string | undefined
+  categoryId: string | undefined
+  sort: string | undefined
+}
+
 export type ProductState = {
   items: Product[]
   products: Product[]
@@ -50,6 +60,9 @@ export type ProductState = {
   searchedResult: Product[]
   totalQuantity: number
   totalPrice: number
+  totalPages: number
+  currentPage: number
+  query: QueryParams
   savedItem: Product[]
 }
 const initialState: ProductState = {
@@ -65,6 +78,9 @@ const initialState: ProductState = {
   searchedResult: [],
   totalQuantity: 0,
   totalPrice: 0,
+  totalPages: 0,
+  currentPage: 0,
+  query: {} as QueryParams,
   savedItem: []
 }
 
@@ -182,8 +198,11 @@ export const productSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchProduct.fulfilled, (state, action) => {
+        const { payload, totalPages, currentPage } = action.payload
         state.isLoading = false
-        state.items = action.payload
+        state.currentPage = currentPage
+        state.totalPages = totalPages
+        state.items = payload
         state.products = state.items
       })
       .addCase(postProduct.fulfilled, (state, action) => {

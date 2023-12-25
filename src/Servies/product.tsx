@@ -2,14 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 import { baseURL } from '../api'
-import { Product } from '../redux/slices/products/productSlice'
-
-// type Data = {
-//   message: string
-//   payload: Array<Product>
-//   totalPages: number
-//   currentPage: number
-// }
+import { Product, QueryParams } from '../redux/slices/products/productSlice'
 
 export type apiResponse = {
   message: string
@@ -17,10 +10,11 @@ export type apiResponse = {
 }
 export const fetchProduct = createAsyncThunk(
   'product/fetchData',
-  async (_, { rejectWithValue }) => {
+  async (query: Partial<QueryParams> | undefined, { rejectWithValue }) => {
+    console.log(query?.page)
+    const page = { page: query?.page }
     try {
-      const response = await axios.get(`${baseURL}/products`)
-      const data = response.data.payload
+      const { data } = await axios.get(`${baseURL}/products/?page=${query?.page}`)
       return data
     } catch (err) {
       const message = err.response.data.errors

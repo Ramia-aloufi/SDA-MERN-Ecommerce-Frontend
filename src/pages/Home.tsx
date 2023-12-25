@@ -8,27 +8,28 @@ import Offer from '../components/Offer'
 import Banner from '../components/Banner'
 import CategoryFilter from '../components/CategoryFilter'
 import Pagination from '../components/Pagination'
+import { fetchProduct } from '../Servies/product'
 
 const Home = () => {
   const dispatch = useDispatch<AppDispatch>()
-  const { products } = useSelector(productState)
-
+  const { totalPages, currentPage, products } = useSelector(productState)
   const handleSortChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const sortVlue = e.target.value
     dispatch(sortProduct(sortVlue))
   }
   //   const productsPerPage = 8 // Number of products to display per page
 
-  const [currentPage, setCurrentPage] = useState(1)
-  const productsPerPage = 8 // Number of products to display per page
+  // const [currentPage, setCurrentPage] = useState(1)
+  // const productsPerPage = 8 // Number of products to display per page
 
   // Get current products based on currentPage
-  const indexOfLastProduct = currentPage * productsPerPage
-  const indexOfFirstProduct = indexOfLastProduct - productsPerPage
-  const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct)
+  // const indexOfLastProduct = currentPage * productsPerPage
+  // const indexOfFirstProduct = indexOfLastProduct - productsPerPage
+  // const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct)
 
   const handlePageChange = (page: number) => {
-    setCurrentPage(page)
+    console.log(page || "0")
+    dispatch(fetchProduct({ page: page }))
   }
   return (
     <div className="overflow-hidden relative space-y-4 px-8">
@@ -48,13 +49,13 @@ const Home = () => {
         </div>
       </div>
       <div className=" w-full gap-x-4 gap-y-4 grid place-items-center sm:grid-cols-2 xs:grid-cols-1 md:grid-cols-3 lg:grid-cols-4">
-        {currentProducts.map((product) => (
+        {products.map((product) => (
           <ProductCard key={product._id} product={product} />
         ))}
       </div>
       <Pagination
         currentPage={currentPage}
-        totalPages={Math.ceil(products.length / productsPerPage)}
+        totalPages={totalPages}
         onPageChange={handlePageChange}
       />
     </div>

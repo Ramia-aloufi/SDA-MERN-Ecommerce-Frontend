@@ -58,7 +58,7 @@ export const ProductsTable = () => {
                   />
                 </td>
                 <td className="border p-2 hidden sm:table-cell">
-                  {(product.category as unknown as Category).title}
+                  {(product.category as unknown as Category).title || ''}
                 </td>
                 <td className="border p-2 grid gap-3 justify-center">
                   <button className="trashBtn">
