@@ -11,10 +11,13 @@ export type apiResponse = {
 export const fetchProduct = createAsyncThunk(
   'product/fetchData',
   async (query: Partial<QueryParams> | undefined, { rejectWithValue }) => {
-    console.log(query?.page)
-    const page = { page: query?.page }
     try {
-      const { data } = await axios.get(`${baseURL}/products/?page=${query?.page}`)
+      const { data } = await axios.get(
+        `${baseURL}/products/?page=${query?.page}${
+          query?.categoryId ? `&categoryId=${query.categoryId}` : ''
+        }${query?.maxPrice ? `&maxPrice=${query.maxPrice}` : ''}
+        ${query?.minPrice ? `&minPrice=${query.minPrice}` : ''}`
+      )
       return data
     } catch (err) {
       const message = err.response.data.errors

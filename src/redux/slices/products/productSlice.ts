@@ -24,14 +24,7 @@ export type Product = {
   updatedAt?: Date
   __v: number
 }
-// export type ProductInput = {
-//   title: string
-//   description: string
-//   price: number
-//   quantity: number
-//   image?: string
-//   category: string
-// }
+
 export type CartItem = {
   product: Product
   quantity: number
