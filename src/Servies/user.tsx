@@ -3,16 +3,22 @@ import axios from 'axios'
 
 import { baseURL } from '../api'
 import { User } from '../redux/slices/user/userSlice'
+import { QueryParams } from '../redux/slices/products/productSlice'
 
-export const fetchUser = createAsyncThunk('user/fetchData', async () => {
-  try {
-    const response = await axios.get(`${baseURL}/users`)
-    return response.data
-  } catch (error) {
-    const message = error.response.data.errors
-    return message
+export const fetchUser = createAsyncThunk(
+  'user/fetchData',
+  async (query: Partial<QueryParams> | undefined) => {
+    try {
+      const response = await axios.get(
+        `${baseURL}/users${query?.search ? `?search=${query.search}` : ''}`
+      )
+      return response.data
+    } catch (error) {
+      const message = error.response.data.errors
+      return message
+    }
   }
-})
+)
 export const postUser = createAsyncThunk(
   'user/postData',
   async (user: { username: string; password: string; email: string }) => {

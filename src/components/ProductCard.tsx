@@ -1,7 +1,7 @@
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { IoHeart, IoHeartOutline } from 'react-icons/io5'
-import { Product, SavedItem, addToCart } from '../redux/slices/products/productSlice'
+import { Product, SavedItem, addToCart, productState } from '../redux/slices/products/productSlice'
 import { baseURL } from '../api'
 
 type ProductCardProps = {
@@ -9,29 +9,30 @@ type ProductCardProps = {
 }
 const ProductCard = ({ product }: ProductCardProps) => {
   const dispatch = useDispatch()
+  const { saved } = useSelector(productState)
   const handeAddToCart = (product: Product) => {
     console.log(product)
     dispatch(addToCart(product))
   }
   const handeSaveProduct = (product: Product) => {
-    console.log(product.saved)
+    console.log(product)
     dispatch(SavedItem(product))
   }
   console.log(product.image)
 
   return (
     <div className="grid  space-y-2 xs:w-[310px] md:w-auto  bg-white relative text-left shadow-sm rounded-md p-4  lg:h-[400px]">
-      {!product.saved ? (
-        <IoHeartOutline
-          onClick={() => handeSaveProduct(product)}
-          className="absolute top-3 right-3 text-lg text-gray-300 z-30 "
-        />
-      ) : (
-        <IoHeart
-          onClick={() => handeSaveProduct(product)}
-          className="absolute top-3 right-3 text-lg text-[#419cb6] z-30 "
-        />
-      )}
+      <div className="absolute top-3 right-3 text-lg bg-white shadow-md z-30 p-2 rounded-full ">
+        {!saved.includes(product) ? (
+          <IoHeartOutline
+            onClick={() => handeSaveProduct(product)}
+            className=" text-lg text-gray-300 "
+          />
+        ) : (
+          <IoHeart onClick={() => handeSaveProduct(product)} className="text-lg text-[#419cb6]  " />
+        )}
+      </div>
+
       <Link to={`/product/${product.slug}`}>
         <div className=" w-full overflow-hidden rounded-lg lg:aspect-none group-hover:opacity-75 h-[200px]  ">
           <img

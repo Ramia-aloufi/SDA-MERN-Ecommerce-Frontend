@@ -96,19 +96,6 @@ export const productSlice = createSlice({
       //   : []
       // state.products = state.searchedResult.length > 0 ? state.searchedResult : state.items
     },
-    sortProduct: (state, action) => {
-      const sortBy = action.payload
-      switch (sortBy) {
-        case 'price':
-          state.products.sort((a, b) => a.price - b.price)
-          break
-        case 'name':
-          state.products.sort((a, b) => a.title.localeCompare(b.title))
-          break
-        default:
-          state.products
-      }
-    },
     addToCart: (state, action) => {
       const product: Product = action.payload
       console.log(product)
@@ -169,14 +156,6 @@ export const productSlice = createSlice({
         0
       )
     },
-    FilterByCategory: (state, action) => {
-      const id = action.payload
-      state.products = state.items
-      if (id != 0) {
-        state.products = state.products.filter((product) => product.category.includes(id))
-        state.products = state.items
-      }
-    },
     SavedItem: (state, action) => {
       const item = action.payload
       state.status = 'Saved product successfully !'
@@ -184,7 +163,7 @@ export const productSlice = createSlice({
       if (!isExist) {
         state.saved.push(item)
       } else {
-        state.status = 'Product already saved!'
+        state.saved = state.saved.filter((product) => product._id !== item._id)
       }
     }
   },
@@ -250,12 +229,10 @@ export const productSlice = createSlice({
 })
 export const {
   searchProduct,
-  sortProduct,
   addToCart,
   removeFromCart,
   IncreaseQuantity,
   DecreaseQuantity,
-  FilterByCategory,
   clearError,
   SavedItem
 } = productSlice.actions

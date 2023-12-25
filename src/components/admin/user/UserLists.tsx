@@ -46,7 +46,6 @@ const UserLists = () => {
           <th className="border p-2 uppercase">Username</th>
           <th className="border p-2 uppercase hidden lg:table-cell">email</th>
           <th className="border p-2 uppercase hidden sm:table-cell">Role</th>
-          <th className="border p-2 uppercase ">password</th>
           <th className="border p-2 uppercase">action</th>
         </tr>
       </thead>
@@ -66,7 +65,6 @@ const UserLists = () => {
                     {item.isAdmin ? 'admin' : 'user'}
                   </button>
                 </td>
-                <td className="border p-2 hidden md:table-cell">{item.password}</td>
                 <td className="border p-2 grid gap-3 justify-center">
                   <button onClick={() => handleDelete(item.slug)} className="trashBtn">
                     <FiTrash />

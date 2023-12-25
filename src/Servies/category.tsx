@@ -2,12 +2,18 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { baseURL } from '../api'
 import { Category } from '../redux/slices/categories/categorySlice'
+import { QueryParams } from '../redux/slices/products/productSlice'
 
-export const fetchCategory = createAsyncThunk('category/fetchData', async () => {
-  const response = await axios.get(`${baseURL}/categories`)
-  const data: Category[] = await response.data.payload
-  return data
-})
+export const fetchCategory = createAsyncThunk(
+  'category/fetchData',
+  async (query: Partial<QueryParams> | undefined) => {
+    const response = await axios.get(
+      `${baseURL}/categories${query?.search ? `?search=${query.search}` : ''}`
+    )
+    const data: Category[] = await response.data.payload
+    return data
+  }
+)
 export const postCategory = createAsyncThunk(
   'category/postCategory',
   async (title: string, { rejectWithValue }) => {
