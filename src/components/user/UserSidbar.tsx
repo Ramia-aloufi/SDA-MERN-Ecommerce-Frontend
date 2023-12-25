@@ -13,6 +13,7 @@ const UserSidbar = () => {
   const userLogout = () => {
     dispatch(logout())
   }
+  console.log(userData?._id)
   return (
     <aside className="h-full z-0 bg-[#434343] text-white border-y border-white flex flex-col items-center justify-evenly p-1">
       <Link to="/user">
@@ -24,9 +25,9 @@ const UserSidbar = () => {
         </div>
       </Link>
       <div className="text-center  flex flex-col gap-7 text-sm">
-        <Link to="/admin/users"> Order</Link>
+        <Link to={`/user/order/${userData?._id}`}> Order</Link>
       </div>
-      <Link to="/">
+      <Link to={`/`}>
         <button className="btn flex justify-center items-center gap-2" onClick={userLogout}>
           Sign Out <IoLogOutOutline className="text-lg" />
         </button>

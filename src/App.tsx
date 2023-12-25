@@ -6,10 +6,10 @@ import { router } from './router/index'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from './redux/store'
 import { useEffect } from 'react'
-import { fetchOrder } from './redux/slices/Order/orderSlice'
 import { fetchUser } from './Servies/user'
 import { fetchProduct } from './Servies/product'
 import { fetchCategory } from './Servies/category'
+import { fetchOrder } from './Servies/order'
 
 function App() {
   const dispatch = useDispatch<AppDispatch>()

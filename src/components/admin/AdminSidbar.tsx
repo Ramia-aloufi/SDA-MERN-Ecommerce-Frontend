@@ -1,13 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { IoLogOutOutline, IoAddCircleSharp } from 'react-icons/io5'
+import { IoLogOutOutline } from 'react-icons/io5'
 
 import { AppDispatch } from '../../redux/store'
 import { userState } from '../../redux/slices/user/userSlice'
 import { logout, updateUser } from '../../Servies/user'
 import { baseURL } from '../../api'
 import { ChangeEvent, useRef } from 'react'
-import { updateSingleProduct } from '../../Servies/product'
 
 export const AdminSidbar = () => {
   const dispatch = useDispatch<AppDispatch>()
@@ -18,7 +17,7 @@ export const AdminSidbar = () => {
   }
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = event.target.files[0]
+    const selectedFile =  event.target.files[0]
     console.log('Selected file:', selectedFile)
     const user = new FormData()
     console.log(userData)

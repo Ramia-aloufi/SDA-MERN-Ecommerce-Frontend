@@ -13,8 +13,8 @@ const CartPage = () => {
   return (
     <div className="h-full gap-4 grid grid-cols-[2fr,1fr]  p-2">
       <div className=" bg-white">
-        {inCart.map((product) => (
-          <CartProductCard key={product.id} product={product} />
+        {inCart.map((item) => (
+          <CartProductCard key={item.product._id} {...item} />
         ))}
       </div>
 

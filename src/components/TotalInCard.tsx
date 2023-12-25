@@ -1,9 +1,24 @@
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { productState } from '../redux/slices/products/productSlice'
+import { AppDispatch } from '../redux/store'
+import { placeOrder } from '../Servies/order'
 
 const TotalInCard = () => {
-  const { totalPrice } = useSelector(productState)
+  const { totalPrice, inCart } = useSelector(productState)
+  const dispatch = useDispatch<AppDispatch>()
+  const onSubmit = () => {
+    const cart = inCart.map((item) => {
+      return { product: item.product._id, quantity: item.quantity }
+    })
+    const order = {
+      products: cart,
+      payment: {
+        amount: totalPrice
+      }
+    }
+    dispatch(placeOrder(order))
+  }
   return (
     <div className="p-4 space-y-4 bg-white">
       <h1 className="font-bold text-xl">Total</h1>
@@ -17,7 +32,9 @@ const TotalInCard = () => {
         <span className="text-lg font-semibold">Free</span>
       </div>
       <hr />
-      <button>Checkout</button>
+      <button className="btn" onClick={() => onSubmit()}>
+        Checkout
+      </button>
     </div>
   )
 }

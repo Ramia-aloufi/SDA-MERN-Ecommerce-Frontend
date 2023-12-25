@@ -32,6 +32,10 @@ export type Product = {
 //   image?: string
 //   category: string
 // }
+export type CartItem = {
+  product: Product
+  quantity: number
+}
 
 export type ProductState = {
   items: Product[]
@@ -40,7 +44,8 @@ export type ProductState = {
   status: null | string
   isLoading: boolean
   singleProduct: Product
-  inCart: Product[]
+  inCart: CartItem[]
+  saved: Product[]
   searchTerm: string
   searchedResult: Product[]
   totalQuantity: number
@@ -55,6 +60,7 @@ const initialState: ProductState = {
   isLoading: false,
   singleProduct: {} as Product,
   inCart: [],
+  saved: [],
   searchTerm: '',
   searchedResult: [],
   totalQuantity: 0,
@@ -88,84 +94,89 @@ export const productSlice = createSlice({
           state.products.sort((a, b) => a.price - b.price)
           break
         case 'name':
-          // state.products.sort((a, b) => a.name.localeCompare(b.name))
+          state.products.sort((a, b) => a.title.localeCompare(b.title))
           break
         default:
           state.products
       }
     },
     addToCart: (state, action) => {
-      const newProduct: Product = action.payload
-      const isExist = state.inCart.find((cart) => cart._id === newProduct._id)
+      const product: Product = action.payload
+      console.log(product)
+      const isExist = state.inCart.find((cart) => cart.product._id === product._id)
 
       if (!isExist) {
-        state.inCart = [...state.inCart, { ...newProduct, quantity: 1 }]
+        state.inCart.push({ product: product, quantity: 1 })
       } else {
-        // state.inCart = state.inCart.map((product) =>
-        //   product.id === newProduct.id ? { ...product, quantity: product.quantity + 1 } : product
-        // )
+        state.inCart = state.inCart.map((item) =>
+          item.product._id === product._id
+            ? { product: item.product, quantity: item.quantity + 1 }
+            : item
+        )
       }
 
       state.totalQuantity = state.inCart.reduce((total, product) => total + product.quantity, 0)
       state.totalPrice = state.inCart.reduce(
-        (total, product) => total + product.quantity * product.price,
+        (total, item) => total + item.quantity * item.product.price,
         0
       )
+      console.log(product.price)
     },
     removeFromCart: (state, action) => {
-      const id: number = action.payload
-      // state.inCart = state.inCart.filter((product) => product.id !== id)
+      const id = action.payload
+      state.inCart = state.inCart.filter((item) => item.product._id != id)
       state.totalQuantity = state.inCart.reduce((total, product) => total + product.quantity, 0)
       state.totalPrice = state.inCart.reduce(
-        (total, product) => total + product.quantity * product.price,
+        (total, item) => total + item.quantity * item.product.price,
         0
       )
     },
     IncreaseQuantity: (state, action) => {
       const productIncreas: Product = action.payload
-      // state.inCart.map((product) => {
-      // //   if (product.id == productIncreas.id) {
-      // //     product.quantity += 1
-      // //   }
-      // //   console.log(productIncreas)
-      // // })
+      state.inCart.map((item) => {
+        if (item.product._id == productIncreas._id) {
+          item.quantity += 1
+        }
+      })
       state.totalQuantity = state.inCart.reduce((total, product) => total + product.quantity, 0)
       state.totalPrice = state.inCart.reduce(
-        (total, product) => total + product.quantity * product.price,
+        (total, item) => total + item.quantity * item.product.price,
         0
       )
     },
     DecreaseQuantity: (state, action) => {
       const productIncreas: Product = action.payload
-      state.inCart.map((product) => {
-        // if (product.id == productIncreas.id) {
-        //   if (product.quantity > 0) {
-        //     product.quantity -= 1
-        //   }
-        // }
+      state.inCart.map((item) => {
+        if (item.product._id == productIncreas._id) {
+          if (item.quantity > 0) {
+            item.quantity -= 1
+          }
+        }
         console.log(productIncreas)
       })
       state.totalQuantity = state.inCart.reduce((total, product) => total + product.quantity, 0)
       state.totalPrice = state.inCart.reduce(
-        (total, product) => total + product.quantity * product.price,
+        (total, item) => total + item.quantity * item.product.price,
         0
       )
     },
     FilterByCategory: (state, action) => {
-      const id: number = action.payload
+      const id = action.payload
       state.products = state.items
-      // if (id != 0) {
-      //   state.products = state.products.filter((product) => product.categories.includes(id))
-      //   // state.products = state.items
-      // }
+      if (id != 0) {
+        state.products = state.products.filter((product) => product.category.includes(id))
+        state.products = state.items
+      }
     },
     SavedItem: (state, action) => {
-      const item: Product = action.payload
-      // state.items.map((product) => product._id == item._id && (product.saved = !product.saved))
-      // state.items.map((product) => product._id == item._id)
-
-      // state.products = state.items
-      // state.savedItem = state.items.filter((product) => product.saved == true)
+      const item = action.payload
+      state.status = 'Saved product successfully !'
+      const isExist = state.saved.find((product) => product._id === item._id)
+      if (!isExist) {
+        state.saved.push(item)
+      } else {
+        state.status = 'Product already saved!'
+      }
     }
   },
   extraReducers: (builder) => {
