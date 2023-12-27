@@ -6,7 +6,8 @@ import { AppDispatch } from '../../redux/store'
 import { userState } from '../../redux/slices/user/userSlice'
 import { logout, updateUser } from '../../Servies/user'
 import { baseURL } from '../../api'
-import { ChangeEvent, useRef } from 'react'
+import { ChangeEvent, useEffect, useRef } from 'react'
+import { showToast } from '../../helper/toast'
 
 export const AdminSidbar = () => {
   const dispatch = useDispatch<AppDispatch>()
@@ -17,15 +18,12 @@ export const AdminSidbar = () => {
   }
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const selectedFile =  event.target.files[0]
-    console.log('Selected file:', selectedFile)
+    const selectedFile = event.target.files[0]
     const user = new FormData()
     console.log(userData)
     if (userData) {
-      user.append('username', userData.username)
       user.append('image', selectedFile)
-      user.append('email', userData.email)
-      user.append('password', userData.password)
+      console.log(user)
       dispatch(updateUser({ user, slug: userData.slug }))
     }
   }
@@ -35,6 +33,7 @@ export const AdminSidbar = () => {
       fileInputRef.current.click()
     }
   }
+
 
   return (
     <aside className="h-full z-0 bg-[#434343] text-white border-y border-white flex flex-col items-center justify-evenly p-1">

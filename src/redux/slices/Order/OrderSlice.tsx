@@ -5,7 +5,7 @@ import { fetchOrder, fetchuseOrder, placeOrder, useOrder } from '../../../Servie
 import { User } from '../user/userSlice'
 
 export type Payment = {
-  paymentMethod?: 'Credit Card' | 'Apple Pay'
+  paymentMethod: string
   amount: number
 }
 export type orderItem = {

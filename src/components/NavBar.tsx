@@ -20,24 +20,28 @@ const NavBar = () => {
       </Link>
       <SearchInput />
       <div className="flex md:gap-4 xs:gap-1  justify-center items-center text-center">
-        <Link to="/user/cart">
-          <button className="relative mb-1 items-center text-2xl font-medium text-center text-white">
-            <IoCart className="text-center hover:text-[#f88648]" />
-            <span className="absolute bottom-3 left-4 items-center justify-center w-4 h-4 text-xs font-semibold text-white bg-[#f88648] rounded-full">
-              {totalQuantity}
-            </span>
-          </button>
-        </Link>
+        {!userData?.isAdmin && (
+          <Link to="/user/cart">
+            <button className="relative mb-1 items-center text-2xl font-medium text-center text-white">
+              <IoCart className="text-center hover:text-[#f88648]" />
+              <span className="absolute bottom-3 left-4 items-center justify-center w-4 h-4 text-xs font-semibold text-white bg-[#f88648] rounded-full">
+                {totalQuantity}
+              </span>
+            </button>
+          </Link>
+        )}
         <Link to={isLogedIn ? (userData?.isAdmin ? '/admin' : '/user') : '/login'}>
           <button className="inline-flex items-center  text-2xl font-medium text-center text-white">
             <IoPersonSharp className="text-center hover:text-[#f88648]" />
           </button>
         </Link>
-        <Link to={isLogedIn ? '/user/savedproduct' : '/login'}>
-          <button className="inline-flex items-center text-2xl font-medium text-center text-white ">
-            <IoHeart className="text-center hover:text-[#f88648]" />
-          </button>
-        </Link>
+        {!userData?.isAdmin && (
+          <Link to={isLogedIn ? '/user/savedproduct' : '/login'}>
+            <button className="inline-flex items-center text-2xl font-medium text-center text-white ">
+              <IoHeart className="text-center hover:text-[#f88648]" />
+            </button>
+          </Link>
+        )}
       </div>
     </nav>
   )

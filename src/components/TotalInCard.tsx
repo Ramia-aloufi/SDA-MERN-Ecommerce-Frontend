@@ -3,10 +3,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import { productState } from '../redux/slices/products/productSlice'
 import { AppDispatch } from '../redux/store'
 import { placeOrder } from '../Servies/order'
+import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
+import Payment from '../pages/Payment'
 
 const TotalInCard = () => {
   const { totalPrice, inCart } = useSelector(productState)
   const dispatch = useDispatch<AppDispatch>()
+  const navigate = useNavigate()
+  const [ispayment, setIsPayment] = useState(false)
   const onSubmit = () => {
     const cart = inCart.map((item) => {
       return { product: item.product._id, quantity: item.quantity }
@@ -17,7 +22,9 @@ const TotalInCard = () => {
         amount: totalPrice
       }
     }
-    dispatch(placeOrder(order))
+    setIsPayment(true)
+    // navigate('/user/checkout')
+    // dispatch(placeOrder(order))
   }
   return (
     <div className="p-4 space-y-4 bg-white">
@@ -35,6 +42,7 @@ const TotalInCard = () => {
       <button className="btn" onClick={() => onSubmit()}>
         Checkout
       </button>
+      {ispayment && <Payment />}
     </div>
   )
 }

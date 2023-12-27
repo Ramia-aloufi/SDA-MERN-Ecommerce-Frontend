@@ -118,6 +118,7 @@ export const userSlice = createSlice({
       })
       .addCase(updateUser.fulfilled, (state, action) => {
         const { payload, message } = action.payload
+        console.log('payload', payload)
         state.items = state.items.map((user) => (user.slug == payload.slug ? payload : user))
         state.status = message
         state.userData = payload

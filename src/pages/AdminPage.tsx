@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -9,6 +9,7 @@ import { AdminSidbar } from '../components/admin/AdminSidbar'
 import { userState } from '../redux/slices/user/userSlice'
 import { updateUser } from '../Servies/user'
 import { AppDispatch } from '../redux/store'
+import { showToast } from '../helper/toast'
 
 export const AdminPage = () => {
   const userSchema = object({
@@ -25,7 +26,7 @@ export const AdminPage = () => {
     resolver: zodResolver(userSchema)
   })
   const [isEdit, setIsEdit] = useState(false)
-  const { userData } = useSelector(userState)
+  const { userData, error, status } = useSelector(userState)
   const dispatch = useDispatch<AppDispatch>()
 
   const onEdit = () => {
@@ -36,16 +37,15 @@ export const AdminPage = () => {
 
   const onSubmit = (data: UserSchema) => {
     if (userData?.slug) {
-      dispatch(
-        updateUser({
-          user: { ...userData, username: data.username },
-          slug: userData?.slug
-        })
-      )
+      const user = { username: data.username }
+      dispatch(updateUser({ user, slug: userData?.slug }))
       setIsEdit(false)
     }
   }
-
+  useEffect(() => {
+    error && showToast(error, false, dispatch)
+    status && showToast(status, true, dispatch)
+  }, [error, status])
   return (
     <div className="h-full grid grid-cols-[1fr,3fr]">
       <AdminSidbar />

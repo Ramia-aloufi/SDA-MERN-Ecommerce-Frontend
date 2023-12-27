@@ -64,9 +64,10 @@ export const logout = createAsyncThunk('user/logout', async () => {
 })
 export const updateUser = createAsyncThunk(
   'user/updateUser',
-  async (payload: { user: FormData | User; slug: string }) => {
+  async (payload: { user: FormData | Partial<User>; slug: string }) => {
     try {
       const { user, slug } = payload
+      console.log(user)
       const { data } = await axios.put(`${baseURL}/users/${slug}`, user)
       return data
     } catch (error) {

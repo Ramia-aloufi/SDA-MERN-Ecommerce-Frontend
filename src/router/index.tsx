@@ -23,9 +23,9 @@ import SavedProduct from '../pages/SavedProduct'
 import Activate from '../components/Activate'
 import ForgotPassword from '../pages/ForgotPassword'
 import ResetPassword from '../pages/ResetPassword'
-import orderDetils from '../components/user/userOrder'
-import OrderDetils from '../components/user/userOrder'
 import { OrderUser } from '../components/user/Order'
+import CheckoutForm from '../pages/CheckoutForm'
+import Payment from '../pages/Payment'
 
 // function Index() {
 //   // const count = useSelector((state: RootState) => state.counter.value)
@@ -143,6 +143,10 @@ export const router = createBrowserRouter([
           {
             path: 'savedproduct',
             element: <SavedProduct />
+          },
+          {
+            path: 'checkout',
+            element: <Payment />
           },
           {
             path: 'cart',

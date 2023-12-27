@@ -35,7 +35,7 @@ const ForgotPassword = () => {
     setIsSend(true)
   }
   if (isSend) {
-    return <h3>aaaa</h3>
+    return <h3 className="grid place-items-center h-full text-lg">Email sent successfully! 🎉</h3>
   }
   return (
     <div className="h-full flex flex-col items-center justify-center bg-gray-50">

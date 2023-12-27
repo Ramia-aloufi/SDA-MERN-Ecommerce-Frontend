@@ -19,8 +19,10 @@ const ProductDetails = () => {
     isLoading && <h2>loading</h2>
   }
   return (
-    <div className=" w-1/2 shadow-md my-4 rounded-md m-auto">
-      <ProductDetailCard />
+    <div className="flex justify-center items-center h-full">
+      <div className="w-2/3 shadow-md my-4 rounded-md m-auto">
+        <ProductDetailCard />
+      </div>
     </div>
   )
 }
