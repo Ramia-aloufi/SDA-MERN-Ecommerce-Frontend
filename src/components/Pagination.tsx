@@ -15,9 +15,11 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
         <button
           key={page}
           onClick={() => onPageChange(page)}
-          className={`px-3 py-1 hover:text-white rounded ${
-            currentPage === page ? 'bg-[#f88648] text-white' : 'bg-white text-[#f88648]'
-          } border border-[#f88648] hover:bg-[#f88648]`}>
+          className={`px-3 py-1 hover:text-white border rounded ${
+            currentPage === page
+              ? ' border-[#f88648] text-[#f88648] bg-transparent'
+              : ' text-gray-500 border-gray-500'
+          }  hover:bg-[#f88648] hover:border-transparent`}>
           {page}
         </button>
       ))}

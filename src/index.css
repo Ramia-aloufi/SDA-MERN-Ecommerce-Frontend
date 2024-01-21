@@ -3,7 +3,11 @@
 @tailwind utilities;
 
 .btn{
-  @apply  px-4 py-2 text-white bg-[#f88648] w-full border border-transparent h-[45px] rounded hover:border hover:border-[#f88648] hover:bg-white hover:text-[#f88648] focus:outline-none focus:ring focus:ring-blue-300 active:bg-blue-800 text-sm 
+  @apply  px-4 py-2 text-white bg-transparent  border-white w-full border  h-[45px] rounded hover:border hover:border-[#f88648] hover:bg-[#f88648] hover:text-[#fff] focus:outline-none focus:ring focus:ring-[#f88648] font-semibold
+}
+
+.btn2{
+  @apply  px-4 py-2 text-[#f88648] bg-transparent  border-[#f88648] w-full border  h-[45px] rounded hover:border hover:border-[#f88648] hover:bg-[#f88648] hover:text-[#fff] focus:outline-none focus:ring focus:ring-[#f88648] font-semibold
 }
 .trashBtn{
   @apply bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded
@@ -44,37 +48,7 @@ body{
   -webkit-box-orient: vertical;
 }
 
-.custom-select-container {
-  position: relative;
-  width: 200px; /* Adjust as needed */
-}
-
-/* CustomSelect.css */
-.custom-select-container {
-  position: relative;
-  width: 200px;
-}
-
-.custom-select {
-  appearance: none;
-  padding: 8px;
-  font-size: 16px;
-  width: 100%;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  cursor: pointer;
-  transform-origin: bottom; /* Set the transform-origin to bottom */
-}
-
-.custom-select:hover {
-  border-color: #aaa;
-}
-
-.custom-select:focus {
-  outline: none;
-  border-color: #4a90e2;
-  box-shadow: 0 0 5px rgba(74, 144, 226, 0.7);
-}
+/*  */
 
 /* DropdownMenu.css */
 .dropdown {
@@ -86,14 +60,15 @@ body{
   padding: 10px;
   border: 1px solid #ccc;
   cursor: pointer;
-  width: 200px;
+  max-width: 200px;
+  min-width: 90px;
 }
 
 .options {
   position: absolute;
   top: 100%;
   left: 0;
-  width: 100%;
+  width: 200px;
   max-height: 200px;
   overflow-y: auto;
   background: #fff;

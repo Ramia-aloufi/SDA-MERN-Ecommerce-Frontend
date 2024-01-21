@@ -9,13 +9,12 @@ import { AppDispatch } from '../../../redux/store'
 import { useEffect } from 'react'
 import { showToast } from '../../../helper/toast'
 import { Category } from '../../../redux/slices/categories/categorySlice'
+import { LineWave } from 'react-loader-spinner'
 
 export const ProductsTable = () => {
-  const products = useSelector(productState).products
+  const { products, status, error, isLoading } = useSelector(productState)
   const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
-
-  const { status, error } = useSelector(productState)
 
   const handleDelete = (slug: string) => {
     dispatch(deleteSingleProduct(slug))
@@ -30,6 +29,13 @@ export const ProductsTable = () => {
     error && showToast(error, false, dispatch)
   }, [status, error])
 
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center">
+        <LineWave color="orange" thickness="6px" speed="0.3s" />
+      </div>
+    )
+  }
   return (
     <table className="min-w-full table-auto text-xs">
       <thead>

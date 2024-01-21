@@ -1,12 +1,14 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { object, string, z } from 'zod'
 import { ToastContainer } from 'react-toastify'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { AppDispatch } from '../../../redux/store'
-import { updateSingleCategory } from '../../../Servies/category'
+import { getSingleCategory, updateSingleCategory } from '../../../Servies/category'
+import { useEffect } from 'react'
+import { categoryState } from '../../../redux/slices/categories/categorySlice'
 
 const categorySchema = object({
   title: string().min(3)
@@ -14,12 +16,14 @@ const categorySchema = object({
 type CategorySchema = z.infer<typeof categorySchema>
 const UpdateCategoryForm = () => {
   const { slug } = useParams()
+  const { singleCategory } = useSelector(categoryState)
   const navigate = useNavigate()
 
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors }
   } = useForm<CategorySchema>({
     resolver: zodResolver(categorySchema) // Use Zod schema resolver
@@ -31,6 +35,15 @@ const UpdateCategoryForm = () => {
     reset()
     navigate('/admin/category')
   }
+  useEffect(() => {
+    dispatch(getSingleCategory(slug))
+  }, [slug, dispatch])
+  useEffect(() => {
+    if (singleCategory !== null) {
+      setValue('title', singleCategory?.title || '')
+    }
+  }, [singleCategory])
+  console.log(singleCategory)
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
       <ToastContainer />
@@ -63,3 +76,6 @@ const UpdateCategoryForm = () => {
 }
 
 export default UpdateCategoryForm
+function setValue(arg0: string, arg1: string) {
+  throw new Error('Function not implemented.')
+}

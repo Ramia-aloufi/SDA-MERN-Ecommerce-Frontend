@@ -3,8 +3,19 @@ import { RiAddLine } from 'react-icons/ri'
 
 import { AdminSidbar } from '../AdminSidbar'
 import { ProductsTable } from './ProductsTable'
+import Pagination from '../../Pagination'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchProduct } from '../../../Servies/product'
+import { productState } from '../../../redux/slices/products/productSlice'
+import { AppDispatch } from '../../../redux/store'
 
 export const Products = () => {
+  const dispatch = useDispatch<AppDispatch>()
+  const { totalPages, currentPage } = useSelector(productState)
+
+  const handlePageChange = (page: number) => {
+    dispatch(fetchProduct({ page: page }))
+  }
   return (
     <div className="h-screen grid md:grid-cols-[1fr,4fr] xs:grid-cols-[1fr,2fr] ">
       <AdminSidbar />
@@ -19,6 +30,11 @@ export const Products = () => {
           </button>
         </div>
         <ProductsTable />
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
       </div>
     </div>
   )

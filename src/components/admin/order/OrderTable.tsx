@@ -1,15 +1,38 @@
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { FiTrash, FiEdit } from 'react-icons/fi'
 
 import { orderState } from '../../../redux/slices/Order/orderSlice'
 import { Product } from '../../../redux/slices/products/productSlice'
 import { User } from '../../../redux/slices/user/userSlice'
+import { useEffect } from 'react'
+import { showToast } from '../../../helper/toast'
+import { AppDispatch } from '../../../redux/store'
+import { LineWave } from 'react-loader-spinner'
+import { fetchOrder } from '../../../Servies/order'
 
 const OrderTable = () => {
-  const { orders } = useSelector(orderState)
+  const { orders, status, error, isLoading } = useSelector(orderState)
+  const dispatch = useDispatch<AppDispatch>()
+
   const handleDelete = (id: number) => {
     console.log(id)
   }
+  useEffect(() => {
+    status && showToast(status, true, dispatch)
+    error && showToast(error, false, dispatch)
+  }, [status, error])
+
+  useEffect(() => {
+    dispatch(fetchOrder())
+  }, [dispatch])
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center">
+        <LineWave color="orange" thickness="6px" speed="0.3s" />
+      </div>
+    )
+  }
+
   return (
     <table className="min-w-full table-auto text-xs">
       <thead>

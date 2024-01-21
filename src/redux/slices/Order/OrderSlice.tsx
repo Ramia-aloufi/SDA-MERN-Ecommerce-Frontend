@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 import { RootState } from '../../store'
-import { fetchOrder, fetchuseOrder, placeOrder, useOrder } from '../../../Servies/order'
+import { fetchOrder, fetchuseOrder, placeOrder } from '../../../Servies/order'
 import { User } from '../user/userSlice'
 
 export type Payment = {
@@ -61,6 +61,7 @@ export const orderSlice = createSlice({
         state.items = payload
         state.orders = state.items
         state.status = message
+        console.log(payload)
       })
       .addCase(fetchuseOrder.fulfilled, (state, action) => {
         const { payload, message } = action.payload
@@ -70,6 +71,7 @@ export const orderSlice = createSlice({
       })
       .addCase(placeOrder.fulfilled, (state, action) => {
         const { payload, message } = action.payload
+        console.log(action.payload)
         state.isLoading = false
         state.items.push(payload)
         state.orders = state.items
@@ -93,8 +95,8 @@ export const orderSlice = createSlice({
         (action) => action.type.endsWith('/rejected'),
         (state, action) => {
           state.isLoading = false
-          state.error = action.payload || 'An error occurred.'
-          console.log(state.error)
+          state.error = action.payload.message || 'An error occurred.'
+          state.status = null
         }
       )
   }

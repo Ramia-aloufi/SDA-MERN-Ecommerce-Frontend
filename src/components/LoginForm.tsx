@@ -55,7 +55,7 @@ function LoginForm() {
       </div>
       <div>
         <Link to="/forgot-password">Forgot Password ?</Link>
-        <button type="submit" className="btn">
+        <button type="submit" className="btn2">
           Log in
         </button>
       </div>

@@ -57,6 +57,7 @@ export type ProductState = {
   currentPage: number
   query: QueryParams
   savedItem: Product[]
+  productsCount:number
 }
 const initialState: ProductState = {
   items: [],
@@ -74,7 +75,8 @@ const initialState: ProductState = {
   totalPages: 0,
   currentPage: 0,
   query: {} as QueryParams,
-  savedItem: []
+  savedItem: [],
+  productsCount: 0
 }
 
 export const productSlice = createSlice({
@@ -170,12 +172,14 @@ export const productSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchProduct.fulfilled, (state, action) => {
-        const { payload, totalPages, currentPage } = action.payload
+        const { payload, totalPages, currentPage, message, productsCount } = action.payload
         state.isLoading = false
         state.currentPage = currentPage
         state.totalPages = totalPages
         state.items = payload
         state.products = state.items
+        state.status = message
+        state.productsCount = productsCount
       })
       .addCase(postProduct.fulfilled, (state, action) => {
         state.isLoading = false
@@ -221,8 +225,8 @@ export const productSlice = createSlice({
         (action) => action.type.endsWith('/rejected'),
         (state, action) => {
           state.isLoading = false
-          state.error = action.payload || 'An error occurred.'
-          console.log(state.error)
+          state.error = action.payload.message.message || 'An error occurred.'
+          state.status = null
         }
       )
   }

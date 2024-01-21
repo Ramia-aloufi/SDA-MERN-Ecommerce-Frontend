@@ -4,13 +4,13 @@ import axios from 'axios'
 import { baseURL } from '../api'
 import { Order } from '../redux/slices/Order/orderSlice'
 
-export const fetchOrder = createAsyncThunk('order/fetchData', async () => {
+export const fetchOrder = createAsyncThunk('order/fetchData', async (_, { rejectWithValue }) => {
   try {
     const { data } = await axios.get(`${baseURL}/orders/all-orders`)
     return data
-  } catch (error) {
-    const message = error.response.message || 'fetchOrder error'
-    return message
+  } catch (err) {
+    const message = err.response.data.errors
+    return rejectWithValue(message)
   }
 })
 

@@ -53,7 +53,7 @@ const SignupForm = () => {
         {errors.password && <p className="errorMessage">{errors.password.message}</p>}
       </div>
       <div>
-        <button type="submit" className="btn">
+        <button type="submit" className="btn2">
           Create account
         </button>
       </div>

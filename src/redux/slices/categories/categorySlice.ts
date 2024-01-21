@@ -5,6 +5,7 @@ import { Category } from '../../../components/admin/category/Category'
 import {
   deleteSingleCategory,
   fetchCategory,
+  getSingleCategory,
   postCategory,
   updateSingleCategory
 } from '../../../Servies/category'
@@ -21,6 +22,7 @@ export type Category = {
 export type CategoryState = {
   items: Category[]
   categories: Category[]
+  singleCategory: Category | null
   error: null | string
   isLoading: boolean
   searchTerm: string
@@ -31,6 +33,7 @@ export type CategoryState = {
 const initialState: CategoryState = {
   items: [],
   categories: [],
+  singleCategory: null,
   error: null,
   isLoading: false,
   searchTerm: '',
@@ -60,9 +63,11 @@ export const categorySlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchCategory.fulfilled, (state, action) => {
+        const { payload, message } = action.payload
         state.isLoading = false
-        state.items = action.payload
+        state.items = payload
         state.categories = state.items
+        state.status = message
       })
       .addCase(postCategory.fulfilled, (state, action) => {
         state.isLoading = false
@@ -70,6 +75,10 @@ export const categorySlice = createSlice({
         state.items.push(product)
         state.categories = state.items
         state.status = action.payload.message
+      })
+      .addCase(getSingleCategory.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.singleCategory = action.payload.payload
       })
       .addCase(deleteSingleCategory.fulfilled, (state, action) => {
         state.isLoading = false
@@ -107,8 +116,8 @@ export const categorySlice = createSlice({
         (action) => action.type.endsWith('/rejected'),
         (state, action) => {
           state.isLoading = false
-          state.error = action.payload || 'An error occurred.'
-          console.log(state.error)
+          state.error = action.payload.message || 'An error occurred.'
+          state.status = null
         }
       )
   }

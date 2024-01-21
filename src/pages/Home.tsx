@@ -8,10 +8,11 @@ import Banner from '../components/Banner'
 import Pagination from '../components/Pagination'
 import { fetchProduct } from '../Servies/product'
 import FilterAndSort from '../components/FilterAndSort'
+import { Link } from 'react-router-dom'
 
 const Home = () => {
   const dispatch = useDispatch<AppDispatch>()
-  const { totalPages, currentPage, products } = useSelector(productState)
+  const { totalPages, currentPage, products, productsCount } = useSelector(productState)
 
   const handlePageChange = (page: number) => {
     dispatch(fetchProduct({ page: page }))
@@ -22,9 +23,10 @@ const Home = () => {
       <Banner />
       <Offer />
       <FilterAndSort />
-      <div className=" w-full gap-x-4 gap-y-4 grid place-items-center sm:grid-cols-2 xs:grid-cols-1 md:grid-cols-3 lg:grid-cols-4">
+      <span className="mt-2 text-center w-full grid text-gray-400">{productsCount} products</span>
+      <div className=" w-full gap-x-4 gap-y-4 grid place-items-center grid-cols-1 sm:grid-cols-2 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {products.map((product) => (
-          <ProductCard key={product._id} product={product} />
+          <ProductCard product={product} key={product._id} />
         ))}
       </div>
       <Pagination

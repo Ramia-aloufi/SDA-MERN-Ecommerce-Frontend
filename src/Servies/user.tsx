@@ -7,15 +7,15 @@ import { QueryParams } from '../redux/slices/products/productSlice'
 
 export const fetchUser = createAsyncThunk(
   'user/fetchData',
-  async (query: Partial<QueryParams> | undefined) => {
+  async (query: Partial<QueryParams> | undefined, { rejectWithValue }) => {
     try {
-      const response = await axios.get(
+      const { data } = await axios.get(
         `${baseURL}/users${query?.search ? `?search=${query.search}` : ''}`
       )
-      return response.data
-    } catch (error) {
-      const message = error.response.data.errors
-      return message
+      return data
+    } catch (err) {
+      const message = err.response.data.errors
+      return rejectWithValue(message)
     }
   }
 )
@@ -67,7 +67,6 @@ export const updateUser = createAsyncThunk(
   async (payload: { user: FormData | Partial<User>; slug: string }) => {
     try {
       const { user, slug } = payload
-      console.log(user)
       const { data } = await axios.put(`${baseURL}/users/${slug}`, user)
       return data
     } catch (error) {
@@ -80,7 +79,6 @@ export const banStatus = createAsyncThunk('user/banStatus', async (user: Partial
   try {
     const isBanned = user.isBanned ? 'unban' : 'ban'
     const { data } = await axios.put(`${baseURL}/users/${isBanned}/${user._id}`)
-    console.log(data)
     return data
   } catch (error) {
     const message = error.response.data.errors

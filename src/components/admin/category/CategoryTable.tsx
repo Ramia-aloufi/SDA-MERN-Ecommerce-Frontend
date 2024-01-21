@@ -7,12 +7,12 @@ import { AppDispatch } from '../../../redux/store'
 import { deleteSingleCategory } from '../../../Servies/category'
 import { useEffect } from 'react'
 import { showToast } from '../../../helper/toast'
+import { LineWave } from 'react-loader-spinner'
 
 const CategoryTable = () => {
-  const navigate = useNavigate()
-  const { categories } = useSelector(categoryState)
+  const { categories, error, status, isLoading } = useSelector(categoryState)
   const dispatch = useDispatch<AppDispatch>()
-  const { error, status } = useSelector(categoryState)
+  const navigate = useNavigate()
 
   const handleDelete = (slug: string) => {
     console.log('slug', slug)
@@ -26,7 +26,13 @@ const CategoryTable = () => {
     status && showToast(status, true, dispatch)
     error && showToast(error, false, dispatch)
   }, [status, error])
-
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center">
+        <LineWave color="orange" thickness="6px" speed="0.3s" />
+      </div>
+    )
+  }
   return (
     <table className="min-w-full table-auto text-xs">
       <thead>

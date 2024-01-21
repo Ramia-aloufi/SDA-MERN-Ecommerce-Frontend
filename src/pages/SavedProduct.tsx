@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { Product, SavedItem, productState } from '../redux/slices/products/productSlice'
-import { IoHeart, IoHeartOutline } from 'react-icons/io5'
+import { IoBookmark, IoBookmarkOutline, IoHeart, IoHeartOutline } from 'react-icons/io5'
 import { baseURL } from '../api'
 
 const SavedProduct = () => {
@@ -17,7 +17,7 @@ const SavedProduct = () => {
         return (
           <div
             key={product._id}
-            className="mb-4  flex items-center ps-4 py-4  w-2/3 relative shadow-sm">
+            className="mb-4 flex flex-col sm:flex-row   sm:items-start  px-4 py-4 w-2/3 relative shadow-sm">
             <img
               src={`${baseURL}/${product.image}`}
               alt={product.title}
@@ -27,16 +27,11 @@ const SavedProduct = () => {
               <h3 className="font-semibold text-lg mb-1">{product.title}</h3>
               <p className="text-gray-600 mb-2">Price: ${product.price}</p>
             </div>
-            <div className="absolute top-3 right-3 text-lg bg-white shadow-md z-30 p-2 rounded-full ">
-              {!saved.includes(product) ? (
-                <IoHeartOutline
+            <div className="absolute top-3 right-3 text-lg z-30 p-2 ">
+              {saved.includes(product) && (
+                <IoBookmark
                   onClick={() => handeSaveProduct(product)}
-                  className=" text-lg text-gray-300 "
-                />
-              ) : (
-                <IoHeart
-                  onClick={() => handeSaveProduct(product)}
-                  className="text-lg text-[#419cb6]  "
+                  className=" text-xl text-gray-300 z-10 cursor-pointer "
                 />
               )}
             </div>

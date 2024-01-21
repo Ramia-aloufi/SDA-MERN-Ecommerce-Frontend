@@ -6,8 +6,7 @@ import { AppDispatch } from '../../redux/store'
 import { userState } from '../../redux/slices/user/userSlice'
 import { logout, updateUser } from '../../Servies/user'
 import { baseURL } from '../../api'
-import { ChangeEvent, useEffect, useRef } from 'react'
-import { showToast } from '../../helper/toast'
+import { ChangeEvent, useRef } from 'react'
 
 export const AdminSidbar = () => {
   const dispatch = useDispatch<AppDispatch>()
@@ -33,7 +32,6 @@ export const AdminSidbar = () => {
       fileInputRef.current.click()
     }
   }
-
 
   return (
     <aside className="h-full z-0 bg-[#434343] text-white border-y border-white flex flex-col items-center justify-evenly p-1">

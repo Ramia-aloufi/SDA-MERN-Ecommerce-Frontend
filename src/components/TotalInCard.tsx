@@ -39,7 +39,7 @@ const TotalInCard = () => {
         <span className="text-lg font-semibold">Free</span>
       </div>
       <hr />
-      <button className="btn" onClick={() => onSubmit()}>
+      <button className="btn2" onClick={() => onSubmit()}>
         Checkout
       </button>
       {ispayment && <Payment />}

@@ -4,13 +4,13 @@ import { FaBan, FaRegCheckCircle } from 'react-icons/fa'
 
 import { User, userState } from '../../../redux/slices/user/userSlice'
 import { AppDispatch } from '../../../redux/store'
-import { banStatus, deleteSingleUser, roleStatus } from '../../../Servies/user'
+import { banStatus, deleteSingleUser, fetchUser, roleStatus } from '../../../Servies/user'
 import { useEffect } from 'react'
 import { showToast } from '../../../helper/toast'
+import { LineWave } from 'react-loader-spinner'
 
 const UserLists = () => {
   const { users, isLoading, error, status } = useSelector(userState)
-
   const dispatch = useDispatch<AppDispatch>()
 
   const handleDelete = (slug: string) => {
@@ -26,16 +26,18 @@ const UserLists = () => {
   }
 
   useEffect(() => {
-    if (status) {
-      showToast(status, true, dispatch)
-    }
-    if (error) {
-      showToast(error, false, dispatch)
-    }
-  }, [status, error, users])
-
+    status && showToast(status, true, dispatch)
+    error && showToast(error, false, dispatch)
+  }, [status, error])
+  useEffect(() => {
+    dispatch(fetchUser())
+  }, [dispatch])
   if (isLoading) {
-    return <p>Loading Data</p>
+    return (
+      <div className="flex justify-center items-center">
+        <LineWave color="orange" thickness="6px" speed="0.3s" />
+      </div>
+    )
   }
 
   return (

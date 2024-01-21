@@ -71,11 +71,12 @@ const FilterAndSort = () => {
     }
   }, [])
   return (
-    <div className="flex justify-between">
+    <div className="flex gap-5 justify-between text-gray-600">
       <div className="filter">
         <label htmlFor="">Filter</label>
+        <div className="flex gap-4">
         <div className="dropdown" ref={dropdownRef}>
-          <div className="selected-option" onClick={() => toggleDropdown('type')}>
+          <div className="selected-option md:w-[400px]" onClick={() => toggleDropdown('type')}>
             {selectedOption || 'Type'}
           </div>
           {isOpen.type && (
@@ -91,8 +92,8 @@ const FilterAndSort = () => {
             </div>
           )}
         </div>
-        <div className="dropdown" ref={inputRef}>
-          <div className="selected-option" onClick={() => toggleDropdown('price')}>
+        <div className="dropdown " ref={inputRef}>
+          <div className="selected-option md:w-[400px]" onClick={() => toggleDropdown('price')}>
             {'price'}
           </div>
           {isOpen.price && (
@@ -109,6 +110,7 @@ const FilterAndSort = () => {
               <input className="btn" type="submit" />
             </form>
           )}
+        </div>
         </div>
       </div>
       <div className="filter">

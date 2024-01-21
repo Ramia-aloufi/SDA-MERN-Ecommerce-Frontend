@@ -50,6 +50,7 @@ export function ProductForm() {
     })
 
     dispatch(postProduct(formdata))
+    navigate('/admin/product')
   }
 
   {

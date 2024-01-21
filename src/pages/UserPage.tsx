@@ -54,7 +54,7 @@ const UserPage = () => {
               onClick={() => {
                 onEdit()
               }}
-              className="btn flex justify-center gap-2">
+              className="btn2 flex justify-center gap-2">
               Edit
               <IoCreateOutline className="text-lg" />
             </button>
@@ -66,7 +66,7 @@ const UserPage = () => {
             <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
               <input type="text" {...register('username')} />
               {errors.username && <p className="errorMessage">{errors.username.message}</p>}
-              <input type="submit" className="btn" />
+              <input type="submit" className="btn2" />
             </form>
           </div>
         )}

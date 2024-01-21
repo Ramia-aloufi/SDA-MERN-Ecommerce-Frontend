@@ -200,8 +200,8 @@ export const userSlice = createSlice({
         (action) => action.type.endsWith('/rejected'),
         (state, action) => {
           state.isLoading = false
-          state.error = action.payload || 'An error occurred.'
-          console.log(state.error)
+          state.error = action.payload.message || 'An error occurred.'
+          state.status = null
         }
       )
   }
