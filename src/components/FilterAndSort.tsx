@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, FormEvent, ChangeEvent } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+
 import { Category, categoryState } from '../redux/slices/categories/categorySlice'
 import { AppDispatch } from '../redux/store'
 import { fetchProduct } from '../Servies/product'
@@ -75,42 +76,42 @@ const FilterAndSort = () => {
       <div className="filter">
         <label htmlFor="">Filter</label>
         <div className="flex gap-4">
-        <div className="dropdown" ref={dropdownRef}>
-          <div className="selected-option md:w-[400px]" onClick={() => toggleDropdown('type')}>
-            {selectedOption || 'Type'}
-          </div>
-          {isOpen.type && (
-            <div className="options">
-              {categories.map((categories) => (
-                <div
-                  key={categories._id}
-                  className="option"
-                  onClick={() => handleTypeClick(categories)}>
-                  {categories.title}
-                </div>
-              ))}
+          <div className="dropdown" ref={dropdownRef}>
+            <div className="selected-option md:w-[400px]" onClick={() => toggleDropdown('type')}>
+              {selectedOption || 'Type'}
             </div>
-          )}
-        </div>
-        <div className="dropdown " ref={inputRef}>
-          <div className="selected-option md:w-[400px]" onClick={() => toggleDropdown('price')}>
-            {'price'}
+            {isOpen.type && (
+              <div className="options">
+                {categories.map((categories) => (
+                  <div
+                    key={categories._id}
+                    className="option"
+                    onClick={() => handleTypeClick(categories)}>
+                    {categories.title}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
-          {isOpen.price && (
-            <form className="options gap-2 p-2 grid grid-cols-2" onSubmit={handlePriceSubmit}>
-              <div className="">
-                <label htmlFor="maxPrice">max</label>
-                <input name="maxPrice" type="number" onChange={handlePriceChange} />
-              </div>
-              <div className="">
-                <label htmlFor="minPrice">min</label>
-                <input type="number" name="minPrice" onChange={handlePriceChange} />
-              </div>
-              <input type="reset" />
-              <input className="btn" type="submit" />
-            </form>
-          )}
-        </div>
+          <div className="dropdown " ref={inputRef}>
+            <div className="selected-option md:w-[400px]" onClick={() => toggleDropdown('price')}>
+              {'price'}
+            </div>
+            {isOpen.price && (
+              <form className="options gap-2 p-2 grid grid-cols-2" onSubmit={handlePriceSubmit}>
+                <div className="">
+                  <label htmlFor="maxPrice">max</label>
+                  <input name="maxPrice" type="number" onChange={handlePriceChange} />
+                </div>
+                <div className="">
+                  <label htmlFor="minPrice">min</label>
+                  <input type="number" name="minPrice" onChange={handlePriceChange} />
+                </div>
+                <input type="reset" />
+                <input className="btn" type="submit" />
+              </form>
+            )}
+          </div>
         </div>
       </div>
       <div className="filter">

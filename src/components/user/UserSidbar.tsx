@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { IoLogOutOutline } from 'react-icons/io5'
+import { ChangeEvent, useRef } from 'react'
 
 import { AppDispatch } from '../../redux/store'
 import { userState } from '../../redux/slices/user/userSlice'
 import { logout, updateUser } from '../../Servies/user'
-import { ChangeEvent, useRef } from 'react'
 import { baseURL } from '../../api'
 
 const UserSidbar = () => {
@@ -17,21 +17,21 @@ const UserSidbar = () => {
     dispatch(logout())
   }
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = event.target.files[0]
+    const files = event.target.files
+    const selectedFile = (files && files[0]) || ''
+
     const user = new FormData()
     if (userData) {
       user.append('username', userData.username)
       user.append('image', selectedFile)
       user.append('email', userData.email)
       user.append('password', userData.password)
-      for (const [key, value] of user.entries()) {
-        console.log(`${key}: ${value}`)
-      }
+
       dispatch(updateUser({ user, slug: userData.slug }))
     }
   }
   const handleClickIcon = () => {
-    if (fileInputRef) {
+    if (fileInputRef.current) {
       fileInputRef.current.click()
     }
   }

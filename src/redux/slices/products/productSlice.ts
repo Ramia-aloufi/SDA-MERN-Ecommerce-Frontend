@@ -57,7 +57,7 @@ export type ProductState = {
   currentPage: number
   query: QueryParams
   savedItem: Product[]
-  productsCount:number
+  productsCount: number
 }
 const initialState: ProductState = {
   items: [],
@@ -225,7 +225,7 @@ export const productSlice = createSlice({
         (action) => action.type.endsWith('/rejected'),
         (state, action) => {
           state.isLoading = false
-          state.error = action.payload.message.message || 'An error occurred.'
+          state.error = action.payload.response.data.errors.message || 'An error occurred.'
           state.status = null
         }
       )

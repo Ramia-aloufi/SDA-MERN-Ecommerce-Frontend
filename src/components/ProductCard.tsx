@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { IoBookmark, IoBookmarkOutline } from 'react-icons/io5'
 import { Product, SavedItem, addToCart, productState } from '../redux/slices/products/productSlice'
 import { baseURL } from '../api'
+import { Category } from '../redux/slices/categories/categorySlice'
 
 type ProductCardProps = {
   product: Product
@@ -22,8 +23,8 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
   return (
     <div
-      style={{ '--image-url': `url(${baseURL}/${product.image})` }}
-      className="  w-full relative text-left shadow-sm rounded-md p-4 h-[400px] align-bottom before:content-[''] before:absolute before:inset-0 before:bg-[image:var(--image-url)] before:bg-cover before:z-[-10] before:rounded">
+      style={{ '--image-url': `url(${baseURL}/${product.image})` } as React.CSSProperties}
+      className={`  w-full relative text-left shadow-sm rounded-md p-4 h-[400px] align-bottom before:content-[''] before:absolute before:inset-0 before:bg-[image:var(--image-url)] before:bg-cover before:z-[-10] before:rounded`}>
       <Link
         className="absolute inset-0 z-[1]"
         to={`/product/${product.slug}`}
@@ -43,7 +44,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             />
           )}
         </div>
-        <span className="font-semibold">{product.category.title}</span>
+        <span className="font-semibold">{(product.category as unknown as Category).title}</span>
 
         <div className="flex justify-center items-center gap-7 ">
           <span className="font-semibold text-xl">${product.price}</span>

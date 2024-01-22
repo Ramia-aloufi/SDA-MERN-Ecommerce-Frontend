@@ -1,13 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { useDispatch, useSelector } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { object, string, z } from 'zod'
-import { postCategory } from '../Servies/category'
+import { useState } from 'react'
+
 import { AppDispatch } from '../redux/store'
 import { forgotPassword } from '../Servies/user'
-import { useEffect, useState } from 'react'
-import { userState } from '../redux/slices/user/userSlice'
 
 const emailSchema = object({
   email: string().email()
@@ -15,10 +14,8 @@ const emailSchema = object({
 
 type CategorySchema = z.infer<typeof emailSchema>
 const ForgotPassword = () => {
-  const navigate = useNavigate()
   const dispatch = useDispatch<AppDispatch>()
   const [isSend, setIsSend] = useState<boolean>(false)
-  const { status } = useSelector(userState)
   const {
     register,
     handleSubmit,

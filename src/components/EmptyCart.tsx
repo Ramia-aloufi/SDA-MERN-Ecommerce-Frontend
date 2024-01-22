@@ -12,7 +12,7 @@ const EmptyCart = () => {
         <div className="">
           <p className="text-gray-600">Your cart is empty</p>
           <p className="text-gray-500 font-light">
-            Haven't found what you're looking for? Keep exploring!
+            Have not found what you are looking for? Keep exploring!
           </p>
         </div>
 

@@ -4,9 +4,10 @@ import { IoLogOutOutline } from 'react-icons/io5'
 
 import { AppDispatch } from '../../redux/store'
 import { userState } from '../../redux/slices/user/userSlice'
+import { ChangeEvent, useRef } from 'react'
+
 import { logout, updateUser } from '../../Servies/user'
 import { baseURL } from '../../api'
-import { ChangeEvent, useRef } from 'react'
 
 export const AdminSidbar = () => {
   const dispatch = useDispatch<AppDispatch>()
@@ -17,7 +18,8 @@ export const AdminSidbar = () => {
   }
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = event.target.files[0]
+    const files = event.target.files
+    const selectedFile = (files && files[0]) || ''
     const user = new FormData()
     console.log(userData)
     if (userData) {
@@ -28,7 +30,7 @@ export const AdminSidbar = () => {
   }
 
   const handleClickIcon = () => {
-    if (fileInputRef) {
+    if (fileInputRef.current) {
       fileInputRef.current.click()
     }
   }

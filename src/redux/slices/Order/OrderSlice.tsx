@@ -5,7 +5,7 @@ import { fetchOrder, fetchuseOrder, placeOrder } from '../../../Servies/order'
 import { User } from '../user/userSlice'
 
 export type Payment = {
-  paymentMethod: string
+  paymentMethod?: string
   amount: number
 }
 export type orderItem = {
@@ -95,7 +95,7 @@ export const orderSlice = createSlice({
         (action) => action.type.endsWith('/rejected'),
         (state, action) => {
           state.isLoading = false
-          state.error = action.payload.message || 'An error occurred.'
+          state.error = action.payload.response.data.errors.message || 'An error occurred.'
           state.status = null
         }
       )

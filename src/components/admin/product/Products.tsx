@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom'
 import { RiAddLine } from 'react-icons/ri'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { AdminSidbar } from '../AdminSidbar'
 import { ProductsTable } from './ProductsTable'
 import Pagination from '../../Pagination'
-import { useDispatch, useSelector } from 'react-redux'
 import { fetchProduct } from '../../../Servies/product'
 import { productState } from '../../../redux/slices/products/productSlice'
 import { AppDispatch } from '../../../redux/store'

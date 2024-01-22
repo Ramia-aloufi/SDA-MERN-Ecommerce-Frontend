@@ -1,4 +1,4 @@
-import { loadStripe } from '@stripe/stripe-js'
+import { Stripe, loadStripe } from '@stripe/stripe-js'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { baseURL } from '../api'
@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux'
 import { productState } from '../redux/slices/products/productSlice'
 
 const Payment = () => {
-  const [stripePromise, setStripePromise] = useState<any>(null)
+  const [stripePromise, setStripePromise] = useState<Promise<Stripe | null> | null>(null)
   const [clientSecret, setClientSecret] = useState('')
   const { totalPrice } = useSelector(productState)
 

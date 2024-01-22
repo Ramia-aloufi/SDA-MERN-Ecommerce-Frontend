@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 import { RootState } from '../../store'
 import {
+  activateUser,
   banStatus,
   deleteSingleUser,
   fetchUser,
@@ -175,7 +176,11 @@ export const userSlice = createSlice({
       .addCase(forgotPassword.fulfilled, (state, action) => {
         const { message } = action.payload
         state.isLoading = false
-
+        state.status = message
+      })
+      .addCase(activateUser.fulfilled, (state, action) => {
+        const { message } = action.payload
+        state.isLoading = false
         state.status = message
       })
       .addCase(resetPassword.fulfilled, (state, action) => {
@@ -200,7 +205,7 @@ export const userSlice = createSlice({
         (action) => action.type.endsWith('/rejected'),
         (state, action) => {
           state.isLoading = false
-          state.error = action.payload.message || 'An error occurred.'
+          state.error = action.payload.response.data.errors.message || 'An error occurred.'
           state.status = null
         }
       )

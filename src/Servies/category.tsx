@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
+
 import { baseURL } from '../api'
 import { QueryParams } from '../redux/slices/products/productSlice'
 
@@ -12,8 +13,7 @@ export const fetchCategory = createAsyncThunk(
       )
       return data
     } catch (err) {
-      const message = err.response.data.errors
-      return rejectWithValue(message)
+      return rejectWithValue(err)
     }
   }
 )
@@ -23,9 +23,8 @@ export const postCategory = createAsyncThunk(
     try {
       const { data } = await axios.post(`${baseURL}/categories`, { title: title })
       return data
-    } catch (error) {
-      const message = error.response.message || 'Error delete data'
-      rejectWithValue(message)
+    } catch (err) {
+      return rejectWithValue(err)
     }
   }
 )
@@ -35,9 +34,8 @@ export const getSingleCategory = createAsyncThunk(
     try {
       const { data } = await axios.get(`${baseURL}/categories/${slug}`)
       return data
-    } catch (error) {
-      const message = error.response.message || 'Error fetching data'
-      rejectWithValue(message)
+    } catch (err) {
+      return rejectWithValue(err)
     }
   }
 )
@@ -47,9 +45,8 @@ export const deleteSingleCategory = createAsyncThunk(
     try {
       const { data } = await axios.delete(`${baseURL}/categories/${slug}`)
       return data
-    } catch (error) {
-      const message = error.response.message || 'Error delete data'
-      rejectWithValue(message)
+    } catch (err) {
+      return rejectWithValue(err)
     }
   }
 )
@@ -60,9 +57,8 @@ export const updateSingleCategory = createAsyncThunk(
     try {
       const { data } = await axios.put(`${baseURL}/categories/${slug}`, { title: title })
       return data
-    } catch (error) {
-      const message = err.response.data.errors
-      return rejectWithValue(message)
+    } catch (err) {
+      return rejectWithValue(err)
     }
   }
 )

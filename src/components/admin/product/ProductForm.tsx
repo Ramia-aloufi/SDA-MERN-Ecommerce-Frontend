@@ -2,13 +2,14 @@ import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { any, object, string, z } from 'zod'
+import { useEffect } from 'react'
+import { LineWave } from 'react-loader-spinner'
 
 import { postProduct } from '../../../Servies/product'
 import { showToast } from '../../../helper/toast'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch } from '../../../redux/store'
 import { productState } from '../../../redux/slices/products/productSlice'
-import { useEffect } from 'react'
 import { categoryState } from '../../../redux/slices/categories/categorySlice'
 
 const productSchema = object({
@@ -45,16 +46,17 @@ export function ProductForm() {
     formdata.append('price', data.price)
     formdata.append('category', data.category)
 
-    formdata.forEach((value, key) => {
-      console.log(`${key}: ${value}`)
-    })
-
     dispatch(postProduct(formdata))
+    reset()
     navigate('/admin/product')
   }
 
   {
-    isLoading && <h1>Loading.. </h1>
+    isLoading && (
+      <div className="flex justify-center items-center">
+        <LineWave color="orange" thickness="6px" speed="0.3s" />
+      </div>
+    )
   }
   useEffect(() => {
     if (error) {

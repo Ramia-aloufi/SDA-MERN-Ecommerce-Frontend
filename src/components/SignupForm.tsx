@@ -16,7 +16,6 @@ const signupSchema = object({
 type SignupSchema = z.infer<typeof signupSchema>
 
 const SignupForm = () => {
-  // const navigate = useNavigate()
   const dispatch = useDispatch<AppDispatch>()
 
   const {

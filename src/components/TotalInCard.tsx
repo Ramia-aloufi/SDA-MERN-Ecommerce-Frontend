@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 
 import { productState } from '../redux/slices/products/productSlice'
 import { AppDispatch } from '../redux/store'
 import { placeOrder } from '../Servies/order'
-import { useNavigate } from 'react-router-dom'
-import { useState } from 'react'
 import Payment from '../pages/Payment'
 
 const TotalInCard = () => {
@@ -23,8 +23,8 @@ const TotalInCard = () => {
       }
     }
     setIsPayment(true)
-    // navigate('/user/checkout')
-    // dispatch(placeOrder(order))
+    navigate('/user/checkout')
+    dispatch(placeOrder(order))
   }
   return (
     <div className="p-4 space-y-4 bg-white">

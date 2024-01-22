@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { FiTrash, FiEdit } from 'react-icons/fi'
-import { orderState } from '../../redux/slices/Order/orderSlice'
-import { Product } from '../../redux/slices/products/productSlice'
 import { useParams } from 'react-router-dom'
 import { useEffect } from 'react'
+
+import { orderState } from '../../redux/slices/Order/orderSlice'
+import { Product } from '../../redux/slices/products/productSlice'
 import { AppDispatch } from '../../redux/store'
 import { fetchuseOrder } from '../../Servies/order'
 

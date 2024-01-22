@@ -1,7 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux'
+import { IoBookmark, IoBookmarkOutline } from 'react-icons/io5'
+
 import { baseURL } from '../api'
 import { Product, SavedItem, addToCart, productState } from '../redux/slices/products/productSlice'
-import { IoBookmark, IoBookmarkOutline } from 'react-icons/io5'
+import { Category } from '../redux/slices/categories/categorySlice'
 
 const ProductDetailCard = () => {
   const dispatch = useDispatch()
@@ -32,7 +34,7 @@ const ProductDetailCard = () => {
           <div className="flex justify-between xs:mt-2">
             <div className="">
               <span className="block  font-semibold ">
-                {product.category ? product.category.title : ''}
+                {(product.category as unknown as Category).title}
               </span>
               <h2 className=" text-gray-500 text-2xl">{product.title}</h2>
             </div>

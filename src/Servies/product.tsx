@@ -21,9 +21,8 @@ export const fetchProduct = createAsyncThunk(
         ${query?.search ? `&search=${query.search}` : ''}`
       )
       return data
-    } catch (err) {
-      const message = err.response.data.errors
-      return rejectWithValue(message)
+    } catch (error) {
+      return rejectWithValue(error)
     }
   }
 )
@@ -35,8 +34,7 @@ export const getSingleProduct = createAsyncThunk(
       const response = await axios.get(`${baseURL}/products/${slug}`)
       return response.data.payload
     } catch (error) {
-      const message = error.response.message || 'Error fetching data'
-      return rejectWithValue(message)
+      return rejectWithValue(error)
     }
   }
 )
@@ -47,9 +45,8 @@ export const postProduct = createAsyncThunk(
     try {
       const { data } = await axios.post(`${baseURL}/products/`, product)
       return data
-    } catch (err) {
-      const message = err.response.data.errors
-      return rejectWithValue(message)
+    } catch (error) {
+      return rejectWithValue(error)
     }
   }
 )
@@ -61,8 +58,7 @@ export const deleteSingleProduct = createAsyncThunk(
       const { data } = await axios.delete(`${baseURL}/products/${slug}`)
       return data
     } catch (error) {
-      const message = error.response || 'Error delete data'
-      return rejectWithValue(message)
+      return rejectWithValue(error)
     }
   }
 )
@@ -78,8 +74,7 @@ export const updateSingleProduct = createAsyncThunk(
       const { data } = await axios.put(`${baseURL}/products/${slug}`, product)
       return data
     } catch (error) {
-      const message = err.response.data.errors
-      return rejectWithValue(message)
+      return rejectWithValue(error)
     }
   }
 )

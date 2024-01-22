@@ -8,7 +8,6 @@ import Banner from '../components/Banner'
 import Pagination from '../components/Pagination'
 import { fetchProduct } from '../Servies/product'
 import FilterAndSort from '../components/FilterAndSort'
-import { Link } from 'react-router-dom'
 
 const Home = () => {
   const dispatch = useDispatch<AppDispatch>()

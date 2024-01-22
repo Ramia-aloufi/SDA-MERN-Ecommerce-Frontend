@@ -24,20 +24,8 @@ import Activate from '../components/Activate'
 import ForgotPassword from '../pages/ForgotPassword'
 import ResetPassword from '../pages/ResetPassword'
 import { OrderUser } from '../components/user/Order'
-import CheckoutForm from '../pages/CheckoutForm'
 import Payment from '../pages/Payment'
 
-// function Index() {
-//   // const count = useSelector((state: RootState) => state.counter.value)
-//   // const dispatch = useDispatch()
-//   return (
-//     <>
-//       <NavBar />
-//       <App />
-//       <Footer />
-//     </>
-//   )
-// }
 function Layout() {
   return (
     <div className="flex flex-col h-screen">

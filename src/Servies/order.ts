@@ -9,29 +9,29 @@ export const fetchOrder = createAsyncThunk('order/fetchData', async (_, { reject
     const { data } = await axios.get(`${baseURL}/orders/all-orders`)
     return data
   } catch (err) {
-    const message = err.response.data.errors
-    return rejectWithValue(message)
+    return rejectWithValue(err)
   }
 })
 
-export const placeOrder = createAsyncThunk('order/placeOrder', async (order: Partial<Order>) => {
-  try {
-    const { data } = await axios.post(`${baseURL}/orders/process-payment`, order)
-    return data
-  } catch (error) {
-    const message = error.response.message || 'fetchOrder error'
-    return message
+export const placeOrder = createAsyncThunk(
+  'order/placeOrder',
+  async (order: Partial<Order>, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.post(`${baseURL}/orders/process-payment`, order)
+      return data
+    } catch (err) {
+      return rejectWithValue(err)
+    }
   }
-})
+)
 export const fetchuseOrder = createAsyncThunk(
   'order/fetchuseOrder',
-  async (id: string | undefined) => {
+  async (id: string | undefined, { rejectWithValue }) => {
     try {
       const { data } = await axios.get(`${baseURL}/orders/${id}`)
       return data
-    } catch (error) {
-      const message = error.response.message || 'fetchOrder error'
-      return message
+    } catch (err) {
+      return rejectWithValue(err)
     }
   }
 )

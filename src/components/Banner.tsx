@@ -11,15 +11,11 @@ const Banner = () => {
             Upgrade Your Space with Our Beautiful Furniture
           </h1>
         </div>
-        {/* <p className="text-opacity-80 leading-relaxed md:text-base xs:text-sm">
-          Discover a carefully curated selection of furniture that seamlessly combines comfort and
-          exquisite design. Transform your home with pieces that elevate your living experience.
-          Shop now for the perfect blend of quality and affordability.
-        </p> */}
-        <button className="btn" style={{ width: '200px' }}> Shop Now </button>
+        <button className="btn" style={{ width: '200px' }}>
+          Shop Now
+        </button>
       </div>
     </div>
   )
 }
-// faae26
 export default Banner

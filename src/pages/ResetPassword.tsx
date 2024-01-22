@@ -1,13 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { useDispatch, useSelector } from 'react-redux'
-import { Link, useNavigate, useParams } from 'react-router-dom'
-import { object, string, z } from 'zod'
-import { postCategory } from '../Servies/category'
+import { useDispatch } from 'react-redux'
+import { useNavigate, useParams } from 'react-router-dom'
+import { z } from 'zod'
+
 import { AppDispatch } from '../redux/store'
-import { forgotPassword, resetPassword } from '../Servies/user'
-import { useEffect, useState } from 'react'
-import { userState } from '../redux/slices/user/userSlice'
+import { resetPassword } from '../Servies/user'
 
 const resetpasswordForm = z
   .object({

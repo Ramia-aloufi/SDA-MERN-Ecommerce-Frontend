@@ -1,15 +1,15 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { FiTrash, FiEdit } from 'react-icons/fi'
 import { useNavigate } from 'react-router-dom'
+import { LineWave } from 'react-loader-spinner'
+import { useEffect } from 'react'
 
 import { productState } from '../../../redux/slices/products/productSlice'
 import { baseURL } from '../../../api'
 import { deleteSingleProduct } from '../../../Servies/product'
 import { AppDispatch } from '../../../redux/store'
-import { useEffect } from 'react'
 import { showToast } from '../../../helper/toast'
 import { Category } from '../../../redux/slices/categories/categorySlice'
-import { LineWave } from 'react-loader-spinner'
 
 export const ProductsTable = () => {
   const { products, status, error, isLoading } = useSelector(productState)
