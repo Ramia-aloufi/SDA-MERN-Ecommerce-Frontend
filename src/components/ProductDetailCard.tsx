@@ -34,7 +34,7 @@ const ProductDetailCard = () => {
           <div className="flex justify-between xs:mt-2">
             <div className="">
               <span className="block  font-semibold ">
-                {(product.category as unknown as Category).title}
+                {product.category.title}
               </span>
               <h2 className=" text-gray-500 text-2xl">{product.title}</h2>
             </div>
