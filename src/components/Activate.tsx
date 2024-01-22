@@ -1,8 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
 
 import { activateUser } from '../Servies/user'
-import { showToast } from '../helper/toast'
 
 const Activate = () => {
   const { token } = useParams()
@@ -10,11 +8,8 @@ const Activate = () => {
   console.log('token', token)
 
   const navigate = useNavigate()
-  const dispatch = useDispatch()
-  const handleActivate = async (token: string | undefined) => {
-    const response = token && (await activateUser(token))
-    showToast(response, true, dispatch)
-    console.log('aa')
+  const handleActivate = (token: string | undefined) => {
+    token && activateUser(token)
     navigate('/')
   }
 
