@@ -22,7 +22,7 @@ const TotalInCard = () => {
     }
     setIsPayment(true)
     dispatch(placeOrder(order))
-    dispatch(clearCart())
+    // dispatch(clearCart())
   }
   return (
     <div className="p-4 space-y-4 bg-white">
