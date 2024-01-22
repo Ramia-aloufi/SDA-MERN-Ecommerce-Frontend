@@ -87,6 +87,9 @@ export const productSlice = createSlice({
       state.error = null
       state.status = null
     },
+    clearCart: (state) => {
+      state.inCart = []
+    },
     searchProduct: (state, action) => {
       console.log(action.payload)
       const search = action.payload
@@ -238,6 +241,7 @@ export const {
   IncreaseQuantity,
   DecreaseQuantity,
   clearError,
+  clearCart,
   SavedItem
 } = productSlice.actions
 
