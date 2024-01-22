@@ -28,15 +28,15 @@ const TotalInCard = () => {
   }
   return (
     <div className="p-4 space-y-4 bg-white">
-      <h1 className="font-bold text-xl">Total</h1>
+      <h1 className="font-bold text-xl ">Total</h1>
       <hr />
       <div className="flex justify-between items-center">
         <span className="text-sm font-semibold">Sup-Total</span>
-        <span className="text-lg font-semibold">${totalPrice}</span>
+        <span className="text-lg xs:text-md font-semibold">${totalPrice}</span>
       </div>
       <div className="flex justify-between items-center">
         <span className="text-sm font-semibold">Delivery</span>
-        <span className="text-lg font-semibold">Free</span>
+        <span className="text-lg xs:text-md font-semibold">Free</span>
       </div>
       <hr />
       <button className="btn2" onClick={() => onSubmit()}>

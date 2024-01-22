@@ -3,7 +3,6 @@ import { IoBookmark, IoBookmarkOutline } from 'react-icons/io5'
 
 import { baseURL } from '../api'
 import { Product, SavedItem, addToCart, productState } from '../redux/slices/products/productSlice'
-import { Category } from '../redux/slices/categories/categorySlice'
 
 const ProductDetailCard = () => {
   const dispatch = useDispatch()
@@ -62,7 +61,7 @@ const ProductDetailCard = () => {
               }  h-[45px] rounded flex items-center justify-center w-full   `}
               onClick={() => handeSaveProduct(product)}>
               {!saved.includes(product) ? (
-                <IoBookmarkOutline className=" text-xl text-gray-500 cursor-pointer " />
+                <IoBookmarkOutline className=" text-xl xs:text-md text-gray-500 cursor-pointer " />
               ) : (
                 <IoBookmark className="text-xl text-[#fff] cursor-pointer" />
               )}

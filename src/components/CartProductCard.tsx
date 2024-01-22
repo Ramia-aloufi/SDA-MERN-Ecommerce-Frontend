@@ -8,6 +8,7 @@ import {
   removeFromCart
 } from '../redux/slices/products/productSlice'
 import { baseURL } from '../api'
+import { IoTrashOutline } from 'react-icons/io5'
 
 const CartProductCard = (cart: CartItem) => {
   const { product, quantity } = cart
@@ -48,8 +49,8 @@ const CartProductCard = (cart: CartItem) => {
             </button>
             <button
               onClick={() => onRemove(product)}
-              className="bg-red-500 text-white px-3 py-1 rounded-md">
-              Remove
+              className="text-red-500">
+              <IoTrashOutline />
             </button>
           </div>
         </div>
