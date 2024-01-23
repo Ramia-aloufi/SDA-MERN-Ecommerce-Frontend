@@ -6,11 +6,12 @@ import SearchInput from './SearchInput'
 import productState from '../models/ProductState'
 import userState from '../models/userState'
 import User from '../models/User'
+import RootState from '../models/RootState'
 
 const NavBar = () => {
   const { totalQuantity } = useSelector(productState)
-  const userData: User | null = useSelector(userState).userData
-  const isLogedIn: boolean = useSelector(userState).isLogedIn
+  const userData: User | null = useSelector((state: RootState) => state.users).userData
+  const isLogedIn: boolean = useSelector((state: RootState) => state.users).isLogedIn
   return (
     <nav className="bg-[#434343] w-screen flex p-3 md:px-9  items-center justify-between sticky top-0">
       <Link to="/">
