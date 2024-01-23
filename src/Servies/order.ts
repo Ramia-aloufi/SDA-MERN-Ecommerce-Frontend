@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 import { baseURL } from '../api'
-import { Order } from '../redux/slices/Order/orderSlice'
+import Order from '../models/Order'
 
 export const fetchOrder = createAsyncThunk('order/fetchData', async (_, { rejectWithValue }) => {
   try {

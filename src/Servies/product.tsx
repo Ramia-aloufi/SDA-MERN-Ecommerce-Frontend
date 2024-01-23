@@ -2,7 +2,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 import { baseURL } from '../api'
-import { Product, QueryParams } from '../redux/slices/products/productSlice'
+import { QueryParams } from '../redux/slices/products/productSlice'
+import Product from '../models/Product'
 
 export type apiResponse = {
   message: string
