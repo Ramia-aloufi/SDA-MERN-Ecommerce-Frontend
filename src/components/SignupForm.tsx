@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import 'react-toastify/dist/ReactToastify.css'
 import { postUser } from '../Servies/user'
 import { useDispatch } from 'react-redux'
-import { AppDispatch } from '../redux/store'
+import AppDispatch from '../models/AppDispatch'
 
 const signupSchema = object({
   username: string().min(3),

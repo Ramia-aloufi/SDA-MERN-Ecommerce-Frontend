@@ -2,12 +2,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { IoLogOutOutline } from 'react-icons/io5'
 
-import { AppDispatch } from '../../redux/store'
-import { userState } from '../../redux/slices/user/userSlice'
 import { ChangeEvent, useRef } from 'react'
 
 import { logout, updateUser } from '../../Servies/user'
 import { baseURL } from '../../api'
+import AppDispatch from '../../models/AppDispatch'
+import userState from '../../models/userState'
 
 const AdminSidbar = () => {
   const dispatch = useDispatch<AppDispatch>()

@@ -5,10 +5,10 @@ import { object, string, z } from 'zod'
 import { ToastContainer } from 'react-toastify'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import { AppDispatch } from '../../../redux/store'
 import { getSingleCategory, updateSingleCategory } from '../../../Servies/category'
 import { useEffect } from 'react'
-import { categoryState } from '../../../redux/slices/categories/categorySlice'
+import AppDispatch from '../../../models/AppDispatch'
+import categoryState from '../../../models/CategoryState'
 
 const categorySchema = object({
   title: string().min(3)

@@ -2,12 +2,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { FiTrash, FiEdit } from 'react-icons/fi'
 import { useNavigate } from 'react-router-dom'
 
-import { categoryState } from '../../../redux/slices/categories/categorySlice'
-import { AppDispatch } from '../../../redux/store'
 import { deleteSingleCategory } from '../../../Servies/category'
 import { useEffect } from 'react'
 import showToast from '../../../helper/toast'
 import { LineWave } from 'react-loader-spinner'
+import AppDispatch from '../../../models/AppDispatch'
+import categoryState from '../../../models/CategoryState'
 
 const CategoryTable = () => {
   const { categories, error, status, isLoading } = useSelector(categoryState)

@@ -1,14 +1,14 @@
 import { useDispatch, useSelector } from 'react-redux'
 
-import { AppDispatch } from '../redux/store'
 import ProductCard from '../components/ProductCard'
-import { productState } from '../redux/slices/products/productSlice'
 import Offer from '../components/Offer'
 import Banner from '../components/Banner'
 import Pagination from '../components/Pagination'
 import { fetchProduct } from '../Servies/product'
 import FilterAndSort from '../components/FilterAndSort'
 import { LineWave } from 'react-loader-spinner'
+import AppDispatch from '../models/AppDispatch'
+import productState from '../models/ProductState'
 
 const Home = () => {
   const dispatch = useDispatch<AppDispatch>()

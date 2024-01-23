@@ -1,10 +1,10 @@
 import { useState, useRef, useEffect, FormEvent, ChangeEvent } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { categoryState } from '../redux/slices/categories/categorySlice'
-import { AppDispatch } from '../redux/store'
 import { fetchProduct } from '../Servies/product'
 import Category from '../models/Category'
+import categoryState from '../models/CategoryState'
+import AppDispatch from '../models/AppDispatch'
 
 const FilterAndSort = () => {
   const [isOpen, setIsOpen] = useState({ type: false, price: false, sort: false })

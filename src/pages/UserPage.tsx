@@ -6,9 +6,9 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { IoCreateOutline } from 'react-icons/io5'
 
 import UserSidbar from '../components/user/UserSidbar'
-import { userState } from '../redux/slices/user/userSlice'
 import { updateUser } from '../Servies/user'
-import { AppDispatch } from '../redux/store'
+import userState from '../models/userState'
+import AppDispatch from '../models/AppDispatch'
 
 const UserPage = () => {
   const userSchema = object({

@@ -5,9 +5,9 @@ import { baseURL } from '../api'
 import { Elements } from '@stripe/react-stripe-js'
 import CheckoutForm from './CheckoutForm'
 import { useDispatch, useSelector } from 'react-redux'
-import { productState } from '../redux/slices/products/productSlice'
 import showToast from '../helper/toast'
-import { AppDispatch } from '../redux/store'
+import productState from '../models/ProductState'
+import AppDispatch from '../models/AppDispatch'
 
 const Payment = () => {
   const [stripePromise, setStripePromise] = useState<Promise<Stripe | null> | null>(null)

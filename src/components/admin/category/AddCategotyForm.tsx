@@ -4,8 +4,8 @@ import { useDispatch } from 'react-redux'
 import { object, string, z } from 'zod'
 import { useNavigate } from 'react-router-dom'
 
-import { AppDispatch } from '../../../redux/store'
 import { postCategory } from '../../../Servies/category'
+import AppDispatch from '../../../models/AppDispatch'
 
 const categorySchema = object({
   name: string().min(3)

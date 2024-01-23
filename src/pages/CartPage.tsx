@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux'
 
-import { productState } from '../redux/slices/products/productSlice'
 import CartProductCard from '../components/CartProductCard'
 import TotalInCard from '../components/TotalInCard'
 import EmptyCart from '../components/EmptyCart'
+import productState from '../models/ProductState'
 
 const CartPage = () => {
   const { inCart } = useSelector(productState)

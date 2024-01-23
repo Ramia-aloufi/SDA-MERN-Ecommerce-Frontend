@@ -1,10 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { IoBookmark, IoBookmarkOutline } from 'react-icons/io5'
-import { SavedItem, addToCart, productState } from '../redux/slices/products/productSlice'
+import { SavedItem, addToCart } from '../redux/slices/products/productSlice'
 import { baseURL } from '../api'
 import Product from '../models/Product'
 import Category from '../models/Category'
+import productState from '../models/ProductState'
 
 type ProductCardProps = {
   product: Product

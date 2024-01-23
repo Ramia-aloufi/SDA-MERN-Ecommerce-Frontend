@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import { RootState } from '../../store'
 import { fetchOrder, fetchuseOrder, placeOrder } from '../../../Servies/order'
 import Order from '../../../models/Order'
 
@@ -84,7 +83,5 @@ export const orderSlice = createSlice({
   }
 })
 export const { deldeteOrder } = orderSlice.actions
-
-export const orderState = (state: RootState) => state.orders
 
 export default orderSlice.reducer

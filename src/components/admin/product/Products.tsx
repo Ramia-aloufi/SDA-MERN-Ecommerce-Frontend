@@ -6,8 +6,8 @@ import AdminSidbar from '../AdminSidbar'
 import ProductsTable from './ProductsTable'
 import Pagination from '../../Pagination'
 import { fetchProduct } from '../../../Servies/product'
-import { productState } from '../../../redux/slices/products/productSlice'
-import { AppDispatch } from '../../../redux/store'
+import AppDispatch from '../../../models/AppDispatch'
+import productState from '../../../models/ProductState'
 
 const Products = () => {
   const dispatch = useDispatch<AppDispatch>()

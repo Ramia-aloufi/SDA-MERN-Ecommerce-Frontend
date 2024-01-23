@@ -8,9 +8,9 @@ import { LineWave } from 'react-loader-spinner'
 import { postProduct } from '../../../Servies/product'
 import showToast from '../../../helper/toast'
 import { useDispatch, useSelector } from 'react-redux'
-import { AppDispatch } from '../../../redux/store'
-import { productState } from '../../../redux/slices/products/productSlice'
-import { categoryState } from '../../../redux/slices/categories/categorySlice'
+import AppDispatch from '../../../models/AppDispatch'
+import categoryState from '../../../models/CategoryState'
+import productState from '../../../models/ProductState'
 
 const productSchema = object({
   title: string().min(6),

@@ -1,14 +1,12 @@
 import { useSelector } from 'react-redux'
 import { useState } from 'react'
 
-import { productState } from '../redux/slices/products/productSlice'
 import Payment from '../pages/Payment'
-// import { AppDispatch } from '../redux/store'
-import { userState } from '../redux/slices/user/userSlice'
 import { useNavigate } from 'react-router-dom'
+import userState from '../models/userState'
+import productState from '../models/ProductState'
 
 const TotalInCard = () => {
-  // const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
   const { totalPrice } = useSelector(productState)
   const { userData } = useSelector(userState)

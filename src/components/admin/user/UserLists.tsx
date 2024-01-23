@@ -4,11 +4,11 @@ import { FaBan, FaRegCheckCircle } from 'react-icons/fa'
 import { LineWave } from 'react-loader-spinner'
 import { useEffect } from 'react'
 
-import { userState } from '../../../redux/slices/user/userSlice'
-import { AppDispatch } from '../../../redux/store'
 import { banStatus, deleteSingleUser, fetchUser, roleStatus } from '../../../Servies/user'
 import showToast from '../../../helper/toast'
 import User from '../../../models/User'
+import userState from '../../../models/userState'
+import AppDispatch from '../../../models/AppDispatch'
 
 const UserLists = () => {
   const { users, isLoading, error, status } = useSelector(userState)

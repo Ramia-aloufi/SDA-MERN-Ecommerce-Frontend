@@ -6,8 +6,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 
 import { login } from '../Servies/user'
-import { AppDispatch } from '../redux/store'
-import { userState } from '../redux/slices/user/userSlice'
+import AppDispatch from '../models/AppDispatch'
+import userState from '../models/userState'
 
 const loginSchema = object({
   email: string().email(),

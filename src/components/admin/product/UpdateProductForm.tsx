@@ -5,11 +5,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { any, object, string, z } from 'zod'
 import { useEffect } from 'react'
 
-import { productState } from '../../../redux/slices/products/productSlice'
-import { AppDispatch } from '../../../redux/store'
 import { getSingleProduct, updateSingleProduct } from '../../../Servies/product'
-import { categoryState } from '../../../redux/slices/categories/categorySlice'
 import Category from '../../../models/Category'
+import AppDispatch from '../../../models/AppDispatch'
+import productState from '../../../models/ProductState'
+import categoryState from '../../../models/CategoryState'
 
 const UpdateProductForm = () => {
   const { slug } = useParams()

@@ -4,8 +4,8 @@ import { useDispatch } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import { z } from 'zod'
 
-import { AppDispatch } from '../redux/store'
 import { resetPassword } from '../Servies/user'
+import AppDispatch from '../models/AppDispatch'
 
 const resetpasswordForm = z
   .object({

@@ -3,8 +3,8 @@ import { IoPersonSharp, IoCart, IoHeart } from 'react-icons/io5'
 import { useSelector } from 'react-redux'
 
 import SearchInput from './SearchInput'
-import { productState } from '../redux/slices/products/productSlice'
-import { userState } from '../redux/slices/user/userSlice'
+import productState from '../models/ProductState'
+import userState from '../models/userState'
 
 const NavBar = () => {
   const { totalQuantity } = useSelector(productState)

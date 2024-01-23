@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify'
 
-import { AppDispatch } from '../redux/store'
 import { clearError } from '../redux/slices/products/productSlice'
+import AppDispatch from '../models/AppDispatch'
 
 const showToast = (message: string, isSuccess: boolean, dispatch: AppDispatch | null) => {
   if (isSuccess) {

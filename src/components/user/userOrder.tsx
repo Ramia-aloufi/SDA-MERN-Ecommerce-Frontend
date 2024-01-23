@@ -2,10 +2,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { useEffect } from 'react'
 
-import { orderState } from '../../redux/slices/Order/orderSlice'
-import { AppDispatch } from '../../redux/store'
 import { fetchuseOrder } from '../../Servies/order'
 import Product from '../../models/Product'
+import orderState from '../../models/OrderState'
+import AppDispatch from '../../models/AppDispatch'
 
 const OrderDetils = () => {
   const { id } = useParams()

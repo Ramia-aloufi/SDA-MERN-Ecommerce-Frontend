@@ -2,11 +2,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
 import { useEffect } from 'react'
 
-import { productState } from '../redux/slices/products/productSlice'
-import { AppDispatch } from '../redux/store'
 import ProductDetailCard from '../components/ProductDetailCard'
 import { getSingleProduct } from '../Servies/product'
 import ProductCard from '../components/ProductCard'
+import productState from '../models/ProductState'
+import AppDispatch from '../models/AppDispatch'
 
 const ProductDetails = () => {
   const { slug } = useParams()

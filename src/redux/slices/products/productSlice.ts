@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import { RootState } from '../../store'
 import {
   fetchProduct,
   deleteSingleProduct,
@@ -225,7 +224,5 @@ export const {
   clearCart,
   SavedItem
 } = productSlice.actions
-
-export const productState = (state: RootState) => state.products
 
 export default productSlice.reducer

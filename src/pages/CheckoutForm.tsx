@@ -2,9 +2,9 @@ import { FormEvent, useState } from 'react'
 import { PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { AppDispatch } from '../redux/store'
 import { placeOrder } from '../Servies/order'
-import { productState } from '../redux/slices/products/productSlice'
+import productState from '../models/ProductState'
+import AppDispatch from '../models/AppDispatch'
 
 const CheckoutForm = () => {
   const [isproccesed, setIsproccesed] = useState(false)

@@ -5,7 +5,7 @@ import CategoriesReducer from './slices/categories/categorySlice'
 import UsersReducer from './slices/user/userSlice'
 import OrderSlice from './slices/Order/orderSlice'
 
-export const store = configureStore({
+const store = configureStore({
   reducer: {
     products: productsReducer,
     categories: CategoriesReducer,
@@ -13,8 +13,4 @@ export const store = configureStore({
     orders: OrderSlice
   }
 })
-
-// Infer the `RootState` and `AppDispatch` types from the store itself
-export type RootState = ReturnType<typeof store.getState>
-// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
-export type AppDispatch = typeof store.dispatch
+export default store

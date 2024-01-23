@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom'
 import { object, string, z } from 'zod'
 import { useState } from 'react'
 
-import { AppDispatch } from '../redux/store'
 import { forgotPassword } from '../Servies/user'
+import AppDispatch from '../models/AppDispatch'
 
 const emailSchema = object({
   email: string().email()

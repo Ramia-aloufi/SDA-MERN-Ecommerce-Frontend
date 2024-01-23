@@ -2,10 +2,10 @@ import { ChangeEvent, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { debounce } from 'lodash'
 
-import { AppDispatch } from '../redux/store'
 import { fetchProduct } from '../Servies/product'
 import { fetchCategory } from '../Servies/category'
 import { fetchUser } from '../Servies/user'
+import AppDispatch from '../models/AppDispatch'
 
 const SearchInput = () => {
   const currentPath = location.pathname

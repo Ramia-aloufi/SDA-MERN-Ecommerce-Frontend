@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import { RootState } from '../../store'
 import {
   deleteSingleCategory,
   fetchCategory,
@@ -113,7 +112,5 @@ export const categorySlice = createSlice({
 })
 
 export const { searchCategory } = categorySlice.actions
-
-export const categoryState = (state: RootState) => state.categories
 
 export default categorySlice.reducer

@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import { RootState } from '../../store'
 import {
   activateUser,
   banStatus,
@@ -47,7 +46,7 @@ const initialState: userState = {
   status: null
 }
 
-export const userSlice = createSlice({
+const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
@@ -191,7 +190,6 @@ export const userSlice = createSlice({
   }
 })
 
-export const userState = (state: RootState) => state.users
 export const { searchUser } = userSlice.actions
 
 export default userSlice.reducer

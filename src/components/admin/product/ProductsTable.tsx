@@ -4,12 +4,12 @@ import { useNavigate } from 'react-router-dom'
 import { LineWave } from 'react-loader-spinner'
 import { useEffect } from 'react'
 
-import { productState } from '../../../redux/slices/products/productSlice'
 import { baseURL } from '../../../api'
 import { deleteSingleProduct } from '../../../Servies/product'
-import { AppDispatch } from '../../../redux/store'
 import showToast from '../../../helper/toast'
 import Category from '../../../models/Category'
+import AppDispatch from '../../../models/AppDispatch'
+import productState from '../../../models/ProductState'
 
 const ProductsTable = () => {
   const { products, status, error, isLoading } = useSelector(productState)

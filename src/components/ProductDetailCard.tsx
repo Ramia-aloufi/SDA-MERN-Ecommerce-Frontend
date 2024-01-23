@@ -2,9 +2,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { IoBookmark, IoBookmarkOutline } from 'react-icons/io5'
 
 import { baseURL } from '../api'
-import { SavedItem, addToCart, productState } from '../redux/slices/products/productSlice'
+import { SavedItem, addToCart } from '../redux/slices/products/productSlice'
 import Product from '../models/Product'
 import Category from '../models/Category'
+import productState from '../models/ProductState'
 
 const ProductDetailCard = () => {
   const dispatch = useDispatch()
