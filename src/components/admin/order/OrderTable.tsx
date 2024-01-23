@@ -8,12 +8,12 @@ import { fetchOrder } from '../../../Servies/order'
 import Product from '../../../models/Product'
 import User from '../../../models/User'
 import AppDispatch from '../../../models/AppDispatch'
-import orderState from '../../../models/OrderState'
 import Order from '../../../models/Order'
 import OrderStateType from '../../../models/OrderStateType'
+import RootState from '../../../models/RootState'
 
 const OrderTable = () => {
-  const state:OrderStateType = useSelector(orderState)
+  const state:OrderStateType = useSelector((state: RootState) => state.orders)
   const dispatch = useDispatch<AppDispatch>()
 
   const handleDelete = (id: number) => {
