@@ -2,8 +2,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 import { baseURL } from '../api'
-import { QueryParams } from '../redux/slices/products/productSlice'
 import User from '../models/User'
+import QueryParams from '../models/QueryParams'
 
 export const fetchUser = createAsyncThunk(
   'user/fetchData',

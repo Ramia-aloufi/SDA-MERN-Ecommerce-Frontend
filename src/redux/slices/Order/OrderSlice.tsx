@@ -25,7 +25,7 @@ const initialState: OrderState = {
   searchedResult: []
 }
 
-export const orderSlice = createSlice({
+ const orderSlice = createSlice({
   name: 'order',
   initialState,
   reducers: {

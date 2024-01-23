@@ -9,9 +9,8 @@ import User from '../models/User'
 
 const NavBar = () => {
   const { totalQuantity } = useSelector(productState)
-  const { userData, isLogedIn }: { userData: User | null; isLogedIn: boolean } =
-    useSelector(userState)
-
+  const userData: User | null = useSelector(userState).userData
+  const isLogedIn: boolean = useSelector(userState).isLogedIn
   return (
     <nav className="bg-[#434343] w-screen flex p-3 md:px-9  items-center justify-between sticky top-0">
       <Link to="/">

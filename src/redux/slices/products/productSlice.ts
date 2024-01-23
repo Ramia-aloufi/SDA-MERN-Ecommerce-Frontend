@@ -8,21 +8,11 @@ import {
   postProduct
 } from '../../../Servies/product'
 import Product from '../../../models/Product'
+import CartItem from '../../../models/Cart'
+import QueryParams from '../../../models/QueryParams'
 
-export type CartItem = {
-  product: Product
-  quantity: number
-}
 
-export type QueryParams = {
-  page: number | undefined
-  limit: number | undefined
-  maxPrice: number | undefined
-  minPrice: number | undefined
-  search: string | undefined
-  categoryId: string | undefined
-  sort: string | undefined
-}
+
 
 type ProductState = {
   items: Product[]
@@ -63,7 +53,7 @@ const initialState: ProductState = {
   productsCount: 0
 }
 
-export const productSlice = createSlice({
+ const productSlice = createSlice({
   name: 'product',
   initialState,
   reducers: {
@@ -77,12 +67,6 @@ export const productSlice = createSlice({
     searchProduct: (state, action) => {
       const search = action.payload
       state.searchTerm = search
-      // state.searchedResult = state.searchTerm
-      //   ? state.items.filter((product) =>
-      //       product.name.toLowerCase().includes(state.searchTerm.toLowerCase())
-      //     )
-      //   : []
-      // state.products = state.searchedResult.length > 0 ? state.searchedResult : state.items
     },
     addToCart: (state, action) => {
       const product: Product = action.payload

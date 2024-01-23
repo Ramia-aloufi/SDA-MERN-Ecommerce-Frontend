@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 import { baseURL } from '../api'
-import { QueryParams } from '../redux/slices/products/productSlice'
+import QueryParams from '../models/QueryParams'
 
 export const fetchCategory = createAsyncThunk(
   'category/fetchData',

@@ -1,7 +1,6 @@
 import { useDispatch } from 'react-redux'
 
 import {
-  CartItem,
   DecreaseQuantity,
   IncreaseQuantity,
   removeFromCart
@@ -9,6 +8,7 @@ import {
 import { baseURL } from '../api'
 import { IoTrashOutline } from 'react-icons/io5'
 import Product from '../models/Product'
+import CartItem from '../models/Cart'
 
 const CartProductCard = (cart: CartItem) => {
   const { product, quantity } = cart

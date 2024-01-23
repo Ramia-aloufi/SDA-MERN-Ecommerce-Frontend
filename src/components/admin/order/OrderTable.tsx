@@ -12,21 +12,21 @@ import orderState from '../../../models/OrderState'
 import Order from '../../../models/Order'
 
 const OrderTable = () => {
-  const { orders, status, error, isLoading } = useSelector(orderState)
+  const state = useSelector(orderState)
   const dispatch = useDispatch<AppDispatch>()
 
   const handleDelete = (id: number) => {
     console.log(id)
   }
   useEffect(() => {
-    status && showToast(status, true, dispatch)
-    error && showToast(error, false, dispatch)
-  }, [status, error])
+    state.status && showToast(state.status, true, dispatch)
+    state.error && showToast(state.error, false, dispatch)
+  }, [state.status, state.error])
 
   useEffect(() => {
     dispatch(fetchOrder())
   }, [dispatch])
-  if (isLoading) {
+  if (state.isLoading) {
     return (
       <div className="flex justify-center items-center">
         <LineWave color="orange" thickness="6px" speed="0.3s" />
@@ -47,8 +47,8 @@ const OrderTable = () => {
         </tr>
       </thead>
       <tbody>
-        {orders &&
-          orders.map((item: Order, index: number) => {
+        {state.orders &&
+          state.orders.map((item: Order, index: number) => {
             return (
               <tr key={index} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}>
                 <td className="border p-2">{item._id}</td>

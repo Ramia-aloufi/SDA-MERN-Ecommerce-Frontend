@@ -10,7 +10,7 @@ import AppDispatch from '../../../models/AppDispatch'
 import categoryState from '../../../models/CategoryState'
 
 const CategoryTable = () => {
-  const { categories, error, status, isLoading } = useSelector(categoryState)
+  const state = useSelector(categoryState)
   const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
 
@@ -22,10 +22,10 @@ const CategoryTable = () => {
     navigate(`/admin/category/update/${slug}`)
   }
   useEffect(() => {
-    status && showToast(status, true, dispatch)
-    error && showToast(error, false, dispatch)
-  }, [status, error])
-  if (isLoading) {
+    state.status && showToast(state.status, true, dispatch)
+    state.error && showToast(state.error, false, dispatch)
+  }, [state.status, state.error])
+  if (state.isLoading) {
     return (
       <div className="flex justify-center items-center">
         <LineWave color="orange" thickness="6px" speed="0.3s" />
@@ -42,7 +42,7 @@ const CategoryTable = () => {
         </tr>
       </thead>
       <tbody>
-        {categories.map(({ slug, title }, index: number) => {
+        {state.categories.map(({ slug, title }, index: number) => {
           return (
             <tr key={index} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}>
               <td className="border p-2">{index}</td>
