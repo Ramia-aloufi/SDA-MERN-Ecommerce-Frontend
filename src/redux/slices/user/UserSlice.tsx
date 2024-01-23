@@ -14,21 +14,11 @@ import {
   updateUser
 } from '../../../Servies/user'
 import axios from 'axios'
-import User from '../../../models/User'
+import userState from '../../../models/UserStateType'
 
 axios.defaults.withCredentials = true
 
-type userState = {
-  items: User[]
-  users: User[]
-  error: null | string
-  isLoading: boolean
-  isLogedIn: boolean
-  userData: User | null
-  searchTerm: string
-  searchedResult: User[]
-  status: string | null
-}
+
 
 const data =
   localStorage.getItem('LoginData') != null

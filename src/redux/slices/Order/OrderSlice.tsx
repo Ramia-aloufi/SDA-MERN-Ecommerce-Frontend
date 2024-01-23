@@ -3,16 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { fetchOrder, fetchuseOrder, placeOrder } from '../../../Servies/order'
 import Order from '../../../models/Order'
 
-type OrderState = {
-  items: Order[]
-  orders: Order[]
-  userOrders: Order[]
-  error: null | string
-  status: null | string
-  isLoading: boolean
-  searchTerm: string
-  searchedResult: Order[]
-}
+
 
 const initialState: OrderState = {
   items: [],
