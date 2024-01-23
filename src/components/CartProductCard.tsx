@@ -4,7 +4,7 @@ import {
   DecreaseQuantity,
   IncreaseQuantity,
   removeFromCart
-} from '../redux/slices/products/productSlice'
+} from '../redux/slices/products/ProductSlice'
 import { baseURL } from '../api'
 import { IoTrashOutline } from 'react-icons/io5'
 import Product from '../models/Product'

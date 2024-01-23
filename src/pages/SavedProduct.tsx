@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { IoBookmark } from 'react-icons/io5'
 
-import { SavedItem } from '../redux/slices/products/productSlice'
+import { SavedItem } from '../redux/slices/products/ProductSlice'
 import { baseURL } from '../api'
 import Product from '../models/Product'
 import productState from '../models/ProductState'
