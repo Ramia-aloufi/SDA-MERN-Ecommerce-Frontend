@@ -6,7 +6,7 @@ import { categoryState } from '../../../redux/slices/categories/categorySlice'
 import { AppDispatch } from '../../../redux/store'
 import { deleteSingleCategory } from '../../../Servies/category'
 import { useEffect } from 'react'
-import { showToast } from '../../../helper/toast'
+import showToast from '../../../helper/toast'
 import { LineWave } from 'react-loader-spinner'
 
 const CategoryTable = () => {

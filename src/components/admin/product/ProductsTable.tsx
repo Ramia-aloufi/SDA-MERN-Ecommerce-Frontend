@@ -8,10 +8,10 @@ import { productState } from '../../../redux/slices/products/productSlice'
 import { baseURL } from '../../../api'
 import { deleteSingleProduct } from '../../../Servies/product'
 import { AppDispatch } from '../../../redux/store'
-import { showToast } from '../../../helper/toast'
-import { Category } from '../../../redux/slices/categories/categorySlice'
+import showToast from '../../../helper/toast'
+import Category from '../../../models/Category'
 
-export const ProductsTable = () => {
+const ProductsTable = () => {
   const { products, status, error, isLoading } = useSelector(productState)
   const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
@@ -87,3 +87,4 @@ export const ProductsTable = () => {
     </table>
   )
 }
+export default ProductsTable

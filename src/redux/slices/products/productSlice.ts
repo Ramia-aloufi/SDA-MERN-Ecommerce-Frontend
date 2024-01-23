@@ -8,22 +8,7 @@ import {
   getSingleProduct,
   postProduct
 } from '../../../Servies/product'
-import { Category } from '../categories/categorySlice'
-
-export type Product = {
-  _id: string
-  title: string
-  slug: string
-  description: string
-  price: number
-  quantity: number
-  sold: number
-  image: string
-  category: Category['_id']
-  createdAt?: Date
-  updatedAt?: Date
-  __v: number
-}
+import Product from '../../../models/Product'
 
 export type CartItem = {
   product: Product
@@ -40,7 +25,7 @@ export type QueryParams = {
   sort: string | undefined
 }
 
-export type ProductState = {
+type ProductState = {
   items: Product[]
   products: Product[]
   error: null | string

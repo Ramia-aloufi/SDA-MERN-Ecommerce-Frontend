@@ -2,13 +2,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { FiTrash, FiEdit } from 'react-icons/fi'
 
 import { orderState } from '../../../redux/slices/Order/orderSlice'
-import { Product } from '../../../redux/slices/products/productSlice'
-import { User } from '../../../redux/slices/user/userSlice'
 import { useEffect } from 'react'
-import { showToast } from '../../../helper/toast'
+import showToast from '../../../helper/toast'
 import { AppDispatch } from '../../../redux/store'
 import { LineWave } from 'react-loader-spinner'
 import { fetchOrder } from '../../../Servies/order'
+import Product from '../../../models/Product'
+import User from '../../../models/User'
 
 const OrderTable = () => {
   const { orders, status, error, isLoading } = useSelector(orderState)

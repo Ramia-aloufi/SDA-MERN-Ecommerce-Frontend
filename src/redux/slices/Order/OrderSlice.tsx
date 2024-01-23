@@ -2,24 +2,9 @@ import { createSlice } from '@reduxjs/toolkit'
 
 import { RootState } from '../../store'
 import { fetchOrder, fetchuseOrder, placeOrder } from '../../../Servies/order'
-import { User } from '../user/userSlice'
+import Order from '../../../models/Order'
 
-export type Payment = {
-  paymentMethod?: string
-  amount: number
-}
-export type orderItem = {
-  product: string
-  quantity: number
-}
-export type Order = {
-  _id: string
-  buyer: User['_id']
-  products: orderItem[]
-  payment: Payment
-  status: 'Not Processed' | 'Processed' | 'Shipped' | 'Delivered' | 'Canceled'
-}
-export type OrderState = {
+type OrderState = {
   items: Order[]
   orders: Order[]
   userOrders: Order[]

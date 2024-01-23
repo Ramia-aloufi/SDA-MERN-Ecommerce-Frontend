@@ -6,7 +6,7 @@ import { useEffect } from 'react'
 import { LineWave } from 'react-loader-spinner'
 
 import { postProduct } from '../../../Servies/product'
-import { showToast } from '../../../helper/toast'
+import showToast from '../../../helper/toast'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch } from '../../../redux/store'
 import { productState } from '../../../redux/slices/products/productSlice'
@@ -23,7 +23,7 @@ const productSchema = object({
 
 type ProductSchema = z.infer<typeof productSchema>
 
-export function ProductForm() {
+const ProductForm = () => {
   const { isLoading, error } = useSelector(productState)
   const { categories } = useSelector(categoryState)
   const navigate = useNavigate()
@@ -121,3 +121,4 @@ export function ProductForm() {
     </div>
   )
 }
+export default ProductForm

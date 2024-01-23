@@ -1,4 +1,4 @@
-import { AdminSidbar } from '../AdminSidbar'
+import AdminSidbar from '../AdminSidbar'
 import UserLists from './UserLists'
 
 const User = () => {

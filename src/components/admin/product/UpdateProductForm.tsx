@@ -8,7 +8,8 @@ import { useEffect } from 'react'
 import { productState } from '../../../redux/slices/products/productSlice'
 import { AppDispatch } from '../../../redux/store'
 import { getSingleProduct, updateSingleProduct } from '../../../Servies/product'
-import { Category, categoryState } from '../../../redux/slices/categories/categorySlice'
+import { categoryState } from '../../../redux/slices/categories/categorySlice'
+import Category from '../../../models/Category'
 
 const UpdateProductForm = () => {
   const { slug } = useParams()

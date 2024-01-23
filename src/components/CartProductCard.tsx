@@ -4,11 +4,11 @@ import {
   CartItem,
   DecreaseQuantity,
   IncreaseQuantity,
-  Product,
   removeFromCart
 } from '../redux/slices/products/productSlice'
 import { baseURL } from '../api'
 import { IoTrashOutline } from 'react-icons/io5'
+import Product from '../models/Product'
 
 const CartProductCard = (cart: CartItem) => {
   const { product, quantity } = cart

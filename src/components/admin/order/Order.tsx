@@ -1,7 +1,7 @@
-import { AdminSidbar } from '../AdminSidbar'
+import AdminSidbar from '../AdminSidbar'
 import OrderTable from './OrderTable'
 
-export const Order = () => {
+const Order = () => {
   return (
     <div className=" h-screen grid md:grid-cols-[1fr,4fr] xs:grid-cols-[1fr,2fr]">
       <AdminSidbar />
@@ -14,3 +14,4 @@ export const Order = () => {
     </div>
   )
 }
+export default Order

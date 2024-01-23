@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { object, string, z } from 'zod'
 import { IoCreateOutline } from 'react-icons/io5'
 
-import { AdminSidbar } from '../components/admin/AdminSidbar'
+import AdminSidbar from '../components/admin/AdminSidbar'
 import { userState } from '../redux/slices/user/userSlice'
 import { updateUser } from '../Servies/user'
 import { AppDispatch } from '../redux/store'
@@ -72,3 +72,5 @@ export const AdminPage = () => {
     </div>
   )
 }
+
+export default AdminPage

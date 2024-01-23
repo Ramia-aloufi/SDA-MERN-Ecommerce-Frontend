@@ -1,10 +1,10 @@
 import { RiAddLine } from 'react-icons/ri'
 import { Link } from 'react-router-dom'
 
-import { AdminSidbar } from '../AdminSidbar'
+import AdminSidbar from '../AdminSidbar'
 import CategoryTable from './CategoryTable'
 
-export const Category = () => {
+const Category = () => {
   return (
     <div className=" h-screen grid md:grid-cols-[1fr,4fr] xs:grid-cols-[1fr,2fr] ">
       <AdminSidbar />
@@ -25,3 +25,4 @@ export const Category = () => {
     </div>
   )
 }
+export default Category

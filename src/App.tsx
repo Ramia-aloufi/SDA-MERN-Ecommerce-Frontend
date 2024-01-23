@@ -2,7 +2,7 @@ import './App.css'
 
 import { RouterProvider } from 'react-router-dom'
 
-import { router } from './router/index'
+import router from './router/router'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from './redux/store'
 import { useEffect } from 'react'

@@ -6,7 +6,7 @@ import { Elements } from '@stripe/react-stripe-js'
 import CheckoutForm from './CheckoutForm'
 import { useDispatch, useSelector } from 'react-redux'
 import { productState } from '../redux/slices/products/productSlice'
-import { showToast } from '../helper/toast'
+import showToast from '../helper/toast'
 import { AppDispatch } from '../redux/store'
 
 const Payment = () => {

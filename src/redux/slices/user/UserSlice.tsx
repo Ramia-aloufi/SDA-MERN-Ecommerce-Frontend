@@ -14,28 +14,12 @@ import {
   roleStatus,
   updateUser
 } from '../../../Servies/user'
-import { Order } from '../Order/orderSlice'
 import axios from 'axios'
+import User from '../../../models/User'
 
 axios.defaults.withCredentials = true
-export type User = {
-  _id: string
-  username: string
-  slug: string
-  email: string
-  password: string
-  image?: string
-  orders: Order['buyer'][]
-  address: string
-  phone: string
-  isAdmin: boolean
-  isBanned: boolean
-  createdAt?: Date
-  updatedAt?: Date
-  __v: number
-}
 
-export type userState = {
+type userState = {
   items: User[]
   users: User[]
   error: null | string

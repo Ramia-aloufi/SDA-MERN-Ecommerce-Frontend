@@ -3,7 +3,7 @@ import { toast } from 'react-toastify'
 import { AppDispatch } from '../redux/store'
 import { clearError } from '../redux/slices/products/productSlice'
 
-export const showToast = (message: string, isSuccess: boolean, dispatch: AppDispatch | null) => {
+const showToast = (message: string, isSuccess: boolean, dispatch: AppDispatch | null) => {
   if (isSuccess) {
     toast.success(message, {
       position: toast.POSITION.TOP_CENTER,
@@ -21,3 +21,5 @@ export const showToast = (message: string, isSuccess: boolean, dispatch: AppDisp
     })
   }
 }
+
+export default showToast

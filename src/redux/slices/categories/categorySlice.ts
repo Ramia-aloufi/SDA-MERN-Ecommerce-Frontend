@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 import { RootState } from '../../store'
-import { Category } from '../../../components/admin/category/Category'
 import {
   deleteSingleCategory,
   fetchCategory,
@@ -9,17 +8,9 @@ import {
   postCategory,
   updateSingleCategory
 } from '../../../Servies/category'
+import Category from '../../../models/Category'
 
-export type Category = {
-  _id: string
-  title: string
-  slug: string
-  createdAt?: Date
-  updatedAt?: Date
-  __v: number
-}
-
-export type CategoryState = {
+type CategoryState = {
   items: Category[]
   categories: Category[]
   singleCategory: Category | null
@@ -88,7 +79,7 @@ export const categorySlice = createSlice({
         state.status = action.payload.message
       })
       .addCase(updateSingleCategory.fulfilled, (state, action) => {
-        const updatedUser: Category = action.payload.payload
+        const updatedUser = action.payload.payload
         state.items = state.items.map((category) =>
           category._id === updatedUser._id ? updatedUser : category
         )

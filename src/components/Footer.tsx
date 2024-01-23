@@ -1,4 +1,4 @@
-export const Footer = () => {
+const Footer = () => {
   return (
     <footer className="bg-[#434343] text-white p-4 w-screen text-center flex-row gap justify-between text-sm">
       <div className="text-center justify-center flex md:text-right mb-2">
@@ -17,3 +17,4 @@ export const Footer = () => {
     </footer>
   )
 }
+export default Footer

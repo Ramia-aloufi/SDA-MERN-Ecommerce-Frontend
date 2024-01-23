@@ -1,4 +1,4 @@
-import {  useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useState } from 'react'
 
 import { productState } from '../redux/slices/products/productSlice'
@@ -14,22 +14,11 @@ const TotalInCard = () => {
   const { userData } = useSelector(userState)
   const [ispayment, setIsPayment] = useState(false)
   const onSubmit = () => {
-    // const cart = inCart.map((item) => {
-    //   return { product: item.product._id, quantity: item.quantity }
-    // })
-    // const order = {
-    //   products: cart,
-    //   payment: {
-    //     amount: totalPrice
-    //   }
-    // }
     if (userData) {
       setIsPayment(true)
     } else {
       navigate('/login')
     }
-    // dispatch(placeOrder(order))
-    // dispatch(clearCart())
   }
   return (
     <div className="p-4 space-y-4 bg-white">

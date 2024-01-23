@@ -3,7 +3,7 @@ import { ToastContainer } from 'react-toastify'
 
 import LoginForm from '../components/LoginForm'
 import SignupForm from '../components/SignupForm'
-import { showToast } from '../helper/toast'
+import showToast from '../helper/toast'
 import { useDispatch, useSelector } from 'react-redux'
 import { userState } from '../redux/slices/user/userSlice'
 import { AppDispatch } from '../redux/store'

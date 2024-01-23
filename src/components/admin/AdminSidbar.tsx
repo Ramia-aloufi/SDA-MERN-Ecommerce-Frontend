@@ -9,7 +9,7 @@ import { ChangeEvent, useRef } from 'react'
 import { logout, updateUser } from '../../Servies/user'
 import { baseURL } from '../../api'
 
-export const AdminSidbar = () => {
+const AdminSidbar = () => {
   const dispatch = useDispatch<AppDispatch>()
   const { userData } = useSelector(userState)
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -69,3 +69,4 @@ export const AdminSidbar = () => {
     </aside>
   )
 }
+export default AdminSidbar

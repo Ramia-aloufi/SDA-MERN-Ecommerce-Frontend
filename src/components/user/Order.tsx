@@ -1,7 +1,7 @@
 import UserSidbar from './UserSidbar'
 import OrderDetils from './userOrder'
 
-export const OrderUser = () => {
+const OrderUser = () => {
   return (
     <div className=" h-screen grid md:grid-cols-[1fr,4fr] xs:grid-cols-[1fr,2fr]">
       <UserSidbar />
@@ -14,3 +14,4 @@ export const OrderUser = () => {
     </div>
   )
 }
+export default OrderUser
