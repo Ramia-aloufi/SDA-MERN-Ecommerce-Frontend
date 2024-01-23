@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 import { fetchOrder, fetchuseOrder, placeOrder } from '../../../Servies/order'
-import Order from '../../../models/Order'
+import OrderState from '../../../models/OrderStateType'
 
 
 

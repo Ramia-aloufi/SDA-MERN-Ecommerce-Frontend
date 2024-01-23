@@ -10,9 +10,10 @@ import User from '../../../models/User'
 import AppDispatch from '../../../models/AppDispatch'
 import orderState from '../../../models/OrderState'
 import Order from '../../../models/Order'
+import OrderStateType from '../../../models/OrderStateType'
 
 const OrderTable = () => {
-  const state = useSelector(orderState)
+  const state:OrderStateType = useSelector(orderState)
   const dispatch = useDispatch<AppDispatch>()
 
   const handleDelete = (id: number) => {
