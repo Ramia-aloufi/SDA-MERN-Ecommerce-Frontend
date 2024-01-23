@@ -6,6 +6,7 @@ import { fetchuseOrder } from '../../Servies/order'
 import Product from '../../models/Product'
 import orderState from '../../models/OrderState'
 import AppDispatch from '../../models/AppDispatch'
+import Order from '../../models/Order'
 
 const OrderDetils = () => {
   const { id } = useParams()
@@ -28,7 +29,7 @@ const OrderDetils = () => {
       </thead>
       <tbody>
         {userOrders &&
-          userOrders.map((item, index) => {
+          userOrders.map((item: Order, index: number) => {
             return (
               <tr key={index} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}>
                 <td className="border p-2">{index + 1}</td>

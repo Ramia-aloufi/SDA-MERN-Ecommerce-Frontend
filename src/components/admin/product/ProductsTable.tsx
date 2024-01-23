@@ -10,6 +10,7 @@ import showToast from '../../../helper/toast'
 import Category from '../../../models/Category'
 import AppDispatch from '../../../models/AppDispatch'
 import productState from '../../../models/ProductState'
+import Product from '../../../models/Product'
 
 const ProductsTable = () => {
   const { products, status, error, isLoading } = useSelector(productState)
@@ -50,7 +51,7 @@ const ProductsTable = () => {
       </thead>
       <tbody>
         {products &&
-          products.map((product, index) => {
+          products.map((product: Product, index: number) => {
             return (
               <tr key={product._id} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}>
                 <td className="border p-2">{index}</td>

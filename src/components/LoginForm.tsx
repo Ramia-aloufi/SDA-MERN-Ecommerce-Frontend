@@ -8,6 +8,7 @@ import { useEffect } from 'react'
 import { login } from '../Servies/user'
 import AppDispatch from '../models/AppDispatch'
 import userState from '../models/userState'
+import User from '../models/User'
 
 const loginSchema = object({
   email: string().email(),
@@ -19,7 +20,7 @@ type LoginSchema = z.infer<typeof loginSchema>
 function LoginForm() {
   const navigate = useNavigate()
   const dispatch = useDispatch<AppDispatch>()
-  const { userData } = useSelector(userState)
+  const userData: User | null = useSelector(userState).userData
 
   const {
     register,

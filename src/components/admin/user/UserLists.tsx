@@ -52,7 +52,7 @@ const UserLists = () => {
       </thead>
       <tbody>
         {users &&
-          users.map((item, index) => {
+          users.map((item: User, index: number) => {
             return (
               <tr key={index} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}>
                 <td className="border p-2">{index}</td>

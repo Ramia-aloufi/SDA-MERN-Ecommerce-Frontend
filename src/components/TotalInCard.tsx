@@ -5,11 +5,12 @@ import Payment from '../pages/Payment'
 import { useNavigate } from 'react-router-dom'
 import userState from '../models/userState'
 import productState from '../models/ProductState'
+import User from '../models/User'
 
 const TotalInCard = () => {
   const navigate = useNavigate()
   const { totalPrice } = useSelector(productState)
-  const { userData } = useSelector(userState)
+  const userData: User | null = useSelector(userState).userData
   const [ispayment, setIsPayment] = useState(false)
   const onSubmit = () => {
     if (userData) {

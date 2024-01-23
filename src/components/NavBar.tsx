@@ -5,10 +5,12 @@ import { useSelector } from 'react-redux'
 import SearchInput from './SearchInput'
 import productState from '../models/ProductState'
 import userState from '../models/userState'
+import User from '../models/User'
 
 const NavBar = () => {
   const { totalQuantity } = useSelector(productState)
-  const { userData, isLogedIn } = useSelector(userState)
+  const { userData, isLogedIn }: { userData: User | null; isLogedIn: boolean } =
+    useSelector(userState)
 
   return (
     <nav className="bg-[#434343] w-screen flex p-3 md:px-9  items-center justify-between sticky top-0">

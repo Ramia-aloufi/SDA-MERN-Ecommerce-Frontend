@@ -7,10 +7,11 @@ import { logout, updateUser } from '../../Servies/user'
 import { baseURL } from '../../api'
 import AppDispatch from '../../models/AppDispatch'
 import userState from '../../models/userState'
+import User from '../../models/User'
 
 const UserSidbar = () => {
   const dispatch = useDispatch<AppDispatch>()
-  const { userData } = useSelector(userState)
+  const userData: User | null = useSelector(userState).userData
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const userLogout = () => {

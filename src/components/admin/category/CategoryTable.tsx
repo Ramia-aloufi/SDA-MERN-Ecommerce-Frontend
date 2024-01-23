@@ -42,7 +42,7 @@ const CategoryTable = () => {
         </tr>
       </thead>
       <tbody>
-        {categories.map(({ slug, title }, index) => {
+        {categories.map(({ slug, title }, index: number) => {
           return (
             <tr key={index} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}>
               <td className="border p-2">{index}</td>

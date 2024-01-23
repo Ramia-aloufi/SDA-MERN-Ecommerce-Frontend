@@ -9,6 +9,7 @@ import Product from '../../../models/Product'
 import User from '../../../models/User'
 import AppDispatch from '../../../models/AppDispatch'
 import orderState from '../../../models/OrderState'
+import Order from '../../../models/Order'
 
 const OrderTable = () => {
   const { orders, status, error, isLoading } = useSelector(orderState)
@@ -47,7 +48,7 @@ const OrderTable = () => {
       </thead>
       <tbody>
         {orders &&
-          orders.map((item, index) => {
+          orders.map((item: Order, index: number) => {
             return (
               <tr key={index} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}>
                 <td className="border p-2">{item._id}</td>

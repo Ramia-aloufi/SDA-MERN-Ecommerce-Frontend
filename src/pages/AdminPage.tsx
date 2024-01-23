@@ -9,6 +9,7 @@ import AdminSidbar from '../components/admin/AdminSidbar'
 import { updateUser } from '../Servies/user'
 import userState from '../models/userState'
 import AppDispatch from '../models/AppDispatch'
+import User from '../models/User'
 
 export const AdminPage = () => {
   const userSchema = object({
@@ -25,7 +26,7 @@ export const AdminPage = () => {
     resolver: zodResolver(userSchema)
   })
   const [isEdit, setIsEdit] = useState(false)
-  const { userData } = useSelector(userState)
+  const userData: User | null = useSelector(userState).userData
   const dispatch = useDispatch<AppDispatch>()
 
   const onEdit = () => {
