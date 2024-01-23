@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux'
 
 import SearchInput from './SearchInput'
 import productState from '../models/ProductState'
-import userState from '../models/userState'
 import User from '../models/User'
 import RootState from '../models/RootState'
 
