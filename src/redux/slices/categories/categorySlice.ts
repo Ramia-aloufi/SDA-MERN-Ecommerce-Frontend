@@ -46,7 +46,6 @@ export const categorySlice = createSlice({
   initialState,
   reducers: {
     searchCategory: (state, action) => {
-      console.log(action.payload)
       state.searchTerm = action.payload
       state.searchedResult = state.searchTerm
         ? state.items.filter((category) =>
@@ -82,7 +81,6 @@ export const categorySlice = createSlice({
       })
       .addCase(deleteSingleCategory.fulfilled, (state, action) => {
         state.isLoading = false
-        console.log(action.payload)
         state.items = state.items.filter(
           (category) => category.slug != String(action.payload.payload.slug)
         )

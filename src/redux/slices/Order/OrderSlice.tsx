@@ -47,7 +47,6 @@ export const orderSlice = createSlice({
   reducers: {
     deldeteOrder: (state, action) => {
       const id = action.payload
-      console.log(typeof id)
       state.items = state.items.filter((category) => {
         category._id !== id
       })
@@ -61,7 +60,6 @@ export const orderSlice = createSlice({
         state.items = payload
         state.orders = state.items
         state.status = message
-        console.log(payload)
       })
       .addCase(fetchuseOrder.fulfilled, (state, action) => {
         const { payload, message } = action.payload
@@ -71,7 +69,6 @@ export const orderSlice = createSlice({
       })
       .addCase(placeOrder.fulfilled, (state, action) => {
         const { payload, message } = action.payload
-        console.log(action.payload)
         state.isLoading = false
         state.items.push(payload)
         state.orders = state.items

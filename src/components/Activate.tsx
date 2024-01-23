@@ -4,9 +4,6 @@ import { activateUser } from '../Servies/user'
 
 const Activate = () => {
   const { token } = useParams()
-
-  console.log('token', token)
-
   const navigate = useNavigate()
   const handleActivate = (token: string | undefined) => {
     token && activateUser(token)

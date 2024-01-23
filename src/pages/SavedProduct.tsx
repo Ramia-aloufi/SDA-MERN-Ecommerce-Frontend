@@ -8,7 +8,6 @@ const SavedProduct = () => {
   const { saved } = useSelector(productState)
   const dispatch = useDispatch()
   const handeSaveProduct = (product: Product) => {
-    console.log(product)
     dispatch(SavedItem(product))
   }
 

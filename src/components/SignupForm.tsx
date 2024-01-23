@@ -29,7 +29,6 @@ const SignupForm = () => {
 
   const onSubmit = (data: SignupSchema) => {
     dispatch(postUser(data))
-    console.log('Form values:', data)
     reset()
   }
 

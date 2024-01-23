@@ -26,7 +26,6 @@ const ForgotPassword = () => {
   })
 
   const onSubmit = async (data: CategorySchema) => {
-    console.log(data.email)
     dispatch(forgotPassword(data.email))
     reset()
     setIsSend(true)

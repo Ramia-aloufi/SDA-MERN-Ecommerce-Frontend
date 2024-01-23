@@ -21,10 +21,8 @@ export const AdminSidbar = () => {
     const files = event.target.files
     const selectedFile = (files && files[0]) || ''
     const user = new FormData()
-    console.log(userData)
     if (userData) {
       user.append('image', selectedFile)
-      console.log(user)
       dispatch(updateUser({ user, slug: userData.slug }))
     }
   }

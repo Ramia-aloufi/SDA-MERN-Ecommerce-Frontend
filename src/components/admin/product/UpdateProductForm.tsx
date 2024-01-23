@@ -40,8 +40,6 @@ const UpdateProductForm = () => {
   const onSubmit = (data: ProductSchema) => {
     if (data.image[0].name) {
       const product = new FormData()
-      console.log(data)
-      console.log(data.image[0])
       product.append('title', data.title)
       product.append('image', data.image[0])
       product.append('description', data.description)
@@ -56,7 +54,6 @@ const UpdateProductForm = () => {
         quantity: Number(data.quantity),
         image: singleProduct.image
       }
-      console.log(product)
       dispatch(updateSingleProduct({ product, slug }))
     }
     reset()
@@ -68,7 +65,6 @@ const UpdateProductForm = () => {
 
   useEffect(() => {
     if (singleProduct.category !== undefined) {
-      console.log(singleProduct.category)
       setValue('title', singleProduct.title || '')
       setValue('image', singleProduct.image || '')
       setValue('description', singleProduct.description || '')

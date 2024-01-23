@@ -48,7 +48,7 @@ const CartProductCard = (cart: CartItem) => {
               +
             </button>
             <button onClick={() => onRemove(product)} className="text-red-500">
-              <IoTrashOutline />
+              <IoTrashOutline className="text-lg" />
             </button>
           </div>
         </div>

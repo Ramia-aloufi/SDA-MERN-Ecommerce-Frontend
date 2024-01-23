@@ -44,7 +44,6 @@ export const login = createAsyncThunk(
   'user/login',
   async (user: { email: string; password: string }, { rejectWithValue }) => {
     try {
-      console.log('login')
       const { data } = await axios.post(`${baseURL}/auth/login`, user)
       return data
     } catch (error) {
@@ -102,7 +101,6 @@ export const roleStatus = createAsyncThunk(
       const { data } = await axios.put(`${baseURL}/users/role/${user.slug}`, {
         isAdmin: !user.isAdmin
       })
-      console.log(data)
       return data
     } catch (error) {
       return rejectWithValue(error)

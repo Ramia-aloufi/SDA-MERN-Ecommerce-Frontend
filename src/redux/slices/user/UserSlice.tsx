@@ -68,7 +68,6 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     searchUser: (state, action) => {
-      console.log(action.payload)
       state.searchTerm = action.payload
       state.searchedResult = state.searchTerm
         ? state.items.filter((user) =>
@@ -119,7 +118,6 @@ export const userSlice = createSlice({
       })
       .addCase(updateUser.fulfilled, (state, action) => {
         const { payload, message } = action.payload
-        console.log('payload', payload)
         state.items = state.items.map((user) => (user.slug == payload.slug ? payload : user))
         state.status = message
         state.userData = payload
@@ -134,8 +132,6 @@ export const userSlice = createSlice({
       })
       .addCase(banStatus.fulfilled, (state, action) => {
         const { message, payload } = action.payload
-        console.log('payload', payload)
-        console.log('message', message)
         state.status = message
         const existUser = state.items.find((user) => user._id == payload._id)
         if (existUser) {
@@ -153,7 +149,6 @@ export const userSlice = createSlice({
       })
       .addCase(roleStatus.fulfilled, (state, action) => {
         const { payload, message } = action.payload
-        console.log('updatedUser', payload)
         state.items = state.items.map((user) => (user.slug == payload.slug ? payload : user))
         state.status = message
         state.userData = payload

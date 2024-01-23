@@ -43,7 +43,6 @@ const FilterAndSort = () => {
   }
   const handlePriceSubmit = (e: FormEvent) => {
     e.preventDefault()
-    console.log(priceFormData)
     dispatch(fetchProduct(priceFormData))
     setIsOpen({ type: false, price: false, sort: false })
   }
@@ -59,7 +58,6 @@ const FilterAndSort = () => {
     }
   }
   const handleSortOptionClick = (sort: string) => {
-    console.log(sort)
     dispatch(fetchProduct({ sort: sort }))
     toggleDropdown('sort')
   }

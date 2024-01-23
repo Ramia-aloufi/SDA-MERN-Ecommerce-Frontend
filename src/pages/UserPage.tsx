@@ -29,7 +29,6 @@ const UserPage = () => {
   const dispatch = useDispatch<AppDispatch>()
 
   const onEdit = () => {
-    console.log('onEdit')
     setIsEdit(true)
     setValue('username', userData?.username || '')
   }

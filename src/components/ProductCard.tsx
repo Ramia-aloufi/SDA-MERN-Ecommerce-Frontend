@@ -12,14 +12,11 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const dispatch = useDispatch()
   const { saved } = useSelector(productState)
   const handeAddToCart = (product: Product) => {
-    console.log(product)
     dispatch(addToCart(product))
   }
   const handeSaveProduct = (product: Product) => {
-    console.log(product)
     dispatch(SavedItem(product))
   }
-  console.log(product.image)
 
   return (
     <div

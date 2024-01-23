@@ -43,7 +43,6 @@ const UpdateCategoryForm = () => {
       setValue('title', singleCategory?.title || '')
     }
   }, [singleCategory])
-  console.log(singleCategory)
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
       <ToastContainer />

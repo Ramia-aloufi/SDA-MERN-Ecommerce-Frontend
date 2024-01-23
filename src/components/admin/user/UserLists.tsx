@@ -17,11 +17,9 @@ const UserLists = () => {
     dispatch(deleteSingleUser(slug))
   }
   const handleBan = (user: User) => {
-    console.log('user', user)
     dispatch(banStatus(user))
   }
   const handleRole = (user: User) => {
-    console.log('user', user)
     dispatch(roleStatus(user))
   }
 

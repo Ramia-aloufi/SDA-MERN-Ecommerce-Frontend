@@ -91,7 +91,6 @@ export const productSlice = createSlice({
       state.inCart = []
     },
     searchProduct: (state, action) => {
-      console.log(action.payload)
       const search = action.payload
       state.searchTerm = search
       // state.searchedResult = state.searchTerm
@@ -103,7 +102,6 @@ export const productSlice = createSlice({
     },
     addToCart: (state, action) => {
       const product: Product = action.payload
-      console.log(product)
       const isExist = state.inCart.find((cart) => cart.product._id === product._id)
 
       if (!isExist) {
@@ -121,7 +119,6 @@ export const productSlice = createSlice({
         (total, item) => total + item.quantity * item.product.price,
         0
       )
-      console.log(product.price)
     },
     removeFromCart: (state, action) => {
       const id = action.payload
@@ -153,7 +150,6 @@ export const productSlice = createSlice({
             item.quantity -= 1
           }
         }
-        console.log(productIncreas)
       })
       state.totalQuantity = state.inCart.reduce((total, product) => total + product.quantity, 0)
       state.totalPrice = state.inCart.reduce(

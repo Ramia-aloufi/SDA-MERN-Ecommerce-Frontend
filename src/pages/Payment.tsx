@@ -4,23 +4,24 @@ import { useEffect, useState } from 'react'
 import { baseURL } from '../api'
 import { Elements } from '@stripe/react-stripe-js'
 import CheckoutForm from './CheckoutForm'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { productState } from '../redux/slices/products/productSlice'
+import { showToast } from '../helper/toast'
+import { AppDispatch } from '../redux/store'
 
 const Payment = () => {
   const [stripePromise, setStripePromise] = useState<Promise<Stripe | null> | null>(null)
   const [clientSecret, setClientSecret] = useState('')
   const { totalPrice } = useSelector(productState)
-
+  const dispatch = useDispatch<AppDispatch>()
   useEffect(() => {
     axios
       .get(`${baseURL}/config`)
       .then(({ data }) => {
         setStripePromise(loadStripe(data.PublishableKey))
-        console.log(data.PublishableKey)
       })
       .catch((err) => {
-        console.log(err)
+        showToast(err, false, dispatch)
       })
   }, [])
   useEffect(() => {
@@ -28,11 +29,9 @@ const Payment = () => {
       .post(`${baseURL}/payment-intent`, { amount: totalPrice })
       .then(({ data }) => {
         setClientSecret(data.clientSecret)
-        console.log(data.clientSecret)
-        console.log(data.payment)
       })
       .catch((err) => {
-        console.log(err)
+        showToast(err, false, dispatch)
       })
   }, [])
   return (

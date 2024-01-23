@@ -16,7 +16,6 @@ const SearchInput = () => {
     debouncedSearch(value)
   }
   const debouncedSearch = debounce((value: string) => {
-    console.log(value)
     switch (currentPath) {
       case '/admin/category':
         dispatch(fetchCategory({ search: value }))

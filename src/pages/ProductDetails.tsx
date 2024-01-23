@@ -20,7 +20,7 @@ const ProductDetails = () => {
     isLoading && <h2>loading</h2>
   }
   return (
-    <div className="px-14 grid justify-center items-center overflow-hidden ">
+    <div className="px-14 xs:px-7 md:px-14 grid justify-center items-center overflow-hidden ">
       <span className="text-sm text-gray-600 mt-8">
         <Link to={'/'}>Home</Link>
         {'>'} {slug}

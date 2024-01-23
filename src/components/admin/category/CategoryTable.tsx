@@ -15,7 +15,6 @@ const CategoryTable = () => {
   const navigate = useNavigate()
 
   const handleDelete = (slug: string) => {
-    console.log('slug', slug)
     dispatch(deleteSingleCategory(slug))
   }
 

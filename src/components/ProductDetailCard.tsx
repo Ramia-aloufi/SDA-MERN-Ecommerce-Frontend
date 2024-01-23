@@ -3,20 +3,21 @@ import { IoBookmark, IoBookmarkOutline } from 'react-icons/io5'
 
 import { baseURL } from '../api'
 import { Product, SavedItem, addToCart, productState } from '../redux/slices/products/productSlice'
+import { Category } from '../redux/slices/categories/categorySlice'
 
 const ProductDetailCard = () => {
   const dispatch = useDispatch()
   const product = useSelector(productState).singleProduct
   const saved = useSelector(productState).saved
 
-  console.log('product', product)
   const handeAddToCart = (product: Product) => {
-    console.log(product)
     dispatch(addToCart(product))
   }
   const handeSaveProduct = (product: Product) => {
-    console.log(product)
     dispatch(SavedItem(product))
+  }
+  if (!product) {
+    return <p>loading</p>
   }
 
   return (
@@ -33,11 +34,11 @@ const ProductDetailCard = () => {
           <div className="flex justify-between xs:mt-2">
             <div className="">
               <span className="block  font-semibold ">
-                {/* {product.category.title} */}
+                {product.category && (product.category as unknown as Category).title}
               </span>
               <h2 className=" text-gray-500 text-2xl">{product.title}</h2>
             </div>
-            <span className="text-xl font-vbold">${product.price}</span>
+            <span className="text-xl font-bold">${product.price}</span>
           </div>
 
           <div className="leading-8 mt-4">

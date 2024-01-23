@@ -36,7 +36,7 @@ const NavBar = () => {
           </button>
         </Link>
         {!userData?.isAdmin && (
-          <Link to={isLogedIn ? '/user/savedproduct' : '/login'}>
+          <Link to={'/user/savedproduct'}>
             <button className="inline-flex items-center text-2xl font-medium text-center text-white ">
               <IoHeart className="text-center hover:text-[#f88648]" />
             </button>
