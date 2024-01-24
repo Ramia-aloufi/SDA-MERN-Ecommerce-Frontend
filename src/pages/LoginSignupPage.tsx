@@ -17,14 +17,10 @@ const LoginSignupPage = () => {
     setLoginForm((prev) => !prev)
   }
 
-  useEffect(() => {
-    if (status) {
-      showToast(status, true, dispatch)
-    }
-    if (error) {
-      showToast(error, false, dispatch)
-    }
-  }, [status])
+  useEffect(()=>{
+    error && showToast(error,false,dispatch)
+    status && showToast(status,true,dispatch)
+  },[error, status])
 
   return (
     <div className="h-full flex flex-col items-center justify-center bg-gray-50">

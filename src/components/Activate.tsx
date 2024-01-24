@@ -2,22 +2,26 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 import { activateUser } from '../Servies/user'
 import showToast from '../helper/toast'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import userState from '../models/userState'
+import AppDispatch from '../models/AppDispatch'
 
 const Activate = () => {
   const { token } = useParams()
   const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
+  const {error ,status} = useSelector(userState)
   const handleActivate = (token: string | undefined) => {
     if(token){
-      activateUser(token)
-      console.log(token);
-      
-      navigate('/')
-    }else{
-      showToast('error activated account',false, dispatch)
-    }
-  }
+      dispatch(activateUser(token))
+      navigate('/login')
+
+  }}
+  useEffect(()=>{
+    error && showToast(error,false,dispatch)
+    status && showToast(status,true,dispatch)
+  },[error, status])
 
   return (
     <div className="flex items-center justify-center h-full flex-wrap">
