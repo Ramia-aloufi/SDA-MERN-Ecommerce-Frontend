@@ -18,8 +18,6 @@ import userState from '../../../models/UserStateType'
 
 axios.defaults.withCredentials = true
 
-
-
 const data =
   localStorage.getItem('LoginData') != null
     ? JSON.parse(String(localStorage.getItem('LoginData')))
@@ -77,13 +75,14 @@ const userSlice = createSlice({
         state.userData = null
         state.status = action.payload.message
         try{
-        localStorage.setItem(
-          'LoginData',
-          JSON.stringify({
-            isLogedIn: state.isLogedIn,
-            userData: state.userData
-          })
-        )
+          localStorage.clear()
+        // localStorage.setItem(
+        //   'LoginData',
+        //   JSON.stringify({
+        //     isLogedIn: state.isLogedIn,
+        //     userData: state.userData
+        //   })
+        // )
         console.log('localStorage set successfully');
       } catch (error) {
         console.error('Error setting localStorage:', error);
