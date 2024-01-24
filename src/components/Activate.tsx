@@ -19,7 +19,9 @@ const Activate = () => {
 
   return (
     <div className="flex items-center justify-center h-full flex-wrap">
+      <div className="card w2/3">
       <button className='btn2' onClick={() => handleActivate(token)}>Activate Account</button>
+    </div>
     </div>
   )
 }
