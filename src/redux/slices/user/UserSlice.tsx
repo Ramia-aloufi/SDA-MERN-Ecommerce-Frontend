@@ -75,15 +75,13 @@ const userSlice = createSlice({
         state.userData = null
         state.status = action.payload.message
         try{
-          localStorage.removeItem('LoginData')
-          // localStorage.clear()
-        // localStorage.setItem(
-        //   'LoginData',
-        //   JSON.stringify({
-        //     isLogedIn: state.isLogedIn,
-        //     userData: state.userData
-        //   })
-        // )
+        localStorage.setItem(
+          'LoginData',
+          JSON.stringify({
+            isLogedIn: state.isLogedIn,
+            userData: state.userData
+          })
+        )
         console.log('localStorage set successfully');
       } catch (error) {
         console.error('Error setting localStorage:', error);
