@@ -34,8 +34,11 @@ export const activateUser = createAsyncThunk(
   async (token: string, { rejectWithValue }) => {
     try {
       const { data } = await axios.post(`${baseURL}/users/activate`, { token: token })
+      console.log(data.message);
+      
       return data.message
     } catch (error) {
+      console.log(error);
       return rejectWithValue(error)
     }
   }

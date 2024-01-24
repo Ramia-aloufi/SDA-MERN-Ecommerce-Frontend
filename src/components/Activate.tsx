@@ -11,6 +11,8 @@ const Activate = () => {
   const handleActivate = (token: string | undefined) => {
     if(token){
       activateUser(token)
+      console.log(token);
+      
       navigate('/')
     }else{
       showToast('error activated account',false, dispatch)
