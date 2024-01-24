@@ -76,6 +76,7 @@ const userSlice = createSlice({
         state.isLogedIn = false
         state.userData = null
         state.status = action.payload.message
+        try{
         localStorage.setItem(
           'LoginData',
           JSON.stringify({
@@ -83,6 +84,10 @@ const userSlice = createSlice({
             userData: state.userData
           })
         )
+        console.log('localStorage set successfully');
+      } catch (error) {
+        console.error('Error setting localStorage:', error);
+      }
       })
       .addCase(postUser.fulfilled, (state, action) => {
         const { payload, message } = action.payload
