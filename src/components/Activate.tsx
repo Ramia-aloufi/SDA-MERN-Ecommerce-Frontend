@@ -21,7 +21,7 @@ const Activate = () => {
   useEffect(()=>{
     error && showToast(error,false,dispatch)
     status && showToast(status,true,dispatch)
-  },[error, status])
+  },[error, status, dispatch])
 
   return (
     <div className="flex items-center justify-center h-full flex-wrap">

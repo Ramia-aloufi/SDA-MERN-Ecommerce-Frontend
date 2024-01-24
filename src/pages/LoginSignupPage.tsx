@@ -20,7 +20,7 @@ const LoginSignupPage = () => {
   useEffect(()=>{
     error && showToast(error,false,dispatch)
     status && showToast(status,true,dispatch)
-  },[error, status])
+  },[error, status, dispatch])
 
   return (
     <div className="h-full flex flex-col items-center justify-center bg-gray-50">
