@@ -75,7 +75,8 @@ const userSlice = createSlice({
         state.userData = null
         state.status = action.payload.message
         try{
-          localStorage.clear()
+          localStorage.removeItem('LoginData')
+          // localStorage.clear()
         // localStorage.setItem(
         //   'LoginData',
         //   JSON.stringify({
