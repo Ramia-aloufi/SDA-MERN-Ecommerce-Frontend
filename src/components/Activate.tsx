@@ -20,6 +20,10 @@ const Activate = () => {
   return (
     <div className="flex items-center justify-center h-full flex-wrap">
       <div className="card w2/3">
+        <div className="">
+        <h1 className='font-semibold'>Welcome to ELECO!</h1>
+        <p>Thank you for joining us. To get started, please activate your account by clicking the button below:</p>
+        </div>
       <button className='btn2' onClick={() => handleActivate(token)}>Activate Account</button>
     </div>
     </div>
