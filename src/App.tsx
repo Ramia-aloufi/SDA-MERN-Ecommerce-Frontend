@@ -8,6 +8,7 @@ import { useEffect } from 'react'
 import { fetchProduct } from './Servies/product'
 import { fetchCategory } from './Servies/category'
 import AppDispatch from './models/AppDispatch'
+import { getUserData } from './Servies/user'
 
 function App() {
   const dispatch = useDispatch<AppDispatch>()
@@ -15,6 +16,7 @@ function App() {
   useEffect(() => {
     dispatch(fetchCategory())
     dispatch(fetchProduct())
+    dispatch(getUserData())
   }, [dispatch])
   return <RouterProvider router={router} />
 }

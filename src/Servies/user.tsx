@@ -132,3 +132,13 @@ export const resetPassword = createAsyncThunk(
     }
   }
 )
+export const getUserData = createAsyncThunk(
+  'user/resetPassword',
+  async (_, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(`${baseURL}/users/me`)
+      return data
+    } catch (error) {
+      return rejectWithValue(error)
+    }
+  })

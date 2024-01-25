@@ -6,6 +6,7 @@ import {
   deleteSingleUser,
   fetchUser,
   forgotPassword,
+  getUserData,
   login,
   logout,
   postUser,
@@ -62,30 +63,35 @@ const userSlice = createSlice({
         state.isLogedIn = true
         state.userData = payload
         state.status = message
-        localStorage.setItem(
-          'LoginData',
-          JSON.stringify({
-            isLogedIn: state.isLogedIn,
-            userData: state.userData
-          })
-        )
+        // localStorage.setItem(
+        //   'LoginData',
+        //   JSON.stringify({
+        //     isLogedIn: state.isLogedIn,
+        //     userData: state.userData
+        //   })
+        // )
+      })
+      .addCase(getUserData.fulfilled,(state, { payload })=>{
+        state.isLogedIn = true
+        state.userData = payload.payload
+        state.status = payload.message
       })
       .addCase(logout.fulfilled, (state, action) => {
         state.isLogedIn = false
         state.userData = null
         state.status = action.payload.message
-        try{
-        localStorage.setItem(
-          'LoginData',
-          JSON.stringify({
-            isLogedIn: state.isLogedIn,
-            userData: state.userData
-          })
-        )
-        console.log('localStorage set successfully');
-      } catch (error) {
-        console.error('Error setting localStorage:', error);
-      }
+      //   try{
+      //   localStorage.setItem(
+      //     'LoginData',
+      //     JSON.stringify({
+      //       isLogedIn: state.isLogedIn,
+      //       userData: state.userData
+      //     })
+      //   )
+      //   console.log('localStorage set successfully');
+      // } catch (error) {
+      //   console.error('Error setting localStorage:', error);
+      // }
       })
       .addCase(postUser.fulfilled, (state, action) => {
         const { payload, message } = action.payload
