@@ -36,13 +36,13 @@ const ForgotPassword = () => {
   return (
     <div className="h-full flex flex-col items-center justify-center bg-gray-50">
       <div className="max-w-md w-full  p-6 bg-white rounded-lg shadow-lg px-8 ">
-        <h2>Forgot Password</h2>
+        <h2 className="font-bold mb-2 xs:text-lg md:text-xl lg:text-2xl">Forgot Password</h2>
         <p>Enter your email address to reset your password.</p>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
           <label htmlFor="email">Email:</label>
           <input type="text" id="email" {...register('email')} />
           {errors.email && <p className="text-red-600">{errors.email.message}</p>}
-          <button type="submit" className="btn">
+          <button type="submit" className="btn2 mb-2">
             Send Email
           </button>
           <Link to="/login">back to login</Link>
