@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { IoBookmark, IoBookmarkOutline } from 'react-icons/io5'
+import { IoHeart, IoHeartOutline } from 'react-icons/io5'
 import { SavedItem, addToCart } from '../redux/slices/products/ProductSlice'
 import { baseURL } from '../api'
 import Product from '../models/Product'
@@ -32,12 +32,13 @@ const ProductCard = ({ product }: ProductCardProps) => {
         <div className="flex justify-between">
           <h2 className="block nameLines text-md font-semibold">{product.title}</h2>{' '}
           {!saved.includes(product) ? (
-            <IoBookmarkOutline
+            <IoHeartOutline
+
               onClick={() => handeSaveProduct(product)}
               className=" text-xl text-gray-300 z-10 cursor-pointer "
             />
           ) : (
-            <IoBookmark
+            <IoHeart
               onClick={() => handeSaveProduct(product)}
               className="text-xl text-[#fff] z-10 cursor-pointer"
             />

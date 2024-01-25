@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { IoBookmark, IoBookmarkOutline } from 'react-icons/io5'
+import { IoHeart, IoHeartOutline } from 'react-icons/io5'
 
 import { baseURL } from '../api'
 import { SavedItem, addToCart } from '../redux/slices/products/ProductSlice'
@@ -64,9 +64,9 @@ const ProductDetailCard = () => {
               }  h-[45px] rounded flex items-center justify-center w-full   `}
               onClick={() => handeSaveProduct(product)}>
               {!saved.includes(product) ? (
-                <IoBookmarkOutline className=" text-xl xs:text-md text-gray-500 cursor-pointer " />
+                <IoHeartOutline className=" text-xl xs:text-md text-gray-500 cursor-pointer " />
               ) : (
-                <IoBookmark className="text-xl text-[#fff] cursor-pointer" />
+                <IoHeart className="text-xl text-[#fff] cursor-pointer" />
               )}
               {!saved.includes(product) ? 'save to wishlist' : 'saved'}
             </button>
